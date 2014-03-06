@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Reveal;
 
-(function (W) { //IIFE
-    var name = 'Reveal',
-        self = new Global(name, '(expand or contract)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Reveal', self, C, Df, U;
+    self = new Global(name, '(expand or contract)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: {},
@@ -65,7 +66,7 @@ var Reveal;
         Df.sect = sect;
         Df.finish = cb;
 
-        W.debug > 1 && C.debug(name + '_toggle', '\n', Df);
+        U.debug(1) && C.debug(name + '_toggle', '\n', Df);
         if (Df.open) {
             Df.open.children().fadeOut().end() //
             .animate({
@@ -81,7 +82,7 @@ var Reveal;
 
     function _contractAll() {
         var all = $(Df.reveals);
-        W.debug > 0 && C.debug(name + '_contract', '\n', [all.children()]);
+        U.debug(0) && C.debug(name + '_contract', '\n', [all.children()]);
 
         all.css({
             height: '1px',
@@ -112,7 +113,7 @@ var Reveal;
         },
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

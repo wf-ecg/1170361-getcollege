@@ -1,12 +1,13 @@
 /*jslint es5:true, white:false */
-/*globals $, Control, Decache, Extract, Global, Modal, Respond, Reveal, Translate, videojs */
+/*globals $, Control, Decache, Extract, Handlers, Global, Modal, Respond, Reveal, videojs */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 function Main(W) {
-    var name = 'Main',
-        self = new Global(name, '(kicker and binder)'),
-        C = W.console,
-        Df;
+    var name = 'Main', self, C, Df, U;
+    self = new Global(name, '(kicker and binder)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         delay: 333,
@@ -17,19 +18,10 @@ function Main(W) {
             Decache.init('.desktop');
             Control.init(Df);
             Modal.init();
+            Df.inited = true;
         },
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-    function _refresh() {
-        Respond.check();
-        Modal.hide();
-    }
-
-    function _timer() {
-        var str = new Date().toLocaleString() + ' ';
-        return (str += ($.now().toString().match(/^\d{6}/)));
-    }
 
     function _scroll(ele, mult) {
         var $me = $(ele);
@@ -45,62 +37,23 @@ function Main(W) {
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _binding() {
-        Translate.init();
+        if (W.Translate) {
+            W.Translate.init();
+        }
         Respond.init();
         Reveal.init();
+        Handlers.init();
 
-        if ($.browser.mozilla) {
-            $('td').drt_cellophy();
-        }
-
-        $('.disclose').on('click', function () {
-            $('.modal').trigger('show.Modal');
-            $('#Legal').show();
-        });
-
-        $('img.purple').on('click', function (evt) {
-            var vid = $(this).data('vid'),
-                vidjs = videojs(vid);
-
-            $('#Video').children().hide();
-            $('#' + vid).show().click(function (evt) {
-                evt.stopPropagation();
-            });
-
-            $('.modal').trigger('show.Modal') //
-            .on('hide.Modal', function () {
-                vidjs.pause();
-            });
-
-            vidjs.currentTime(0).play();
-            $('#Video').show();
-        });
-
-        $('.aturitmo').on('click', function () {
-            Respond.change(); // eventless arg
-        });
-
-        $('.reveal.upper').on('click', 'button', function (evt) {
-            C.error(evt)
-            evt.preventDefault();
-            evt.stopImmediatePropagation();
-            $('.disclose').click();
-            W.setTimeout(function () {
-                W.open($(evt.target).parent().attr('href'));
-            }, 3333);
-        });
-
-        $(W).bind('resize orientationchange', _.throttle(_refresh, 333));
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init() {
-        C.error('init @ ' + _timer() + ' debug:', W.debug);
-
-        if (self.inited(true)) {
+        if (Df.inited) {
             return null;
         }
+        C.info('init @ ' + Date() + ' debug:', W.debug, self.mode);
+
         Df.inits(_binding);
         _scroll('#Top');
     }
@@ -109,7 +62,6 @@ function Main(W) {
         _: function () {
             return Df;
         },
-        init: _init,
         delay: Df.delay,
         scroll: _scroll,
         sectStr: function () {
@@ -118,6 +70,8 @@ function Main(W) {
         sectArr: function () {
             return Df.sects.split(' ');
         },
+        init: _init,
+        mode: eval(U.tstrict),
     });
     return self;
 }

@@ -1,63 +1,163 @@
 /* TILES */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-#Layout {
-    tr.collapse {
+#Layout.tiles {
+    ///grid
+
+    @mixin span($col: 1, $row: 1) {
+        width: $col * $wt + ($col - 1) * $unit;
+        height: $row * $ht + ($row - 1) * $unit;
+    }
+    @include clearfix();
+
+    .collapse {
         display: none;
     }
-    td.tile  {
+    section {
+        height: 100px;
+    }
+    article {
+        background-repeat: no-repeat;
+        display: inline-block;
+        float: left;
+        margin: $unit 0 0 $unit;
+        position: relative;
         @include nosel();
+        @include box-sizing(border-box);
 
+        //  R1 semantic
+        /* - - - - - - - - - - - - - - - - - - - - - */
+        &.girls {
+            background-image: url(../images/fpo/big_girls.png);
+            .desktop & {
+                @include span(3, 2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.cafe {
+            background-image: url(../images/fpo/sq_cafe.png);
+            .desktop & {
+                @include span();
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.quiz {
+            background-image: url(../images/fpo/quiz.png);
+            .desktop & {
+                font-size: 110%;
+                @include span(2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        //  R2 semantic
+        /* - - - - - - - - - - - - - - - - - - - - - */
+        &.fellows {
+            background-image: url(../images/fpo/fellows.png);
+            .desktop & {
+                @include span(2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.puppy {
+            background-image: url(../images/fpo/sq_puppy.png);
+            .desktop & {
+                @include span();
+            }
+            .mobile & {/* row? col?*/}
+        }
+        //  R3 semantic
+        /* - - - - - - - - - - - - - - - - - - - - - */
+        &.going {
+            background-image: url(../images/fpo/going.png);
+            clear: left;
+            .desktop & {
+                @include span(2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.desk {
+            background-image: url(../images/fpo/sq_desk.png);
+            .desktop & {
+                @include span();
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.steps {
+            background-image: url(../images/fpo/steps.png);
+            .desktop & {
+                padding-left: 15em;
+                @include span(3);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        //  R4 semantic
+        /* - - - - - - - - - - - - - - - - - - - - - */
+        &.credit {
+            background-image: url(../images/fpo/credit.png);
+            .desktop & {
+                @include span(2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.car {
+            background-image: url(../images/fpo/car.png);
+            .desktop & {
+                @include span(2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.spending {
+            background-image: url(../images/fpo/spending.png);
+            .desktop & {
+                @include span(2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        //  R5 semantic
+        /* - - - - - - - - - - - - - - - - - - - - - */
+        &.calc {
+            background-image: url(../images/fpo/calc.png);
+            .desktop & {
+                @include span();
+            }
+            .mobile & {/* row? col?*/}
+        }
         &.babe {
-            background-image: url(../images/photos/babe.png);
+            background-image: url(../images/fpo/sq_babe.png);
+            .desktop & {
+                @include span();
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &.manage {
+            background-image: url(../images/fpo/manage.png);
+            .desktop & {
+                @include span();
+            }
+            .mobile & {/* row? col?*/}
         }
         &.dude {
-            background-image: url(../images/photos/dude.png);
-        }
-        &.cgray {
-            background-image: url(../images/colors/cgray.png);
-
-            h3 {
-                font-weight: 100;
-                @include rex('margin-bottom', 0.5);
+            background-image: url(../images/fpo/sq_dude.png);
+            .desktop & {
+                @include span();
             }
-            p {
-                @include rex('font-size', 1.25);
+            .mobile & {/* row? col?*/}
+        }
+        &.cover {
+            background-image: url(../images/fpo/cover.png);
+            .desktop & {
+                @include span();
             }
+            .mobile & {/* row? col?*/}
         }
-        &.red {
-            background-image: url(../images/colors/red.png);
-
-            h2 {
-                font-weight: 100;
-                line-height: 1.1;
+        &.phone {
+            background-image: url(../images/fpo/sq_phone.png);
+            .desktop & {
+                @include span();
             }
+            .mobile & {/* row? col?*/}
         }
-        &.phones {
-            background-image: url(../images/photos/phones.png);
-        }
-
-        // next row
-
-        &.green {
-            background-image: url(../images/colors/green.png);
-        }
-        &.purple {
-            background-image: url(../images/colors/purple.png);
-        }
-        &.freek {
-            background-image: url(../images/photos/freek.png);
-        }
-        &.amber {
-            background-image: url(../images/colors/amber.png);
-        }
-        &.plum {
-            background-image: url(../images/colors/plum.png);
-        }
-        &.teal {
-            background-image: url(../images/colors/teal.png);
-        }
-
+        /* - - - - - - - - - - - - - - - - - - - - - */
         // next row
 
         &.filler {

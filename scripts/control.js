@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Control;
 
-(function (W) { //IIFE
-    var name = 'Control',
-        self = new Global(name, '(load images after doc)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Control', self, C, Df, U;
+    self = new Global(name, '(load images after doc)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: {},
@@ -40,11 +41,11 @@ var Control;
         }, Main.delay * 2);
     }
 
-    function _getSect(ctrl) { // who am i (too fragile...popping class)
+    function _getSect(ctrl) { // who am i (TODO fragile...popping class)
         return ctrl.closest('td').attr('class').split(' ').pop();
     }
 
-    function _getLevel(ctrl) { // who am i (too fragile...popping class)
+    function _getLevel(ctrl) { // who am i (TODO fragile...popping class)
         return ctrl.closest('tr').attr('class').split(' ').pop();
     }
 
@@ -67,7 +68,7 @@ var Control;
         } else {
             reveal = _getReveal(_getLevel(ctrl)); // td
 
-            Translate.update(reveal, sect);
+            W.Translate && W.Translate.update(reveal, sect);
             _soon(ctrl); // scroll to tile
             _reset(ctrl);
         }
@@ -105,7 +106,7 @@ var Control;
         soon: _soon,
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

@@ -2,7 +2,7 @@
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 body {
-    padding: 9px;
+    padding: $unit;
     overflow-y: scroll;
 
     &.mobile {
@@ -57,7 +57,7 @@ body {
     box-shadow: 3px 333px 333px $shad1;
     margin: auto;
     position: relative;
-    width: 984px;
+    width: $ww;
 
     .mobile & {
         width: 472px;
@@ -67,42 +67,28 @@ body {
         }
     }
 
-    div.aturitmo {
-        background-image: url(../images/header/aturitmo.png);
-        height: 40px;
-        left: 10px;
+    div.masthead {
+        background-image: url(../images/fpo/head.png);
+        height: 54px;
+        left: $unit;
         position: absolute;
         top: 26px;
-        width: 315px;
+        width: 478px;
     }
     div.logo {
         background-image: url(../images/header/logo.png);
         height: 55px;
         position: absolute;
-        right: 10px;
-        top: 10px;
+        right: $unit;
+        top: $unit;
         width: 55px;
-    }
-    h1 {
-        color: white !important;
-        font-size: 1px;
-        position: relative;
-        z-index: -1;
-    }
-    h2 {
-        @extend %myriad;
-        font-size: 210%;
-    }
-    h3 {
-        @extend %archer;
-        font-size: 145%;
-        font-style: italic;
     }
 }
 #Layout {
     border-collapse: separate;
-    border-spacing: 10px;
-    padding-top: 80px;
+    border-spacing: $unit;
+    padding-bottom: $unit;
+    padding-top: $unit * 8;
     position: relative;
     z-index: 1;
 

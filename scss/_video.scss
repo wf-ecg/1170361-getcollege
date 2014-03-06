@@ -4,7 +4,7 @@
 #Video {
     & > div {
         @include box-sizing(content-box);
-        border: 10px solid white;
+        border: $unit solid white;
         color: #ccc;
         margin: auto;
 
@@ -13,7 +13,7 @@
         }
         .vjs-big-play-button {
             // background-image: url(./images/controls/play.png);
-            border-radius: 10px;
+            border-radius: $unit;
             box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.5);
             font-size: 100%;
             height: 55px; width: 70px;

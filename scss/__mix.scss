@@ -4,8 +4,9 @@
 @mixin clearfix(){
     &:after {
         clear: both;
-        content: "";
+        content: '';
         display: table;
+        border-collapse: collapse;
         /* clearfix */
     }
 }
@@ -51,6 +52,16 @@
 }
 @mixin vgrad($clr1: white, $clr2: black){
     @include background-image( linear-gradient(top, $clr1 33%, $clr2 100%) );
+}
+
+@mixin archer () {
+    font-family: 'Archer SSm A', 'Archer SSm B', Georgia, serif;
+}
+@mixin plain () {
+    font-family: Helvetica, Arial, Geneva, sans-serif;
+}
+@mixin thick () {
+    font-family: Verdana, sans-serif;
 }
 
 //* >^º!º^< */

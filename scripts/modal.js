@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Modal;
 
-(function (W) { //IIFE
-    var name = 'Modal',
-        self = new Global(name, '(enable modal selections)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Modal', self, C, Df, U;
+    self = new Global(name, '(enable modal selections)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: {},
@@ -25,7 +26,7 @@ var Modal;
                 me.trigger('hide.Modal');
             });
 
-            W.debug > 1 && C.debug(name + '_binding', '\n', me);
+            U.debug(1) && C.debug(name + '_binding', '\n', me);
         });
     }
 
@@ -68,7 +69,7 @@ var Modal;
         },
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

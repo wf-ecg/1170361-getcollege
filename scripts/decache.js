@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Decache;
 
-(function (W) { //IIFE
-    var name = 'Decache',
-        self = new Global(name, '(load images from data-src after doc)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Decache', self, C, Df, U;
+    self = new Global(name, '(load images from data-src after doc)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: {},
@@ -50,7 +51,7 @@ var Decache;
         init: _init,
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

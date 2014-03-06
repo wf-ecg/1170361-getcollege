@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Translate;
 
-(function (W) { //IIFE
-    var name = 'Translate',
-        self = new Global(name, '(detect and insert verbiage)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Translate', self, C, Df, U;
+    self = new Global(name, '(detect and insert verbiage)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: null,
@@ -46,7 +47,7 @@ var Translate;
         }
 
         rtn = [sect, kind, Df.current]; // include language tag
-        W.debug > 1 && C.debug(name + '_classify', '\n', '[jq:sect,kind,lang]', [jq].concat(rtn));
+        U.debug(1) && C.debug(name + '_classify', '\n', '[jq:sect,kind,lang]', [jq].concat(rtn));
 
         return rtn;
     }
@@ -64,13 +65,13 @@ var Translate;
         Df.dat = (Df.dat || Extract.data());
 
         texts = $(jq || 'body').find(Df.tiles); // one or all
-        W.debug > 1 && C.debug(name + '_retile', '\n', jq, texts);
+        U.debug(1) C.debug(name + '_retile', '\n', jq, texts);
 
         texts.each(_trans);
     }
 
     function _update(jq, sect) {
-        W.debug > 0 && C.debug(name + '_update', '\n', sect);
+        U.debug(0) && C.debug(name + '_update', '\n', sect);
         Reveal.expand(jq, sect, _retile);
     }
 
@@ -104,7 +105,7 @@ var Translate;
             str = Df.dat[sect][kind][Df.current];
             str = $(str).text();
 
-            W.debug > 0 && C.debug(name, '_lookup', str);
+            U.debug(0) && C.debug(name, '_lookup', str);
             return str;
         } catch (err) {
             C.error(err);
@@ -136,7 +137,7 @@ var Translate;
         trans: _trans,
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Respond;
 
-(function (W) { //IIFE
-    var name = 'Respond',
-        self = new Global(name, '(detect and insert verbiage)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Respond', self, C, Df, U;
+    self = new Global(name, '(detect and insert verbiage)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: {},
@@ -53,7 +54,7 @@ var Respond;
         }
 
         if (d !== Df.current) {
-            W.debug > 0 && C.debug(name + '_detect', '\n', d);
+            U.debug(1) && C.debug(name + '_detect', '\n', d);
 
             if (W.isIE && d === 'mobile' && Df.current === 'desktop') {
                 W.location.reload(); // refresh to respond to shrinking
@@ -87,7 +88,7 @@ var Respond;
         },
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

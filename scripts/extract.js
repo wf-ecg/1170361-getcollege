@@ -3,11 +3,12 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Extract;
 
-(function (W) { //IIFE
-    var name = 'Extract',
-        self = new Global(name, '(extract verbiage)'),
-        C = W.console,
-        Df;
+(function (W, $) { //IIFE
+    var name = 'Extract', self, C, Df, U;
+    self = new Global(name, '(extract verbiage)');
+
+    C = W.console;
+    U = Util;
 
     Df = { // DEFAULTS
         dat: {},
@@ -139,7 +140,7 @@ var Extract;
         sect: _lookSect,
     });
 
-}(window));
+}(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

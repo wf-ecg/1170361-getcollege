@@ -41,3 +41,7 @@ $gryD: rgb( 111, 111, 111 );   // dark-gray
 $dark: rgb(  55,  55,  55 );   // dark-dark
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+$ww: 980px;
+$unit: $ww / 97;
+$wt: $unit * 15;
+$ht: $unit * 15;

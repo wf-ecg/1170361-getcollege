@@ -1,78 +1,77 @@
 /*jslint es5:true, white:false */
-/*globals $, Global, Main, Modernizr, window */
+/*globals $, Global, Main, Modernizr, ROOT, _, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Data, CDN, W = (W || window);
 
-W.debug = 1;
+var Data, G, W = (W || window);
 
-if ($.now() > 137780e7) {
-    W.debug--;
-}
-if (W.isIE) {
-    W.debug--;
-}
+W.debug = 0;
+    lax_debug : {
+        if ($.browser.msie) {
+            W.isIE = true;
+            $(function () {
+                $('html').addClass('msie');
+            });
+        }
+        if (($.now() > new Date('2014/3/19')) || W.isIE ||
+            W.location.hostname == 'www.wellsfargomedia.com') {
+            W.debug--;
+        }
+        if (W.location.hostname === 'localhost') {
+            W.debug++;
+        }
+    }
 
-CDN = {
-    self: '/lib/',
-    disk: 'file:///lib/',
-    bithon: '../../../../lib/',
-    webdev: 'http://10.89.101.100/lib/',
-    mython: 'http://10.89.101.81:8000/lib/',
-    python: 'http://localhost:8000/lib/',
-    other0: 'http://cdnjs.cloudflare.com/ajax/libs/',
-}.bithon;
-
-var LOAD = {
-    lib: {
-        test: W.isIE,
-        yep: [
-        CDN + 'ie/split.js',
-        CDN + 'ie/html5shiv.js',
-        //CDN + 'ie/nwmatcher.min.js',
-        //CDN + 'ie/selectivizr-min.js',
-        ],
-        both: [
-        CDN + 'underscore/js-1.4.4/underscore.js',
-        CDN + 'js/console.js',
-        CDN + 'video-js/4.2.1/video-js.css',
-        CDN + 'video-js/4.2.1/video.dev.js',
-        './lib/drt-cellophy.js',
-        './lib/jq-help.js',
-        './lib/mzr-highres.js',
-        ],
-        complete: function () {
-            Data = new Global('Data', '(catchall data fixture)');
-        },
-    },
-    proj: {
-        both: [
-        './scripts/control.js',
-        './scripts/decache.js',
-        './scripts/extract.js',
-        './scripts/main.js',
-        './scripts/modal.js',
-        './scripts/respond.js',
-        './scripts/reveal.js',
-        './scripts/translate.js',
-        ],
-        complete: function () {
-            Main(W).init();
-        },
-    },
-    stats: {
-        test: !W.debug,
-        yep: [
-        CDN + 'js/ecg-ga.js',
-        ],
-    },
+G = { /// all stubs terminated
+    dir: ROOT.dir + '/',
+    lib: ROOT.lib + '/',
+    loc: ROOT.dir + '/lib/',
+    src: ROOT.dir + '/scripts/',
 };
 
-Modernizr.load([LOAD.lib, LOAD.proj, LOAD.stats]);
+Modernizr.load([{
+    test: W.isIE,
+    yep: [
+    G.lib + 'ie/split.js',
+    G.lib + 'ie/html5shiv.js',
+    //cloud.typography.com/6819872/620964/css/fonts.css', // Normal
+    '//cloud.typography.com/6819872/633184/css/fonts.css', // ScrnSmrt
+    ],
+    both: [
+    G.lib + 'underscore/js-1.4.4/underscore.js',
+    G.lib + 'video-js/4.2.1/video-js.css',
+    G.lib + 'video-js/4.2.1/video.dev.js',
+    //
+    G.loc + 'drt-cellophy.js',
+    G.loc + 'jq-help.js',
+    G.loc + 'mzr-highres.js',
+    G.loc + 'js-view.js',
+    ],
+    nope: [
+    G.loc + 'archer.ssm.css',
+    G.loc + 'archer.ssm.itl.css',
+    ],
+    complete: function () {
+        G = $.extend(true, Global, G);
+        Data = new Global('Data', '(catchall data fixture)');
+    },
+}, {
+    both: [
+    G.src + '_util.js',
+    G.src + 'control.js',
+    G.src + 'decache.js',
+    G.src + 'extract.js',
+    G.src + 'handlers.js',
+    G.src + 'main.js',
+    G.src + 'modal.js',
+    G.src + 'respond.js',
+    G.src + 'reveal.js',
+    ],
+    complete: function () {
+        Main(W).init();
+    },
+}, {
+    test: (W.debug < 1),
+    yep: ['http://www.wellsfargomedia.com/lib/js/ecg-ga.js'],
+}]);
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-/*
-
-
-
-
- */
