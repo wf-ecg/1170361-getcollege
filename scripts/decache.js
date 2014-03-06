@@ -1,19 +1,20 @@
 /*jslint es5:true, white:false */
-/*globals $, Global, window */
+/*globals Global, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Decache;
-
-(function (W, $) { //IIFE
-    var name = 'Decache', self, C, Df, U;
-    self = new Global(name, '(load images from data-src after doc)');
+'use strict';
+var Decache = (function (W, $) { //IIFE
+    var name = 'Decache',
+        self = new Global(name, '(load images from data-src after doc)'),
+        C, Df, U;
 
     C = W.console;
     U = Util;
 
     Df = { // DEFAULTS
         dat: {},
-        auto: null, // add cache to these upon init
+        auto: null,
     };
+    // TODO: add cache to these upon init
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
 
@@ -51,6 +52,7 @@ var Decache;
         init: _init,
     });
 
+    return self;
 }(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

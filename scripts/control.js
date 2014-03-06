@@ -1,11 +1,11 @@
 /*jslint es5:true, white:false */
-/*globals $, Global, Reveal, Translate, window */
+/*globals Global, Main, Reveal, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Control;
-
-(function (W, $) { //IIFE
-    var name = 'Control', self, C, Df, U;
-    self = new Global(name, '(load images after doc)');
+'use strict';
+var Control = (function (W, $) { //IIFE
+    var name = 'Control',
+        self = new Global(name, '(control operations)'),
+        C, Df, U;
 
     C = W.console;
     U = Util;
@@ -42,11 +42,13 @@ var Control;
     }
 
     function _getSect(ctrl) { // who am i (TODO fragile...popping class)
-        return ctrl.closest('td').attr('class').split(' ').pop();
+        var str = ctrl.closest('article').attr('class');
+        return str ? str.split(' ').pop() : 'x';
     }
 
     function _getLevel(ctrl) { // who am i (TODO fragile...popping class)
-        return ctrl.closest('tr').attr('class').split(' ').pop();
+        var str = ctrl.closest('section').attr('class');
+        return str ? str.split(' ').pop() : 'x';
     }
 
     function _getReveal(level) { // who am i
@@ -54,7 +56,7 @@ var Control;
     }
 
     function _isActive(ele) {
-        return $(ele).is('.'+ Df.cnom.active);
+        return $(ele).is('.' + Df.cnom.active);
     }
 
     function _tilter(ctrl) {
@@ -66,9 +68,7 @@ var Control;
             Main.scroll('#Top'); // scroll to top
             _reset('', ctrl);
         } else {
-            reveal = _getReveal(_getLevel(ctrl)); // td
-
-            W.Translate && W.Translate.update(reveal, sect);
+            reveal = _getReveal(_getLevel(ctrl)); // article
             _soon(ctrl); // scroll to tile
             _reset(ctrl);
         }
@@ -106,6 +106,7 @@ var Control;
         soon: _soon,
     });
 
+    return self;
 }(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

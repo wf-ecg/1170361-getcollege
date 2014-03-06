@@ -1,11 +1,11 @@
 /*jslint es5:true, white:false */
-/*globals $, Global, Main, Respond, window */
+/*globals Global, Main, Respond, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Reveal;
-
-(function (W, $) { //IIFE
-    var name = 'Reveal', self, C, Df, U;
-    self = new Global(name, '(expand or contract)');
+'use strict';
+var Reveal = (function (W, $) { //IIFE
+    var name = 'Reveal',
+    self = new Global(name, '(expand or contract)'),
+    C, Df, U;
 
     C = W.console;
     U = Util;
@@ -14,80 +14,91 @@ var Reveal;
         dat: {},
         open: '',
         sect: '',
-        tile: '',
         revealpx: 257,
-        reveals: '.reveal',
+        reveals: 'section.reveal',
+        inits: function () {
+            Df.reveals = $(Df.reveals);
+            Df.inited = true;
+        },
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
-
-    function _reexpand(jq) {
-        var mobile = Respond.mobile();
-
-        if (Df.finish) {
-            Df.finish(jq); /// from Translate/retile
-        } else {
-            return true;
-        }
-
-        jq.closest('tr').show().end() //
-        .animate({
-            height: Df.revealpx * (mobile ? 1.5 : 1),
-        }, Main.delay, function () {
-            Df.open = jq;
-        }).children() //
-        .not(mobile ? '.desktop' : 'foo').fadeIn(Main.delay * 2);
-    }
-
-    function _expand(jq) {
-        jq = $(jq);
-
-        if (jq.length) {
-            // remove sects and add sect
-            jq.removeClass(Main.sectStr()).addClass(Df.sect);
-            _reexpand(jq);
-        }
-    }
-
-    function _closed() {
-        Df.open = '';
-
-        if (Df.tile) { //
-            _expand(Df.tile);
-        }
-    }
-
-    function _toggle(tile, sect, cb) {
-        Df.tile = tile || Df.tile;
-
-        if (!tile && !Df.open) {
-            return; // nothing to do!
-        }
-        Df.sect = sect;
-        Df.finish = cb;
-
-        U.debug(1) && C.debug(name + '_toggle', '\n', Df);
-        if (Df.open) {
-            Df.open.children().fadeOut().end() //
-            .animate({
-                height: '1px',
-            }, (Main.delay * 2), function () {
-                $(this).closest('tr').hide();
-                _closed();
-            });
-        } else {
-            _closed(); // ALREADY
-        }
-    }
+    /// attach expand/contract/status events to items with _reveal
 
     function _contractAll() {
-        var all = $(Df.reveals);
-        U.debug(0) && C.debug(name + '_contract', '\n', [all.children()]);
+        Df.reveals.trigger('contract');
+        U.debug(1) && C.debug(name, '_contractAll');
+    }
 
-        all.css({
-            height: '1px',
-        }).children().fadeTo(0.1).end() //
-        .closest('tr').hide();
+    function _attachTo(sele) {
+        var jq, data, handler, mobile;
+
+        jq = $(sele).closest('section');
+        mobile = Respond.mobile();
+
+        data = jq.data();
+        if (!data) {
+            U.debug(2) && C.error('no data');
+            return;
+        }
+        data = data[name] = {
+            status: true,
+        };
+        handler = {
+            expand: function () {
+                _contractAll();
+
+                if (!data.status) {
+                    jq.show().animate({
+                        height: Df.revealpx * (mobile ? 1.5 : 1),
+                    }, Main.delay, function () {
+                        Df.open = jq;
+                    }) //
+                    .children() //
+                    .not(mobile ? '.desktop' : 'foo') //
+                    .fadeIn(Main.delay * 2);
+                }
+
+                data.status = true;
+                U.debug(2) && C.debug(name, 'handler.expand', '\n', Df);
+                return this;
+            },
+            contract: function () {
+                if (data.status) {
+                    jq.children().fadeOut().end().animate({
+                        height: '1px',
+                    }, (Main.delay * 2), function () {
+                        jq.hide();
+                    });
+                }
+                data.status = false;
+                return this;
+            },
+            status: function () {
+                C.warn(data.status);
+                return data.status;
+            },
+        };
+
+        jq.hide() //
+        .on('expand.' + name, handler.expand) //
+        .on('contract.' + name, handler.contract) //
+        .on('status.' + name, handler.status);
+
+        handler.contract();
+        return jq;
+    }
+
+    function _setHandle(sel) {
+        var jq = _attachTo('section.' + sel);
+
+        U.debug(1) && C.debug(name, '_setHandle', sel);
+
+        $('article.' + sel + ' .control').toggle(function () {
+            jq.trigger('expand');
+        }, function () {
+            jq.trigger('contract');
+        });
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -97,7 +108,7 @@ var Reveal;
             return null;
         }
 
-        _contractAll();
+        Df.inits();
         return self;
     }
 
@@ -106,23 +117,16 @@ var Reveal;
             return Df;
         },
         init: _init,
-        expand: _toggle,
-        contract: function (cb) {
-            _toggle();
-            cb && !Df.sect && cb();
-        },
+        attach: _setHandle,
+        contract: _contractAll,
     });
 
+    return self;
 }(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*
-Reveal
-    store props
-        -amount
-    track state
-        -revealpx
-    expose meths
-        +expand
+
+
 
 */

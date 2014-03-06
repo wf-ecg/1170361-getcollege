@@ -5,7 +5,7 @@
     div.desktop {
         //display: block;
     }
-    td.reveal {
+    article.reveal {
         button {
             @include rex('margin', 1);
         }
@@ -34,33 +34,7 @@
 
         // TXT 1
 
-        &.upper.red {
-            .head {
-                @include pos(2, 4);
-            }
-            .text {
-                @include pos(2, 11);
-                p {
-                    @include rex('width', 28);
-                }
-            }
-        }
-
-        // next row
-        // TXT 1
-        &.lower.green {
-            .head {
-                @include rex('height', 18);
-                @include pos(2, 2);
-            }
-            .text {
-                @include rex('height', 18);
-                @include pos(2, 7.5);
-            }
-        }
-
-        // TXT 2
-        &.lower.purple {
+        &.purple {
             .head {
                 @include pos(2, 3);
                 font-size: 140%;

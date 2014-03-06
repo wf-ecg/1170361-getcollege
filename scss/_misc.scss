@@ -37,4 +37,19 @@ body {
         float: right;
     }
 }
+
+cite {
+    color: lime;
+    display: none;
+    font: normal $unit monospace;
+    padding: $unit / 3;
+    position: absolute;
+    right: 0;
+    text-shadow: 0 0 3px black;
+    top: 0;
+
+    .debug & {
+        display: inline;
+    }
+}
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

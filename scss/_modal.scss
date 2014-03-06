@@ -1,8 +1,9 @@
 /* MODALS */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 .modal {
-    background-color: rgba(33,33,33,.33);
+    background-color: rgba(255,255,255,.5);
     display: none;
     height: 100%; width: 100%;
     left: 0; top: 0;
@@ -30,7 +31,7 @@
     }
     aside {
         &.icon {
-            background-image: url(../images/controls/close.png);
+/*            background-image: url(../images/controls/close.png);*/
             background-repeat: no-repeat;
             color: transparent;
             cursor: pointer;
@@ -51,7 +52,7 @@
         &.text {
             background-color: gray;
             background-color: $shad3;
-            bottom: 3px;
+            top: 3px;
             color: white;
             left: 50%;
             letter-spacing: 2px;
@@ -63,7 +64,7 @@
             width: 444px;
 
             &:before {
-                content: 'click to dismiss / eliminar superposición';
+                content: 'click to dismiss';
             }
         }
     }

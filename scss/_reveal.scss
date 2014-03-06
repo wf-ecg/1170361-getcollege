@@ -1,31 +1,103 @@
-/* REVEALS */
+/* REVEAL */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #Layout {
-    td.lower, td.upper {
-        z-index: -1;
+    section.reveal {
+        & .center,
+        & .standard,
+        & .left,
+        & .right {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            width: 99%;
+        }
+        & .left {
+            float: left;
+            padding: 1em;
+            width: 50%;
+        }
+        & .right {
+            border-left: 1px solid #ddd;
+            margin-left: -1em;
+            padding: 1em;
+            float: right;
+            width: 50%;
+        }
+        & .standard {
+            margin-left: auto;
+            width: 66%;
+        }
+        & .center {
+            margin: auto;
+            width: 36%;
+        }
     }
-    td.reveal {
+
+    .reveal {
         background-image: url(../images/features/_bkgr.png);
         background-size: 100% 100%;
         height: 257px;
+        margin: $unit $unit 0;
+        overflow: hidden;
+        position: relative;
+        z-index: -1;
+
+        div.video {
+            display: block;
+            height: 0;
+            line-height: 140%;
+            opacity: 0.9;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            top: 55px;
+            width: 33%;
+            &:hover {
+                opacity: 1.0;
+
+                a {
+                    color: $red;
+                }
+            }
+            img {
+                position: relative;
+            }
+            a {
+                @include archer();
+                color: gray;
+                font-size: 15px;
+                font-weight: 600;
+                text-decoration: none;
+            }
+        }
+
+        img {
+            position: absolute;
+        }
 
         & > div > img {
-            display: none;
+            // display: none;
         }
-        button {
+        a.orange, button {
             float: right;
             margin: 12px 0 18px 0;
         }
-        .head, .text {
-            padding: 0;
-            position: absolute;
+        &.force {
+            .head, .text {
+                padding: 0;
+                position: absolute;
+            }
         }
         .head {
             @include pos(1.5, 5.5);
             h3 {
                 color: $red;
-                font-size: 190%;
+                font-size: 160%;
+                font-style: italic;
+                font-weight: 800;
+                line-height: 1.2;
+                margin-top: $unit;
             }
         }
         .text {
@@ -39,141 +111,41 @@
         // next row
 
         // TXT 1
-        &.upper.red {
-            div > img.red {
-                display: block;
+        &._fellows {
+            /*            div > img.red {
+            display: block;
             }
             .head {
-                @include rex('width', 22);
+            @include rex('width', 22);
             }
             .text {
-                @include pos(27, 3.4);
-                @include rex('width', 26.5);
+            @include pos(27, 3.4);
+            @include rex('width', 26.5);
             }
             button {
-                @include rex('margin-right', 3);
-            }
+            @include rex('margin-right', 3);
+            }*/
         }
         // TXT 1
-        &.lower.green {
-            div > img.green {
-                display: block;
+        &._spending {
+            /*            div > img.green {
+            display: block;
             }
             .head {
-                @include rex('width', 21);
+            @include rex('width', 21);
             }
             .text {
-                @include pos(26, 1.8);
-                @include rex('width', 26);
+            @include pos(26, 1.8);
+            @include rex('width', 26);
 
-                .eng & {
-                    @include pos(26, 5.8);
-                }
+            .eng & {
+            @include pos(26, 5.8);
+            }
             }
             button {
-                margin: 6px 0 18px 0;
-                float: none;
-            }
-        }
-        // TXT 2
-        &.lower.purple {
-            div > img.purple {
-                display: block;
-            }
-            .mobile {
-                display: none;
-            }
-            .cache.left {
-                @include pos(25, 8);
-            }
-            .cache.right{
-                @include pos(53, 8);
-            }
-            .head {
-                @include pos(1.5, 2.5);
-                @include rex('width', 21);
-                font-size: 130%;
-            }
-            .text {
-                @include pos(22, 1.5);
-                @include rex('width', 57);
-                @include rex('height', 6);
-                text-align: center;
-
-                hr {
-                    @include rex('height', 17);
-                    border: 1px solid #bbb;
-                    border-width: 0 0 1px 1px;
-                    clear: right;
-                    float: left;
-                    width: 0;
-                }
-                p {
-                    @include rex('margin', 1);
-                    @include rex('margin-left', 2);
-                    @include rex('width', 24);
-                    clear: right;
-                    float: left;
-                }
-                a:not(.mobile) {
-                    display: none;
-                }
-            }
-        }
-        // TXT 3
-        &.lower.amber {
-            div > img.amber {
-                display: block;
-            }
-            .head {
-                @include pos(1.5, 6.3);
-                @include rex('width', 18);
-            }
-            .text {
-                @include pos(24, 6);
-                @include rex('width', 32);
-                br + br {
-                    display: none;
-                }
-            }
-            button {
-                @include rex('margin-right', 5);
-            }
-        }
-        // TXT 4
-        &.lower.plum {
-            div > img.plum {
-                display: block;
-            }
-            .cache {
-                @include pos(26, 8);
-            }
-            .head {
-                @include pos(1.5, 7.3);
-                @include rex('width', 22);
-            }
-            .text {
-                @include pos(26, 2);
-                @include rex('width', 37);
-            }
-            button {
-                position: relative;
-                @include rex('right', -15);
-                @include rex('top', 6);
-            }
-        }
-        // TXT 5
-        &.lower.teal {
-            div > img.teal {
-                display: block;
-            }
-            .head {
-                @include rex('width', 22);
-            }
-            .text {
-                @include pos(27, 7);
-                @include rex('width', 26);
-            }
+            margin: 6px 0 18px 0;
+            float: none;
+            }*/
         }
     }
 }

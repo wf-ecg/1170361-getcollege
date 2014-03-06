@@ -1,0 +1,83 @@
+/* QUIZ */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#Qwrapper {
+    $bdark: #00698c;
+    $bsemi: #4d96af;
+    $blite: #80b4c6;
+    $bhead: #fcc60a;
+
+    @include archer();
+    background-color: $bdark;
+    box-shadow: 1px 3px 15px black;
+    color: white;
+    cursor: -webkit-grab;
+    display: none;
+    font-size: 130%;
+    line-height: 150%;
+    overflow: hidden;
+    padding: 3em 2em;
+    position: absolute;
+    left: 20%; right: 20%;
+    z-index: 1;
+
+    *:active {
+        cursor: -webkit-grabbing;
+    }
+    a {
+        color: white;
+    }
+    blockquote, h3, h4, h5 {
+        margin: $unit 0;
+        line-height: 120%;
+    }
+    h3 {
+        color: $bhead;
+        font-weight: 600;
+    }
+    h4 {
+        color: $bhead;
+        font-style: italic;
+    }
+    h5 {
+        font-style: italic;
+    }
+    blockquote {
+        background-color: $blite;
+        color: black;
+        line-height: 140%;
+        padding: 0.5em 1em;
+
+        h3 {
+            color: black;
+            font-size: 21px;
+        }
+        p {
+            font-style: italic;
+        }
+    }
+    ol, ul {
+        line-height: 140%;
+        margin-left: 2em;
+    }
+    ol {
+        li {
+            list-style-type: upper-alpha;
+            margin: $unit 0;
+        }
+    }
+    li {
+        margin-left: -0.5em;
+        padding-left: 0.5em;
+
+        &:hover {
+            background-color: $bsemi;
+        }
+        &.selected, &:active {
+            background-color: $blite;
+        }
+    }
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

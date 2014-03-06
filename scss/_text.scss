@@ -13,7 +13,8 @@ h1 {
     padding: 14px 0 0 14px;
 
     p {
-        font-size: 15px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
         line-height: 1.5;
         margin: 0.3em 0;
         @include thick();
@@ -21,16 +22,24 @@ h1 {
 
     h2, h3 {
         font-weight: 500;
-        @include archer();
     }
     h2 {
         font-size: 2.5em;
         line-height: 1.15;
+
+        sup {
+            $x: 1em / 4;
+            font: 200 $x 'verdana';
+            margin-right: $x / -3;
+            position: relative;
+            top: $x / -2;
+        }
     }
     h3 {
         font-size: 1.4em;
         line-height: 1.6;
     }
+    a.orange,
     button {
         position: absolute;
         bottom: 1em;

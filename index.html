@@ -15,80 +15,113 @@
         <!--  -->
         <link rel="stylesheet" media="print" href="styles/print.css">
         <link rel="stylesheet" href="styles/screen.css">
+        <link rel="stylesheet" href="scss/temp.css">
         <!--[if lt IE 10]><script>isIE=!0</script><![endif]-->
         <script src="root.js"></script>
     </head>
     <body class="">
         <a id="Top"></a>
         <noscript> error: scripting is disabled </noscript>
-        <div id="Page">
+        <div id="Page" class="debug desktop">
             <header>
                 <div class="masthead">
                     <h1>Get College Ready</h1>
                 </div>
-                <div class="logo">&nbsp;</div>
+                <div class="logo"></div>
             </header>
 
             <div id="Layout" class="tiles">
                 <section>
-                    <article class="tile girls ">&nbsp;</article>
-                    <article class="tile cafe  ">&nbsp;</article>
-                    <article class="tile quiz  ">
-                        <h2>Check what <br>you know.</h2>
-                        <p> </p>
-                        <button class="orange">Take The Quiz</button>
+                    <article class="tile _girls"></article>
+
+                    <article class="tile _quiz">
+                        <p><br>Check what you know</p>
+                        <h2>Take the <br><i>Get College <br>Ready</i><sup>SM</sup> quiz.</h2>
+                        <a class="orange quizzy">Take The Quiz</a>
                     </article>
-                    <!--  2  -->
-                    <article class="tile fellows ">
-                        <h2>Mr. Fellows Education <br>Series</h2>
-                        <p> </p>
+
+                    <article class="tile _cafe"></article>
+                    <!--
+    2  -->
+
+                    <article class="tile _desk"></article>
+                </section>
+                <!--
+    3  -->
+                <section>
+                    <article class="tile _fellows">
+                        <h2>Mr. Fellows videos</h2>
+                        <p> Watch as Mr. Fellows explains <br>your financial aid journey.</p>
                         <div class="control round"></div>
                     </article>
-                    <article class="tile puppy   ">&nbsp;</article>
-                    <!--  3  -->
-                    <article class="tile going">
-                        <h2>Going to College?</h2>
-                        <p>Learn the basics of paying for your college experience. </p>
-                        <button class="orange">Find Out More</button>
-                    </article>
-                    <article class="tile desk ">&nbsp;</article>
-                    <article class="tile steps">
-                        <h2>CollegeSTEPS</h2>
+
+                    <article class="tile _dude"></article>
+
+                    <article class="tile _steps">
+                        <h2>CollegeSTEPS<sup>®</sup></h2>
                         <p>A special Wells Fargo publication <br>for students and parents. </p>
-                        <button class="orange">Download eMag</button>
+                        <a class="orange" target="_blank" href="http://wfefs.wellsfargo.com/jump/CollegeSTEPSMagazine.pdf">Download eMag</a>
                     </article>
-                    <!--  4  -->
-                    <article class="tile credit ">
-                        <h2>College — <br>time to earn <br>good credit</h2>
+                </section>
+                <!--
+REVEALS -->
+                <section class="_fellows reveal"></section>
+                <!--
+    4  -->
+                <section>
+                    <article class="tile _credit">
+                        <h2>College — <br>time to build <br>good credit</h2>
                         <p> </p>
                         <div class="control round"></div>
                     </article>
-                    <article class="tile car    ">
-                        <h2>Your car and College</h2>
+
+                    <article class="tile _car">
+                        <h2>Your car and college</h2>
                         <p> </p>
                         <div class="control round"></div>
                     </article>
-                    <article class="tile spending" >
-                        <h2>Everyday <br>spending and saving at College</h2>
+
+                    <article class="tile _spending" >
+                        <h2>Everyday <br>spending and saving at college</h2>
                         <p> </p>
                         <div class="control round"></div>
                     </article>
-                    <!--  5  -->
-                    <article class="tile calc  ">
-                        <h3>Calculate <br>College <br>costs </h3>
-                        <button class="orange">Learn More</button>
+                </section>
+                <!--
+REVEALS -->
+                <section class="_credit reveal"></section>
+                <section class="_car reveal"></section>
+                <section class="_spending reveal"></section>
+                <!--
+    5  -->
+                <section>
+                    <article class="tile _paying">
+                        <h3>Paying for college?</h3>
+                        <a class="orange articles">Find Out More</a>
                     </article>
-                    <article class="tile babe  ">&nbsp;</article>
-                    <article class="tile manage">
+
+                    <article class="tile _calc">
+                        <h3>Calculate <br>college <br>costs </h3>
+                        <a class="orange" target="_blank" href="https://www.wellsfargo.com/student/calculators/budget/">Learn More</a>
+                    </article>
+
+                    <article class="tile _phone"></article>
+
+                    <article class="tile _cover">
+                        <h3>Make sure you’re covered at college </h3>
+                        <a class="orange" target="_blank" href="https://www.wellsfargo.com/financial-education/insurance-protection/insurance-in-college/">Learn More</a>
+                    </article>
+
+                    <article class="tile _manage">
                         <h3>Manage <br>your money <br>wisely </h3>
-                        <button class="orange">Learn More</button>
+                        <a class="orange articles">Learn More</a>
                     </article>
-                    <article class="tile dude  ">&nbsp;</article>
-                    <article class="tile cover ">
-                        <h3>Make sure you’re covered at College. </h3>
-                        <button class="orange">Learn More</button>
+
+                    <article class="tile _talk">
+                        <h3>Talk with a banker </h3>
+                        <a class="orange" target="_blank" href="https://appointments.wellsfargo.com/maa/appointment/">Make appointment</a>
                     </article>
-                    <article class="tile phone ">&nbsp;</article>
+
                 </section>
             </div>
 
@@ -96,48 +129,20 @@
                 <span class="left text">
                     © 2014 Wells&nbsp;Fargo Bank, N.A. Member FDIC. ECG-1170361
                 </span>
+                <span class="right">
+                    &nbsp;<button class="disclose">Disclosures</button>
+                </span>
             </footer>
         </div>
 
         <div class="modal">
             <aside class="text"> <!-- CLICK TO CLOSE --> </aside>
             <aside class="icon"> <!-- CLICK TO CLOSE --> </aside>
-            <div id="Legal">
-                <section class="exit">
-                    <article class="text"></article>
-                </section>
-                <section class="legal">
-                    <article class="text"></article>
-                </section>
-            </div>
-            <div id="Video">
-                <!--
-                <video id="MobileDeposit_Demo" class="video-js vjs-default-skin" controls
-                       preload="auto" width="640" height="360"
-                       data-setup="{}">
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/MobileDeposit_Demo.mp4" type='video/mp4'>
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/MobileDeposit_Demo.webm" type='video/webm'>
-                </video>
-                <video id="MobileDeposit_Demo_Spanish" class="video-js vjs-default-skin" controls
-                       preload="auto" width="640" height="360"
-                       data-setup="{}">
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/MobileDeposit_Demo_Spanish.mp4" type='video/mp4'>
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/MobileDeposit_Demo_Spanish.webm" type='video/webm'>
-                </video>
-                <video id="SurePay_Demo" class="video-js vjs-default-skin" controls
-                       preload="auto" width="640" height="360"
-                       data-setup="{}">
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/SurePay_Demo.mp4" type='video/mp4'>
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/SurePay_Demo.webm" type='video/webm'>
-                </video>
-                <video id="SurePay_Demo_Spanish" class="video-js vjs-default-skin" controls
-                       preload="auto" width="640" height="360"
-                       data-setup="{}">
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/SurePay_Demo_Spanish.mp4" type='video/mp4'>
-                    <source src="http://www.wellsfargomedia.com/aturitmo/media/SurePay_Demo_Spanish.webm" type='video/webm'>
-                </video>
-                -->
-            </div>
+
+            <div id="Qwrapper"></div>
+            <div id="ISwrapper"></div>
+            <div id="Legal"></div>
+            <div id="Video"></div>
         </div>
     </body>
 </html>

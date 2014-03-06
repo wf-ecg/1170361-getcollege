@@ -8,16 +8,14 @@ body {
     &.mobile {
         padding: 0;
     }
-    &.eng {
-        img.esp {
-            display: none!important;
-        }
-    }
-    &.esp {
-        img.eng {
-            display: none!important;
-        }
-    }
+}
+#Page {
+    background-color: white;
+    box-shadow: 3px 333px 333px $shad1;
+    margin: auto;
+    position: relative;
+    width: $ww;
+
     header {
         position: relative;
         z-index: 9;
@@ -51,14 +49,9 @@ body {
             text-decoration: none;
         }
     }
-}
-#Page {
-    background-color: white;
-    box-shadow: 3px 333px 333px $shad1;
-    margin: auto;
-    position: relative;
-    width: $ww;
-
+    section {
+        @include clearfix();
+    }
     .mobile & {
         width: 472px;
 
@@ -68,7 +61,7 @@ body {
     }
 
     div.masthead {
-        background-image: url(../images/fpo/head.png);
+        background-image: url(../images/header/head.png);
         height: 54px;
         left: $unit;
         position: absolute;
@@ -84,33 +77,6 @@ body {
         width: 55px;
     }
 }
-#Layout {
-    border-collapse: separate;
-    border-spacing: $unit;
-    padding-bottom: $unit;
-    padding-top: $unit * 8;
-    position: relative;
-    z-index: 1;
-
-    .mobile & {
-        border-spacing: 7px;
-    }
-
-    td {
-        background-repeat: no-repeat;
-        height: 152px; width: 152px;
-        position: relative;
-        vertical-align: top;
-
-        a {
-            text-decoration: none;
-        }
-        img {
-            position: absolute;
-            right: 0;
-        }
-    }
-}
 div.text, div.head {
     color: white;
     font-size: 18px;
@@ -124,7 +90,6 @@ div.text, div.head {
         }
     }
     p {
-        @extend %myriad;
         margin: 0;
         @include rex('margin-right', 0.5);
     }

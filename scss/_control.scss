@@ -1,40 +1,22 @@
-/* CONTROLS */
+/* CONTROL */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-tr.lower, tr.upper {
-    @extend %ani;
+section {
 
-    td {
-        background-size: 100% 100%;
-        background-position: 50%;
+    article:not(:empty) {
+        @extend %ani;
         @include transition( all 0.25s ease-out 0.1s );
-    }
-    td:hover {
-        @include textshadow();
-        background-size: 96% 96%;
-        opacity: 0.9;
-    }
-    td.freek, td.phones {
-        background-size: 100% 100%;
 
         &:hover {
-            background-size: 100% 100%;
-            opacity: 1;
-        }
-        .mobile & {
-            background-size: 107% 100%;
-            width: 125px !important;
-
-            &:hover {
-                background-size: 107% 100%;
-            }
+            @include textshadow();
+            opacity: 0.9;
         }
     }
 }
 button, .control {
     cursor: pointer !important;
 }
-button.orange {
+a.orange {
     @include nosel();
     @include buttongrad1();
     @include textshadow();
@@ -44,17 +26,22 @@ button.orange {
     box-shadow: 1px 2px 3px $shad2;
     color: white;
     display: inline-block;
-    font-size: 12px;
-    letter-spacing: 1px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
     padding: 5px 15px;
+    text-decoration: none;
 
-    &:hover {
+    &.hover, &:hover {
+        cursor: pointer;
+        border-style: outset;
         @extend %ani;
         @include buttongrad2();
     }
     &:active {
         @extend %bulge;
         opacity: 0.8;
+        cursor: move;
+        border-style: inset;
     }
 }
 footer {

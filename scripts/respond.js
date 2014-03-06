@@ -1,11 +1,11 @@
 /*jslint es5:true, white:false */
-/*globals $, Control, Global, Reveal, window */
+/*globals Global, Modernizr, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Respond;
-
-(function (W, $) { //IIFE
-    var name = 'Respond', self, C, Df, U;
-    self = new Global(name, '(detect and insert verbiage)');
+'use strict';
+var Respond = (function (W, $) { //IIFE
+    var name = 'Respond',
+        self = new Global(name, '(detect and insert verbiage)'),
+        C, Df, U;
 
     C = W.console;
     U = Util;
@@ -29,24 +29,23 @@ var Respond;
     }
 
     function _change(str) {
-        Reveal.contract();
-        Control.reset();
+        $.PS_pub('change');
 
         if (str === 'desktop' || (!str && Df.current === 'mobile')) {
-            _setSize('desktop')
-            _recolumn(6)
+            _setSize('desktop');
+            _recolumn(6);
         } else if (str === 'mobile' || (!str && Df.current === 'desktop')) {
             _setSize('mobile');
-            _recolumn(3)
+            _recolumn(3);
         }
     }
 
     function _detect() {
-        var r = Modernizr.highres, // $('html').is('.retina'),
+        var r = Modernizr.highres,
             d = Df.current,
             w = W.document.documentElement.clientWidth;
-            // good god -- the only way to get width in IE?
-
+        // $('html').is('.retina'),
+        // good god -- the only way to get width in IE?
         if ((w <= 600 && !r) || (w <= 1200 && r)) {
             d = 'mobile';
         } else if ((w > 600 && !r) || (w > 1200 && r)) {
@@ -88,6 +87,7 @@ var Respond;
         },
     });
 
+    return self;
 }(window, jQuery));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

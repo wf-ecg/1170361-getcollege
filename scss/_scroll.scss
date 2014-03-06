@@ -1,0 +1,123 @@
+/* SCROLL */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#ISwrapper {
+    $deep: #0095c8;
+    background-color: $deep;
+    border: $unit solid $deep;
+    box-shadow: inset 0 0 $unit*3 $deep;
+    box-shadow: 1px 3px 15px $deep, 1px 3px 15px black;
+    cursor: -webkit-grab;
+    *:active {
+        cursor: -webkit-grabbing;
+    }
+    left: 20%; right: 20%; height: 40%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+}
+.iscustom, #IScustom {
+    color: white;
+    display: none;
+    font-size: 115%;
+    padding: 5% 10% 15% 1%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-transform: translateZ(0); -moz-transform: translateZ(0); -ms-transform: translateZ(0); -o-transform: translateZ(0); transform: translateZ(0);
+    -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+    -webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none; -o-text-size-adjust: none; text-size-adjust: none;
+
+    & ul {
+        color: white;
+        text-align: left;
+        width: 100%;
+        list-style-type: square;
+    }
+    li {
+        line-height: 1.4;
+        margin-bottom: $unit;
+        margin-left: $unit * 2;
+        padding: 0 $unit;
+        font-size: 100%;
+    }
+    h2 {
+        margin-top: $unit * 4;
+    }
+    p, h3, h4 {
+        line-height: 1.6;
+        margin: $unit 0;
+    }
+    h3, h4 {
+        font-style: italic;
+    }
+    p, li {
+        font-size: 95%;
+    }
+    a {
+        color: white;
+    }
+    hr {
+        border-top: 1px dotted white;
+    }
+}
+#IScustom {
+    display: block;
+}
+
+.scrollerXwidget {
+    color: white;
+    font: bold 20px/1 arial;
+    overflow: hidden;
+    position: absolute;
+    top: $unit;
+    right: $unit;
+    z-index: 9999;
+
+    &:hover {
+        color: red;
+        cursor: pointer;
+    }
+}
+
+.iScrollHorizontalScrollbar,
+.iScrollVerticalScrollbar { // all
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: absolute;
+    z-index: 9999;
+}
+.iScrollHorizontalScrollbar {
+    bottom: 0;
+    height: $unit * 1.5;
+    left: $unit;
+    right: $unit * 4;
+}
+.iScrollVerticalScrollbar {
+    bottom: $unit * 2;
+    right: $unit;
+    top: $unit * 4;
+    width: $unit * 1.5;
+}
+.iScrollIndicator {
+    background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+}
+.iScrollHorizontalScrollbar .iScrollIndicator {
+    height: 100%;
+}
+.iScrollVerticalScrollbar .iScrollIndicator {
+    width: 100%;
+}
+.iScrollBothScrollbars { // only when both show
+    &.iScrollHorizontalScrollbar {
+        right: $unit;
+    }
+    &.iScrollVerticalScrollbar {
+        bottom: $unit;
+    }
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

@@ -1,0 +1,3 @@
+[submodule "lib/iscroll"]
+	path = lib/iscroll
+	url = https://github.com/cubiq/iscroll.git

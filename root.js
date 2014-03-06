@@ -1,14 +1,20 @@
-var W = window, D = W.document, ROOT = {
+/*jslint es5:true, white:false */
+/*globals Global, Main, Modernizr, window */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+var W = window,
+C = W.console,
+D = W.document,
+ROOT = {
     _hosts: {
-        'localhost:8000':  {
+        'localhost:8000': {
             top: '/',
             dir: '/wf-ecg/1170361-getcollege',
         },
-        '10.89.101.100':  {
+        '10.89.101.100': {
             dir: '/wf-ecg/1170361-getcollege',
         },
         'www.wellsfargomedia.com': {
-            dir:  '/???-getcollege',
+            dir: '/???-getcollege',
         },
     },
     _config: function () { /// only top is not a stub
@@ -24,13 +30,15 @@ var W = window, D = W.document, ROOT = {
         R.top = R.conf.top || ('//' + R.host);
         R.lib = (R.conf.lib || '') + '/lib';
         R.dir = (R.conf.dir + R.vers) || R.path;
-        // W.console.info('ROOT', R);
+        if (C) C.info('ROOT', R);
     },
 };
 
 ROOT._config();
+
 D.write('<script src="' + ROOT.lib + '/jquery/1.8.2/jquery.js"></script>');
 D.write('<script src="' + ROOT.lib + '/modernizr/2.6.2/modernizr.js"></script>');
 D.write('<script src="' + ROOT.lib + '/js/console.js"></script>');
 D.write('<script src="' + ROOT.lib + '/js/global.js"></script>');
-D.write('<script src="' + ROOT.dir + '/scripts/load.js"></script>');
+D.write('<script src="' + ROOT.dir + '/load.js"></script>');
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

@@ -1,10 +1,11 @@
 /*jslint es5:true, white:false */
-/*globals $, Global, Main, _, window */
+/*globals Global, Respond, Reveal, Util, _, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 'use strict';
 var Handlers = (function (W, $) { //IIFE
-    var name = 'Handlers', self, C, Df, U;
-    self = new Global(name, '(event goodies)');
+    var name = 'Handlers',
+        self = new Global(name, '(event goodies)'),
+        C, Df, U;
 
     C = W.console;
     U = Util;
@@ -12,63 +13,27 @@ var Handlers = (function (W, $) { //IIFE
     Df = { // DEFAULTS
         dat: {},
     };
+
+    var actionMap = {
+        _quiz: function () {},
+        _fellows: function () {},
+        _steps: function () {},
+        _credit: function () {},
+        _car: function () {},
+        _spending: function () {},
+        _paying: function () {},
+        _calc: function () {},
+        _cover: function () {},
+        _manage: function () {},
+        _talk: function () {},
+    };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
-
-    function _refresh() {
-        Respond.check();
-        Modal.hide();
-    }
-
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init() {
         if (self.inited(true)) {
             return null;
         }
-
-        if ($.browser.mozilla) {
-            $('td').drt_cellophy();
-        }
-
-        $('.disclose').on('click', function () {
-            $('.modal').trigger('show.Modal');
-            $('#Legal').show();
-        });
-
-        $('img.purple').on('click', function (evt) {
-            var vid = $(this).data('vid'),
-                vidjs = videojs(vid);
-
-            $('#Video').children().hide();
-            $('#' + vid).show().click(function (evt) {
-                evt.stopPropagation();
-            });
-
-            $('.modal').trigger('show.Modal') //
-            .on('hide.Modal', function () {
-                vidjs.pause();
-            });
-
-            vidjs.currentTime(0).play();
-            $('#Video').show();
-        });
-
-        $('.masthead').on('click', function () {
-            Respond.change(); // eventless arg
-        });
-
-        $('.reveal.upper').on('click', 'button', function (evt) {
-            C.error(evt)
-            evt.preventDefault();
-            evt.stopImmediatePropagation();
-            $('.disclose').click();
-            W.setTimeout(function () {
-                W.open($(evt.target).parent().attr('href'));
-            }, 3333);
-        });
-
-        $(W).bind('resize orientationchange', _.throttle(_refresh, 333));
 
         return self;
     }

@@ -1,25 +1,35 @@
-/* TILES */
+/* TILE */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #Layout.tiles {
     ///grid
+    padding-bottom: $unit;
+    padding-top: $unit * 8;
+    position: relative;
+    z-index: 1;
 
     @mixin span($col: 1, $row: 1) {
         width: $col * $wt + ($col - 1) * $unit;
         height: $row * $ht + ($row - 1) * $unit;
     }
-    @include clearfix();
+    $_orange: #ce4c00;
+    $_red: #ae1e23;
+    $_green: #007337;
+    $_purple: #4d3b65;
+    $_teal: #00698c;
+    $_poop: #7a6855;
+    $_brown: #574537;
+    $_plum: #821861;
+    $_slate: #44464a;
 
     .collapse {
         display: none;
-    }
-    section {
-        height: 100px;
     }
     article {
         background-repeat: no-repeat;
         display: inline-block;
         float: left;
+        min-height: 100px; min-width: 100px;
         margin: $unit 0 0 $unit;
         position: relative;
         @include nosel();
@@ -27,39 +37,36 @@
 
         //  R1 semantic
         /* - - - - - - - - - - - - - - - - - - - - - */
-        &.girls {
-            background-image: url(../images/fpo/big_girls.png);
+        &._girls {
+            background-image: url(../images/photos/big_girls.jpg);
+
             .desktop & {
                 @include span(3, 2);
             }
             .mobile & {/* row? col?*/}
         }
-        &.cafe {
-            background-image: url(../images/fpo/sq_cafe.png);
+        &._quiz {
+            background-image: url(../images/misc/quiz.png);
+
+            .desktop & {
+                font-size: 130%;
+                @include span(2, 2);
+            }
+            .mobile & {/* row? col?*/}
+        }
+        &._cafe {
+            background-image: url(../images/photos/sq_cafe.jpg);
+
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.quiz {
-            background-image: url(../images/fpo/quiz.png);
-            .desktop & {
-                font-size: 110%;
-                @include span(2);
-            }
-            .mobile & {/* row? col?*/}
-        }
         //  R2 semantic
         /* - - - - - - - - - - - - - - - - - - - - - */
-        &.fellows {
-            background-image: url(../images/fpo/fellows.png);
-            .desktop & {
-                @include span(2);
-            }
-            .mobile & {/* row? col?*/}
-        }
-        &.puppy {
-            background-image: url(../images/fpo/sq_puppy.png);
+        &._desk {
+            background-image: url(../images/photos/sq_desk.jpg);
+
             .desktop & {
                 @include span();
             }
@@ -67,23 +74,25 @@
         }
         //  R3 semantic
         /* - - - - - - - - - - - - - - - - - - - - - */
-        &.going {
-            background-image: url(../images/fpo/going.png);
-            clear: left;
+        &._fellows {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_poop;
             .desktop & {
                 @include span(2);
             }
             .mobile & {/* row? col?*/}
         }
-        &.desk {
-            background-image: url(../images/fpo/sq_desk.png);
+        &._dude {
+            background-image: url(../images/photos/sq_dude.jpg);
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.steps {
-            background-image: url(../images/fpo/steps.png);
+        &._steps {
+            background-image: url(../images/photos/steps.jpg);
+            background-color: $_teal;
+
             .desktop & {
                 padding-left: 15em;
                 @include span(3);
@@ -92,22 +101,28 @@
         }
         //  R4 semantic
         /* - - - - - - - - - - - - - - - - - - - - - */
-        &.credit {
-            background-image: url(../images/fpo/credit.png);
+        &._credit {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_slate;
+
             .desktop & {
                 @include span(2);
             }
             .mobile & {/* row? col?*/}
         }
-        &.car {
-            background-image: url(../images/fpo/car.png);
+        &._car {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_green;
+
             .desktop & {
                 @include span(2);
             }
             .mobile & {/* row? col?*/}
         }
-        &.spending {
-            background-image: url(../images/fpo/spending.png);
+        &._spending {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_red;
+
             .desktop & {
                 @include span(2);
             }
@@ -115,43 +130,58 @@
         }
         //  R5 semantic
         /* - - - - - - - - - - - - - - - - - - - - - */
-        &.calc {
-            background-image: url(../images/fpo/calc.png);
+        &._paying {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_green;
+
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.babe {
-            background-image: url(../images/fpo/sq_babe.png);
+        &._calc {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_plum;
+
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.manage {
-            background-image: url(../images/fpo/manage.png);
+        &._phone {
+            background-image: url(../images/photos/sq_phone.jpg);
+
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.dude {
-            background-image: url(../images/fpo/sq_dude.png);
+        &._cover {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_brown;
+
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.cover {
-            background-image: url(../images/fpo/cover.png);
+        &._manage {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_teal;
+
             .desktop & {
                 @include span();
             }
             .mobile & {/* row? col?*/}
         }
-        &.phone {
-            background-image: url(../images/fpo/sq_phone.png);
+        &._talk {
+            background-image: url(../images/misc/burnish.png);
+            background-color: $_purple;
+
+            a.orange {
+                padding-left: $unit / 2;
+                padding-right: $unit / 2;
+            }
             .desktop & {
                 @include span();
             }
