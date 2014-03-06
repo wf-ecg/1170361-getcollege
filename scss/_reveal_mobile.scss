@@ -1,0 +1,92 @@
+/* MOBILE REVEALS */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.mobile #Layout {
+    div.desktop {
+        //display: block;
+    }
+    td.reveal {
+        button {
+            @include rex('margin', 1);
+        }
+
+        &.reveal {
+            background-repeat: repeat-y;
+            background-position: 0% 75%;
+        }
+
+        .head {
+            width: 80%  !important;
+
+            h3 {
+                font-size: 166%;
+            }
+        }
+        .text {
+            width: 90%  !important;
+
+            p {
+                font-size: 120%;
+                line-height: 1.2;
+                margin: 10px 0;
+            }
+        }
+
+        // TXT 1
+
+        &.upper.red {
+            .head {
+                @include pos(2, 4);
+            }
+            .text {
+                @include pos(2, 11);
+                p {
+                    @include rex('width', 28);
+                }
+            }
+        }
+
+        // next row
+        // TXT 1
+        &.lower.green {
+            .head {
+                @include rex('height', 18);
+                @include pos(2, 2);
+            }
+            .text {
+                @include rex('height', 18);
+                @include pos(2, 7.5);
+            }
+        }
+
+        // TXT 2
+        &.lower.purple {
+            .head {
+                @include pos(2, 3);
+                font-size: 140%;
+            }
+            .mobile {
+                display: block;
+            }
+            .text {
+                @include rex('height', 18);
+                @include pos(2, 12);
+
+                hr {
+                    @include rex('width', 33);
+                    height: 0;
+                    margin: 1em 0;
+                }
+                p {
+                    @include rex('margin-left', 0);
+                    @include rex('width', 23);
+                    text-align: left;
+                }
+            }
+            button {
+                @include rex('margin-top', 1);
+            }
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

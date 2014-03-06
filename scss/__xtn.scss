@@ -1,0 +1,50 @@
+/* xtn */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
+//font
+
+%lolax0 { font-family: 'Lola Light'            ; }
+%lolax1 { font-family: 'Lola Regular'          ; }
+%lolax2 { font-family: 'Lola Medium'           ; }
+%lolax3 { font-family: 'Lola Bold'             ; }
+%lolax4 { font-family: 'Lola ExtraBold'        ; }
+%lolay0 { font-family: 'Lola Light Italic'     ; }
+%lolay1 { font-family: 'Lola Regular Italic'   ; }
+%lolay2 { font-family: 'Lola Medium Italic'    ; }
+%lolay3 { font-family: 'Lola Bold Italic'      ; }
+%lolay4 { font-family: 'Lola ExtraBold Italic' ; }
+
+%normal {
+    @extend %lolax1;
+    font-family: "FS Lola", FSLola;
+}
+%medium {
+    @extend %lolax2;
+    font-family: "FS Lola Medium", FSLola-Medium;
+}
+%bolder {
+    @extend %lolax3;
+    font-family: "FS Lola Bold", FSLola-Bold;
+}
+
+%myriad {
+    font-family: "Myriad", "Myriad Pro", Verdana, Geneva, sans-serif;
+}
+%archer {
+    @include nosel();
+    font-family: "Archer", 'Archer Book', Georgia, Times, serif;
+}
+
+%ani {
+    /* foo foo foo */
+    @include backface-visibility( hidden );
+    @include perspective( 1000 );
+    @include transform( scale(1) translate3d(0,0,0) rotate(0deg) );
+    @include transform-style( preserve-3d );
+    @include transition( all 0.125s ease-out 0 );
+}
+%bulge {
+    @include transform( translate(0px, 1px) scale(1.1)  );
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

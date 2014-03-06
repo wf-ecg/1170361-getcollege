@@ -1,0 +1,56 @@
+/* mix */
+@import "__fun";
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+@mixin clearfix(){
+    &:after {
+        clear: both;
+        content: "";
+        display: table;
+        /* clearfix */
+    }
+}
+@mixin nosel(){
+    -webkit-user-drag: none;
+    @include user-select(none);
+    // cursor: move;
+}
+@mixin rex($prop, $rem){
+    #{$prop}: $rem * $remx;
+    //#{$prop}: $rem * 1rem;
+}
+@mixin pos($x:0, $y:0){
+    @include rex('left', $x);
+    @include rex('top', $y);
+}
+@mixin siz($w:0, $h:0){
+    @include rex('width', $w);
+    @include rex('height', $h);
+}
+@mixin textshadow() {
+    text-shadow: 1px 1px 1px black;
+}
+@mixin outline($color: $hilite, $width: 4){
+    outline: {
+        color: $color;
+        width: $width * 1px;
+    }
+}
+
+// GRADS
+@mixin buttongrad1(){
+    background-color: $button1;
+    @include background-image( linear-gradient(top, $button1 50%, $button2 53%) );
+}
+@mixin graygrad(){
+    background-color: #ddd;
+    @include vgrad( #fefefe, #ddd);
+}
+@mixin buttongrad2(){
+    background-color: $button2;
+    @include background-image( linear-gradient(top, $button2 50%, $button1 53%) );
+}
+@mixin vgrad($clr1: white, $clr2: black){
+    @include background-image( linear-gradient(top, $clr1 33%, $clr2 100%) );
+}
+
+//* >^º!º^< */

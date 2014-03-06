@@ -1,0 +1,71 @@
+/* MODALS */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.modal {
+    background-color: rgba(33,33,33,.33);
+    display: none;
+    height: 100%; width: 100%;
+    left: 0; top: 0;
+    position: fixed;
+    z-index: 999;
+
+    & > div {
+        min-width: 400px;
+    }
+    #Legal {
+        width: 60%;
+        margin: 1em auto;
+    }
+    #Video {
+        margin: 1em auto;
+    }
+    .text {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 3px;
+        box-shadow: inset -1px -1px 9px gray;
+        line-height: 140%;
+        margin-bottom: 2em;
+        padding: 1em 1.5em;
+    }
+    aside {
+        &.icon {
+            background-image: url(../images/controls/close.png);
+            background-repeat: no-repeat;
+            color: transparent;
+            cursor: pointer;
+            display: inline-block;
+            float: right;
+            margin: 3px;
+            opacity: 0.75;
+            width: 32px; height: 32px;
+            z-index: 9;
+
+            &:hover {
+                opacity: 1;
+            }
+            &:before {
+                //content: 'X';
+            }
+        }
+        &.text {
+            background-color: gray;
+            background-color: $shad3;
+            bottom: 3px;
+            color: white;
+            left: 50%;
+            letter-spacing: 2px;
+            margin: 0 -222px;
+            padding: 0.5em;
+            position: absolute;
+            text-align: center;
+            text-transform: uppercase;
+            width: 444px;
+
+            &:before {
+                content: 'click to dismiss / eliminar superposición';
+            }
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

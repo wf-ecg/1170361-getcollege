@@ -1,0 +1,142 @@
+/* CONTROLS */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+tr.lower, tr.upper {
+    @extend %ani;
+
+    td {
+        background-size: 100% 100%;
+        background-position: 50%;
+        @include transition( all 0.25s ease-out 0.1s );
+    }
+    td:hover {
+        @include textshadow();
+        background-size: 96% 96%;
+        opacity: 0.9;
+    }
+    td.freek, td.phones {
+        background-size: 100% 100%;
+
+        &:hover {
+            background-size: 100% 100%;
+            opacity: 1;
+        }
+        .mobile & {
+            background-size: 107% 100%;
+            width: 125px !important;
+
+            &:hover {
+                background-size: 107% 100%;
+            }
+        }
+    }
+}
+button, .control {
+    cursor: pointer !important;
+}
+button.orange {
+    @include nosel();
+    @include buttongrad1();
+    @include textshadow();
+
+    border: 1px solid $brown;
+    border-radius: 4px;
+    box-shadow: 1px 2px 3px $shad2;
+    color: white;
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 7px 13px;
+
+    &:hover {
+        @extend %ani;
+        @include buttongrad2();
+    }
+    &:active {
+        @extend %bulge;
+        opacity: 0.8;
+    }
+}
+footer {
+    line-height: 22px;
+
+    button {
+        background: none;
+        border: 0;
+        color: gray;
+        margin-top: -4px;
+        text-decoration: underline;
+        vertical-align: middle;
+    }
+}
+div.control {
+    background-repeat: no-repeat;
+    height: 38px; width: 38px;
+
+    &.tilt {
+        background-image: url(../images/controls/right-arrow.png);
+    }
+    &.tilted {
+        background-image: url(../images/controls/down-arrow.png);
+    }
+    &.round {
+        height: 52px; width: 55px;
+
+        &.tilt {
+            background-image: url(../images/controls/right-round.png);
+        }
+        &.tilted {
+            background-image: url(../images/controls/down-round.png);
+        }
+    }
+    &:not(:hover) {
+        @include transform( rotate(0) );
+    }
+
+}
+.control {
+    @include nosel();
+    @include transform-origin( 34% 36% 0 );
+    @include transform( rotate(0) );
+
+    bottom: 0; right: 0;
+    position: absolute;
+
+    &.tilt {
+        @extend %ani;
+
+        &:active {
+            @include animation(none);
+            @include transform( rotate(90deg) );
+        }
+        &:hover {
+            @include animation(wiggly .3s ease-in-out 9);
+        }
+        &.round:hover {
+            @include animation(thumpy .5s ease-in-out 9);
+        }
+    }
+    &.tilted {
+        @extend %ani;
+
+        opacity: 1;
+
+        &:active {
+            @include transform( rotate(-90deg) );
+        }
+        &.tilted:hover {
+            @include animation(none);
+            opacity: 0.5;
+        }
+    }
+}
+@include keyframes(thumpy) {
+    70% { @include transform( scale(1.00) ); }
+    80% { @include transform( scale(0.95) ); }
+}
+@include keyframes(wiggly) {
+    40% { @include transform( rotate(-5deg) ); }
+    80% { @include transform( rotate( 5deg) ); }
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

@@ -1,0 +1,181 @@
+/* REVEALS */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#Layout {
+    td.lower, td.upper {
+        z-index: -1;
+    }
+    td.reveal {
+        background-image: url(../images/features/_bkgr.png);
+        background-size: 100% 100%;
+        height: 257px;
+
+        & > div > img {
+            display: none;
+        }
+        button {
+            float: right;
+            margin: 12px 0 18px 0;
+        }
+        .head, .text {
+            padding: 0;
+            position: absolute;
+        }
+        .head {
+            @include pos(1.5, 5.5);
+            h3 {
+                color: $red;
+                font-size: 190%;
+            }
+        }
+        .text {
+            @extend %ani;
+            @include transition( all 0.25s ease-out 0.25s );
+
+            color: gray;
+            font-size: 14px;
+        }
+
+        // next row
+
+        // TXT 1
+        &.upper.red {
+            div > img.red {
+                display: block;
+            }
+            .head {
+                @include rex('width', 22);
+            }
+            .text {
+                @include pos(27, 3.4);
+                @include rex('width', 26.5);
+            }
+            button {
+                @include rex('margin-right', 3);
+            }
+        }
+        // TXT 1
+        &.lower.green {
+            div > img.green {
+                display: block;
+            }
+            .head {
+                @include rex('width', 21);
+            }
+            .text {
+                @include pos(26, 1.8);
+                @include rex('width', 26);
+
+                .eng & {
+                    @include pos(26, 5.8);
+                }
+            }
+            button {
+                margin: 6px 0 18px 0;
+                float: none;
+            }
+        }
+        // TXT 2
+        &.lower.purple {
+            div > img.purple {
+                display: block;
+            }
+            .mobile {
+                display: none;
+            }
+            .cache.left {
+                @include pos(25, 8);
+            }
+            .cache.right{
+                @include pos(53, 8);
+            }
+            .head {
+                @include pos(1.5, 2.5);
+                @include rex('width', 21);
+                font-size: 130%;
+            }
+            .text {
+                @include pos(22, 1.5);
+                @include rex('width', 57);
+                @include rex('height', 6);
+                text-align: center;
+
+                hr {
+                    @include rex('height', 17);
+                    border: 1px solid #bbb;
+                    border-width: 0 0 1px 1px;
+                    clear: right;
+                    float: left;
+                    width: 0;
+                }
+                p {
+                    @include rex('margin', 1);
+                    @include rex('margin-left', 2);
+                    @include rex('width', 24);
+                    clear: right;
+                    float: left;
+                }
+                a:not(.mobile) {
+                    display: none;
+                }
+            }
+        }
+        // TXT 3
+        &.lower.amber {
+            div > img.amber {
+                display: block;
+            }
+            .head {
+                @include pos(1.5, 6.3);
+                @include rex('width', 18);
+            }
+            .text {
+                @include pos(24, 6);
+                @include rex('width', 32);
+                br + br {
+                    display: none;
+                }
+            }
+            button {
+                @include rex('margin-right', 5);
+            }
+        }
+        // TXT 4
+        &.lower.plum {
+            div > img.plum {
+                display: block;
+            }
+            .cache {
+                @include pos(26, 8);
+            }
+            .head {
+                @include pos(1.5, 7.3);
+                @include rex('width', 22);
+            }
+            .text {
+                @include pos(26, 2);
+                @include rex('width', 37);
+            }
+            button {
+                position: relative;
+                @include rex('right', -15);
+                @include rex('top', 6);
+            }
+        }
+        // TXT 5
+        &.lower.teal {
+            div > img.teal {
+                display: block;
+            }
+            .head {
+                @include rex('width', 22);
+            }
+            .text {
+                @include pos(27, 7);
+                @include rex('width', 26);
+            }
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+@import "_reveal_mobile";

@@ -1,0 +1,33 @@
+/* TEXT */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// LOLA SPECIFIC
+
+$lolaUrl: $fontServ3 + 'lola/';
+
+@function lolaSrc( $nom: 'FSLola' ){
+    @return woffSrc($nom, $lolaUrl);
+}
+
+@font-face { font-family: "Archer";           font-style: italic; font-weight: 800; src: url("/lib/fonts/wf/archer_ital-bold.woff   ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: italic; font-weight: 400; src: url("/lib/fonts/wf/archer_ital-book.woff   ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: italic; font-weight: 200; src: url("/lib/fonts/wf/archer_ital-light.woff  ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: italic; font-weight: 500; src: url("/lib/fonts/wf/archer_ital-med.woff    ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: italic; font-weight: 600; src: url("/lib/fonts/wf/archer_ital-semi.woff   ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: normal; font-weight: 800; src: url("/lib/fonts/wf/archer-bold.woff        ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: normal; font-weight: 400; src: url("/lib/fonts/wf/archer-book.woff        ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: normal; font-weight: 200; src: url("/lib/fonts/wf/archer-light.woff       ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: normal; font-weight: 500; src: url("/lib/fonts/wf/archer-med.woff         ") format("woff"); }
+@font-face { font-family: "Archer";           font-style: normal; font-weight: 600; src: url("/lib/fonts/wf/archer-semi.woff        ") format("woff"); }
+
+@font-face { font-family: "Myriad Condensed"; font-style: italic; font-weight: 800; src: url("/lib/fonts/wf/myriad_cn_ital-bold.woff") format("woff"); }
+@font-face { font-family: "Myriad Condensed"; font-style: italic; font-weight: 500; src: url("/lib/fonts/wf/myriad_cn_ital.woff     ") format("woff"); }
+@font-face { font-family: "Myriad Condensed"; font-style: normal; font-weight: 800; src: url("/lib/fonts/wf/myriad_cn-bold.woff     ") format("woff"); }
+@font-face { font-family: "Myriad Condensed"; font-style: normal; font-weight: 500; src: url("/lib/fonts/wf/myriad_cn.woff          ") format("woff"); }
+@font-face { font-family: "Myriad Condensed"; font-style: italic; font-weight: 800; src: url("/lib/fonts/wf/myriad_ital-bold.woff   ") format("woff"); }
+@font-face { font-family: "Myriad";           font-style: italic; font-weight: 400; src: url("/lib/fonts/wf/myriad_ital-book.woff   ") format("woff"); }
+@font-face { font-family: "Myriad";           font-style: italic; font-weight: 600; src: url("/lib/fonts/wf/myriad_ital-semi.woff   ") format("woff"); }
+@font-face { font-family: "Myriad";           font-style: normal; font-weight: 800; src: url("/lib/fonts/wf/myriad-bold.woff        ") format("woff"); }
+@font-face { font-family: "Myriad";           font-style: normal; font-weight: 400; src: url("/lib/fonts/wf/myriad-book.woff        ") format("woff"); }
+@font-face { font-family: "Myriad";           font-style: normal; font-weight: 600; src: url("/lib/fonts/wf/myriad-semi.woff        ") format("woff"); }
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

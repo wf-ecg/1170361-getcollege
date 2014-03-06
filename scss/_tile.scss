@@ -1,0 +1,75 @@
+/* TILES */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#Layout {
+    tr.collapse {
+        display: none;
+    }
+    td.tile  {
+        @include nosel();
+
+        &.babe {
+            background-image: url(../images/photos/babe.png);
+        }
+        &.dude {
+            background-image: url(../images/photos/dude.png);
+        }
+        &.cgray {
+            background-image: url(../images/colors/cgray.png);
+
+            h3 {
+                font-weight: 100;
+                @include rex('margin-bottom', 0.5);
+            }
+            p {
+                @include rex('font-size', 1.25);
+            }
+        }
+        &.red {
+            background-image: url(../images/colors/red.png);
+
+            h2 {
+                font-weight: 100;
+                line-height: 1.1;
+            }
+        }
+        &.phones {
+            background-image: url(../images/photos/phones.png);
+        }
+
+        // next row
+
+        &.green {
+            background-image: url(../images/colors/green.png);
+        }
+        &.purple {
+            background-image: url(../images/colors/purple.png);
+        }
+        &.freek {
+            background-image: url(../images/photos/freek.png);
+        }
+        &.amber {
+            background-image: url(../images/colors/amber.png);
+        }
+        &.plum {
+            background-image: url(../images/colors/plum.png);
+        }
+        &.teal {
+            background-image: url(../images/colors/teal.png);
+        }
+
+        // next row
+
+        &.filler {
+            background-image: url(../images/photos/filler.png);
+            height: 315px;
+        }
+
+        &:hover {
+            &.red, &.green, &.purple, &.amber, &.plum, &.teal {
+                cursor: pointer !important;
+            }
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

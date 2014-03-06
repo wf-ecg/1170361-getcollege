@@ -1,0 +1,43 @@
+/* def */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+@import "compass/css3";
+@import "compass/css3/user-interface";
+@import "animation";
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+// misc
+
+$rem: 1rem; $hem: 0.5rem; $qem: 0.25rem;
+$link: #336699;
+$layers: '../images/layers';
+$resp: 800px;
+$debug: 1;
+$remx: 12px;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+//color
+
+$amber1: #BE5B12;   $amber2: #733609;
+$button1: #CE4C12;  $button2: #CC3311;
+$cgray1: #4D4E53;   $cgray2: #27282B;
+$green1: #4E801F;   $green2: #2C4912;
+$red1: #AE1E22;     $red2: #5B0E12;
+$plum1: #821A61;    $plum2: #4F0F3B;
+$purple1: #4A2E66;  $purple2: #2E1C3F;
+$teal1: #146A8C;    $teal2: #0A4257;
+
+$red: #bb0826;
+$brown: #8a3604;
+$shad1: rgba( 123, 123, 123, 0.123 );
+$shad2: rgba( 23, 23, 23, 0.23 );
+$shad3: rgba( 77, 77, 77, 0.7 );
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+//shade
+
+$lite: rgb( 250, 250, 250 );   // lite-lite
+$gryL: rgb( 230, 230, 230 );   // lite-gray
+$gryM: rgb( 155, 155, 155 );   // dark-midd
+$gryD: rgb( 111, 111, 111 );   // dark-gray
+$dark: rgb(  55,  55,  55 );   // dark-dark
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

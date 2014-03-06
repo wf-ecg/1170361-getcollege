@@ -1,0 +1,28 @@
+/* MSIE */
+@import "__mix";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+html.msie {
+    .modal {
+        background-image: url(../images/colors/masq.png);
+    }
+    .badbrowser {
+        &::before {
+            content: 'scold';
+        }
+        &::after {
+            content: 'spank';
+        }
+    }
+    .cgray .text {
+        h3 {
+            font-size: 140% !important;
+        }
+        p {
+            font-size: 80%;
+        }
+    }
+    .reveal h3 {
+        font-weight: normal;
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
