@@ -1,8 +1,8 @@
 /*jslint es5:true, white:false */
 /*globals Global, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
 var Decache = (function (W, $) { //IIFE
+    'use strict';
     var name = 'Decache',
         self = new Global(name, '(load images from data-src after doc)'),
         C, Df, U;
@@ -45,7 +45,7 @@ var Decache = (function (W, $) { //IIFE
         return self;
     }
 
-    W[name] = $.extend(true, self, {
+    $.extend(true, self, {
         _: function () {
             return Df;
         },

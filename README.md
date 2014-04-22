@@ -46,3 +46,14 @@ Body text -- `mono text`
 
 [site]: http://site/
 
+
+TODO
+
+    SCROLL
+        for quiz
+        for ie8
+        for reveals
+
+    QUIZ
+        thicken text
+        dot reved out link underlines

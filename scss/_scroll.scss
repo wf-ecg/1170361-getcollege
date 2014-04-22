@@ -2,14 +2,180 @@
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#ISwrapper {
-    $deep: #0095c8;
+// ARTICLE
+
+.articles.is-port {
+    $deep: #0085ad;
+    $unit: $unit * 1.5;
+
     background-color: $deep;
     border: $unit solid $deep;
     box-shadow: inset 0 0 $unit*3 $deep;
     box-shadow: 1px 3px 15px $deep, 1px 3px 15px black;
-    cursor: -webkit-grab;
     left: 15%; right: 15%; height: 50%;
+    .mobile & { left: 5%; right: 5%; }
+
+    .iScrollVerticalScrollbar {
+        top: $unit * 2;
+    }
+
+    .is-view {
+        color: white;
+        font-size: 115%;
+        padding: 1% 10% 15% 1%;
+
+        hr {
+            margin: 1em 0;
+        }
+        & ul {
+            color: white;
+            list-style-type: square;
+            text-align: left;
+            width: 100%;
+        }
+        li {
+            font-size: 100%;
+            line-height: 1.4;
+            margin-bottom: $unit;
+            margin-left: $unit * 2;
+            padding: 0 $unit;
+        }
+        h2 {
+            font-style: italic;
+            line-height: 1.3;
+            margin-top: $unit * 4;
+        }
+        p, h3, h4 {
+            line-height: 1.6;
+            margin: $unit 0;
+        }
+        h3, h4 {
+            font-style: italic;
+        }
+        p, li {
+            font-size: 95%;
+        }
+        a {
+            color: white;
+            border-bottom: 1px dotted white;
+            text-decoration: none;
+
+            &:hover {
+                border-bottom: 1px solid white;
+            }
+        }
+        hr {
+            border-top: 1px dotted white;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// REVEAL
+
+.reveal.is-port {
+    $devB: 0px; // border width (0 for dev off)
+    $indi: 20px; // indicator
+    $revW: 980px;
+    $revH: 257px; // reveal H and W
+    $revWm: 480px;
+    $revHm: 257px; // reveal H and W
+
+    border: $devB solid green;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: $revW - ($indi / 2);
+
+    .mobile & {
+        width: $revWm - ($indi / 2);
+    }
+    .reveal {
+        cursor: -webkit-grab;
+        .msie & { cursor: move; }
+        float: left;
+        height: $revH;
+        width: $revW - $indi;
+
+        .mobile & {
+            height: $revHm;
+            width: $revWm - $indi;
+
+            br {
+                display: none;
+            }
+        }
+        *:active {
+            cursor: -webkit-grabbing;
+        }
+    }
+    &.x3 {
+        .is-view {
+            width: $revW * 3 + 1px;
+
+            .mobile & {
+                width: $revWm * 3 + 1px;
+            }
+        }
+        .is-proxy {
+            width: (3 * $indi * 2) - $indi;
+        }
+    }
+    &.x5 {
+        .is-view {
+            width: $revW * 5 + 1px;
+
+            .mobile & {
+                width: $revWm * 5 + 1px;
+            }
+        }
+        .is-proxy {
+            width: (5 * $indi * 2) - $indi;
+        }
+    }
+
+    .is-wrap {
+        border: $devB solid yellow;
+        margin: 0 auto;
+        width: $revW;
+
+        .mobile & {
+            width: $revWm ;
+        }
+    }
+    .is-view {
+        border: $devB solid red;
+        height: 1px;
+        position: relative;
+        z-index: 1;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-transform: translateZ(0);-moz-transform: translateZ(0);-ms-transform: translateZ(0);-o-transform: translateZ(0);transform: translateZ(0);
+        -webkit-touch-callout: none;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
+        -webkit-text-size-adjust: none;-moz-text-size-adjust: none;-ms-text-size-adjust: none;-o-text-size-adjust: none;text-size-adjust: none;
+    }
+    .is-proxy {
+        background-image: url(../images/controls/cubes.png);
+        cursor: pointer;
+        height: $indi;
+        position: absolute;
+        top: 230px;
+        right: 40%;
+        z-index: 9;
+    }
+    .is-page {
+        background: #8f8f8f;
+        height: $indi - 1;
+        opacity: 0.95;
+        position: absolute;
+        width: $indi;
+        z-index: 9;
+    }
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.is-port {
+    cursor: -webkit-grab;
+    .msie & { cursor: move; }
     overflow: hidden;
     position: absolute;
     z-index: 1;
@@ -17,111 +183,65 @@
     *:active {
         cursor: -webkit-grabbing;
     }
-}
-.iscustom {
-    color: white;
-    display: block;
-    font-size: 115%;
-    padding: 1% 10% 15% 1%;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-    @include text-size-adjust( none );
-    @include transform( translateZ(0) );
-    @include user-select( none );
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-touch-callout: none;
+    .is-view {
+        display: block;
+        position: relative;
+        z-index: 1;
+        @include text-size-adjust( none );
+        @include transform( translateZ(0) );
+        @include user-select( none );
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+    }
+    .iScrollHorizontalScrollbar,
+    .iScrollVerticalScrollbar { // all
+        background: rgba(0, 0, 0, 0.1);
+        .msie & { background-color: rgb(0, 134, 180); }
+        opacity: 0.3;
+        overflow: hidden;
+        position: absolute;
+        z-index: 9999;
 
-    hr {
-        margin: 1em 0;
+        :not(msie):hover & {
+            opacity: 1;
+        }
     }
-    & ul {
-        color: white;
-        list-style-type: square;
-        text-align: left;
-        width: 100%;
-    }
-    li {
-        font-size: 100%;
-        line-height: 1.4;
-        margin-bottom: $unit;
-        margin-left: $unit * 2;
-        padding: 0 $unit;
-    }
-    h2 {
-        font-style: italic;
-        margin-top: $unit * 4;
-    }
-    p, h3, h4 {
-        line-height: 1.6;
-        margin: $unit 0;
-    }
-    h3, h4 {
-        font-style: italic;
-    }
-    p, li {
-        font-size: 95%;
-    }
-    a {
-        color: white;
-    }
-    hr {
-        border-top: 1px dotted white;
-    }
-}
-
-.scrollerXwidget {
-    color: white;
-    font: bold 20px/1 arial;
-    overflow: hidden;
-    position: absolute;
-    top: $unit;
-    right: $unit;
-    z-index: 9999;
-
-    &:hover {
-        color: red;
-        cursor: pointer;
-    }
-}
-
-.iScrollHorizontalScrollbar,
-.iScrollVerticalScrollbar { // all
-    background: rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    position: absolute;
-    z-index: 9999;
-}
-.iScrollHorizontalScrollbar {
-    bottom: 0;
-    height: $unit * 1.5;
-    left: $unit;
-    right: $unit * 4;
-}
-.iScrollVerticalScrollbar {
-    bottom: $unit * 2;
-    right: $unit;
-    top: $unit * 4;
-    width: $unit * 1.5;
-}
-.iScrollIndicator {
-    background: rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    position: absolute;
-}
-.iScrollHorizontalScrollbar .iScrollIndicator {
-    height: 100%;
-}
-.iScrollVerticalScrollbar .iScrollIndicator {
-    width: 100%;
-}
-.iScrollBothScrollbars { // only when both show
-    &.iScrollHorizontalScrollbar {
+    .iScrollHorizontalScrollbar {
+        bottom: 0;
+        left: 0;
+        height: $unit;
         right: $unit;
     }
-    &.iScrollVerticalScrollbar {
-        bottom: $unit;
+    .iScrollVerticalScrollbar {
+        bottom: 0;
+        right: 0;
+        top: 0;
+        width: $unit;
+    }
+    .iScrollIndicator {
+        background-color: rgba(0, 0, 0, 0.4);
+        .msie & { background-color: rgb(0, 107, 144); }
+        opacity: 0.5;
+        position: absolute;
+
+        :not(msie) &:hover {
+            background-color: $red;
+            cursor: pointer;
+        }
+    }
+    .iScrollHorizontalScrollbar .iScrollIndicator {
+        height: 100%;
+    }
+    .iScrollVerticalScrollbar .iScrollIndicator {
+        width: 100%;
+    }
+    .iScrollBothScrollbars { // only when both show
+        &.iScrollHorizontalScrollbar {
+            right: $unit;
+        }
+        &.iScrollVerticalScrollbar {
+            bottom: $unit;
+        }
     }
 }
-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

@@ -2,7 +2,7 @@
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-.modal {
+#Modal {
 
     .msie & {
         background-color: rgba(255, 255, 255, .666);
@@ -11,46 +11,48 @@
     $clr2: rgba(255, 255, 255, 0.0);
     @include background-image( linear-gradient(top, $clr1 50%, $clr2 100%) );
 
+    cursor: not-allowed;
     display: none;
-    height: 150%; width: 100%;
+    height: 100%; width: 100%;
     left: 0; top: 0;
-    padding-bottom: 33%;
     position: fixed;
+    text-align: center;
     z-index: 999;
 
     & > div {
+        display: inline-block;
+        margin: auto;
         min-width: 400px;
+        text-align: left;
+        top: 50px;
     }
-    #Legal {
-        width: 60%;
-        margin: 1em auto;
-    }
-    aside {
-        &.icon {
-/*            background-image: url(../images/controls/close.png);*/
-            background-repeat: no-repeat;
-            color: transparent;
-            cursor: pointer;
-            display: inline-block;
-            float: right;
-            margin: 3px;
-            opacity: 0.75;
-            width: 32px; height: 32px;
-            z-index: 9;
 
-            &:hover {
-                opacity: 1;
-            }
-            &:before {
-                //content: 'X';
-            }
+    .closeWidget {
+        color: white;
+        font-family: arial;
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1;
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+        top: 0;
+        z-index: 99999;
+
+        &:hover, &.hover {
+            color: $red;
+            cursor: pointer;
         }
-        &.text {
-            background-color: gray;
+    }
+
+    aside {
+        &.message {
+            @extend %ani;
+            @include nosel();
+            background-color: $gray;
             background-color: $shad3;
             top: 3px;
             color: white;
-            cursor: pointer;
             left: 50%;
             letter-spacing: 2px;
             margin: 0 -222px;
@@ -59,24 +61,26 @@
             text-align: center;
             text-transform: uppercase;
             width: 444px;
+            z-index: 99999;
 
             &:before {
-                content: 'click to dismiss';
+                content: 'double-click to dismiss';
             }
         }
-        &.text.labelbaby {
-            @include transform( scale(1) translate3d(0,0,0) rotate(-2deg) );
+        &.message.labelbaby, &.message:active {
+            @include transition( transform 5s ease-in .25s );
+            @include transform( scale(2) translate3d(0,0,0) rotate(-12deg) );
             @include hgrad(#944, #c44);
             @include hgrad($button2, $button1);
 
             border: 1px dotted white;
             border-width: 0 2px;
             box-shadow: 0 0 11px gray;
-            font-size: 150%;
+            cursor: move;
             opacity: 1;
 
             &:before {
-                text-shadow: 1px 2px 3px black, -0px -1px 2px white;
+                text-shadow: 1px 2px 2px $shad3, -0px -1px 1px white;
             }
         }
     }

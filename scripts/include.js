@@ -1,8 +1,8 @@
 /*jslint es5:true, white:false */
 /*globals Global, Util, _, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
 var Include = (function (W, $) { // IIFE
+    'use strict';
     var name = 'Include',
         self, C, Df, G, U;
 
@@ -28,7 +28,9 @@ var Include = (function (W, $) { // IIFE
     /// INTERNAL
 
     function _later(fn) {
-        fn && Df.promise.done(fn);
+        if (fn) {
+            Df.promise.done(fn);
+        }
     }
 
     function _copyCache(sel) {
@@ -44,7 +46,9 @@ var Include = (function (W, $) { // IIFE
     }
 
     function _addParts(arr) {
-        U.debug(1) && C.debug(name, '_addParts', arr);
+        if (U.debug(0)) {
+            C.debug(name, '_addParts', arr);
+        }
 
         _.each(arr, function (e) {
             var tmp = self.cache(e);
@@ -65,7 +69,9 @@ var Include = (function (W, $) { // IIFE
             url: url,
             success: function (str) {
                 cached = $(str);
-                U.debug(2) && C.debug(name, '_promise', this);
+                if (U.debug(2)){
+                    C.debug(name, '_promise', this);
+                }
                 _addParts(arr);
                 _later(cb);
             },

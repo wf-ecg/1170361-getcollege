@@ -4,16 +4,15 @@
 'use strict';
 var Data, Glob;
 
-(function (W, $) {
-    W.debug = 0;
+(function (W, $, M) {
+    W.debug = 1;
 
-    if ($.browser.msie) {
-        W.isIE = true;
+    if (W.isIE) {
         $(function () {
             $('html').addClass('msie');
         });
     }
-    if (($.now() > new Date('2014/3/19')) || W.isIE || //
+    if (($.now() > new Date('2014/3/29')) || W.isIE || //
         W.location.hostname == 'www.wellsfargomedia.com') {
         W.debug--;
     }
@@ -21,7 +20,7 @@ var Data, Glob;
         W.debug++;
     }
     if (W.location.hostname === 'localhost') {
-        W.debug++;
+        W.debug++ > 1 && $('html').addClass('debug');
     }
 
     var G = { /// all stubs terminated
@@ -31,33 +30,37 @@ var Data, Glob;
         src: ROOT.dir + '/scripts/',
     };
 
-    Modernizr.load([{
+    M.load([{
         test: W.isIE,
         yep: [
         G.lib + 'ie/split.js',
-        /* '//cloud.typography.com/6819872/620964/css/fonts.css', Normal */
-        '//cloud.typography.com/6819872/633184/css/fonts.css', /* ScrnSmrt */
         ],
         both: [
+        G.lib + 'jq/jq-pubsub.js',
         G.lib + 'underscore/js-1.4.4/lodash.underscore.js',
         G.lib + 'video-js/4.2.1/video-js.css',
         G.lib + 'video-js/4.2.1/video.dev.js',
         /* */
-        G.loc + 'iscroll/build/iscroll.js',
+        G.loc + 'iscroll-ie.js',
         G.loc + 'jq-help.js',
-        G.loc + 'jq-pubsub.js',
         G.loc + 'js-view.js',
         G.loc + 'mzr-highres.js',
         ],
-        nope: [
-        G.loc + 'archer.ssm.css',
-        G.loc + 'archer.ssm.itl.css',
-        ],
         complete: function () {
+            ROOT.log();
             G = $.extend(true, Global, G);
             Data = new Global('Data', '(catchall data fixture)');
         },
     },{
+        test: (ROOT.host === 'localhost:8000'),
+        yep: [
+        G.loc + 'archer.ssm.css',
+        G.loc + 'archer.ssm.itl.css',
+        ],
+        nope: [
+        /* '//cloud.typography.com/6819872/620964/css/fonts.css', Normal */
+        '//cloud.typography.com/6819872/633184/css/fonts.css', /* ScrnSmrt */
+        ],
         both: [
         G.src + '_util.js',
         G.src + 'control.js',
@@ -67,6 +70,7 @@ var Data, Glob;
         G.src + 'quiz.js',
         G.src + 'respond.js',
         G.src + 'reveal.js',
+        G.src + 'stats.js',
         G.src + 'main.js',
         ],
         complete: function () {
@@ -74,10 +78,11 @@ var Data, Glob;
         },
     },{
         test: (W.debug < 1),
-        yep: ['http://www.wellsfargomedia.com/lib/js/ecg-ga.js'],
+//        yep: ['http://www.wellsfargomedia.com/lib/js/ecg-ga.js'],
+        yep: ['lib/ecg-ga.js'],
     }]);
 
     Glob = G;
-}(window, jQuery));
+}(window, jQuery, Modernizr));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

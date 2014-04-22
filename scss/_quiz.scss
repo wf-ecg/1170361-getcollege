@@ -1,30 +1,43 @@
 /* QUIZ */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-#Qwrapper {
+.quiz {
     $bdark: #00698c;
     $bsemi: #4d96af;
     $blite: #80b4c6;
     $bhead: #fcc60a;
 
-    @include archer();
+    @include font-archer();
     background-color: $bdark;
+    border: $unit solid transparent;
     box-shadow: 1px 3px 15px black;
     color: white;
     cursor: -webkit-grab;
     display: none;
-    font-size: 130%;
-    left: 15%; right: 15%;
+    font-size: 120%;
+    left: 15%; right: 15%; //height: 50%;
+    .mobile & { left: 5%; right: 5%; }
     line-height: 150%;
-    overflow: hidden;
-    padding: 3em 2em;
+    padding: $unit * 2;
     position: absolute;
     z-index: 1;
 
-    *:active {
-        cursor: -webkit-grabbing;
+
+    .answers.is-port {
+        font-size: 80%;
+        height: 333px;
+        margin-bottom: $unit * 2;
+        position: relative;
+        box-shadow: inset 0 -22px 33px -22px $shad2;
+
+        .is-view {
+            color: white;
+            font-size: 115%;
+            margin-right: $unit;
+            padding: 0 0 5% 0;
+        }
     }
+
     a {
         color: white;
     }
@@ -45,7 +58,7 @@
     }
     blockquote, h3, h4, h5 {
         line-height: 130%;
-        margin: $unit 0;
+        margin: 0 0 $unit;
     }
     h3 {
         color: $bhead;
@@ -57,6 +70,7 @@
     }
     h5 {
         font-style: italic;
+        .mobile & br { display: none; }
     }
     ol, ul {
         line-height: 140%;
@@ -67,18 +81,14 @@
         margin-left: -0.5em;
         padding: 0.25em 0.5em;
     }
-    .answers {
-        font-size: 90%;
-        height: 222px;
-        margin-bottom: 33px;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
     .questions {
+        margin-right: 10%;
+
         li {
             cursor: pointer;
-            &:hover {
+            &:hover, &:focus {
                 background-color: $bsemi;
+                outline-color: $hilite;
             }
             &.selected, &:active {
                 background-color: $blite;
@@ -92,7 +102,7 @@
         }
         ul { // T or F
             li {
-                font-size: 200%;
+                font-size: 180%;
                 float: left;
                 list-style-position: inside;
                 list-style-type: circle;

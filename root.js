@@ -14,7 +14,7 @@ ROOT = {
             dir: '/wf-ecg/1170361-getcollege',
         },
         'www.wellsfargomedia.com': {
-            dir: '/???-getcollege',
+            dir: '/drt/4',
         },
     },
     _config: function () { /// only top is not a stub
@@ -30,7 +30,11 @@ ROOT = {
         R.top = R.conf.top || ('//' + R.host);
         R.lib = (R.conf.lib || '') + '/lib';
         R.dir = (R.conf.dir + R.vers) || R.path;
-        if (C) C.info('ROOT', R);
+
+        R.log = function () {
+            C.clear();
+            C.info('ROOT', R);
+        };
     },
 };
 

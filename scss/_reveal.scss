@@ -1,80 +1,16 @@
 /* REVEAL */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+section {
+    &.reveal {
+        background-image: url(../images/features/_bkgr.png);
+        background-size: 100% 100%;
+        height: 257px;
+        margin: $unit $unit 0;
+        overflow: hidden;
+        position: relative;
+        z-index: -1;
 
-$devB: 0px; // border width (0 for dev off)
-$indi: 20px; // indicator
-$revH: 257px; // reveal H and W
-$revW: 980px;
-
-.ISviewport {
-    border: $devB solid green;
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-    width: $revW - ($indi / 2);
-
-    .reveal {
-        cursor: -webkit-grab;
-        float: left;
-        height: $revH;
-        width: $revW - $indi;
-        *:active {
-            cursor: -webkit-grabbing;
-        }
-    }
-    &.x3 {
-        .ISscroller {
-            width: $revW * 3 + 1px;
-        }
-        .ISindicator {
-            width: (3 * $indi * 2) - $indi;
-        }
-    }
-    &.x5 {
-        .ISscroller {
-            width: $revW * 5 + 1px;
-        }
-        .ISindicator {
-            width: (5 * $indi * 2) - $indi;
-        }
-    }
-
-    .ISwrapper {
-        border: $devB solid yellow;
-        margin: 0 auto;
-        width: $revW;
-    }
-    .ISscroller {
-        border: $devB solid red;
-        height: 1px;
-        z-index: 1;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -webkit-transform: translateZ(0);-moz-transform: translateZ(0);-ms-transform: translateZ(0);-o-transform: translateZ(0);transform: translateZ(0);
-        -webkit-touch-callout: none;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
-        -webkit-text-size-adjust: none;-moz-text-size-adjust: none;-ms-text-size-adjust: none;-o-text-size-adjust: none;text-size-adjust: none;
-    }
-    .ISindicator {
-        background-image: url(../images/controls/cubes.png);
-        cursor: pointer;
-        height: $indi;
-        position: absolute;
-        top: 230px;
-        right: 40%;
-        z-index: 9;
-    }
-    .ISdotty {
-        background: #8f8f8f;
-        height: $indi;
-        opacity: 0.95;
-        position: absolute;
-        width: $indi;
-        z-index: 9;
-    }
-}
-
-#Layout {
-    section.reveal {
         & .center,
         & .standard,
         & .left,
@@ -83,6 +19,12 @@ $revW: 980px;
             overflow: hidden;
             position: relative;
             width: 99%;
+
+            .mobile & {
+                clear: both;
+                padding-top: 0;
+                width: 100%;
+            }
         }
         & .left {
             float: left;
@@ -90,11 +32,17 @@ $revW: 980px;
             width: 50%;
         }
         & .right {
-            border-left: 1px solid #ddd;
             margin-left: -1em;
             padding: 1em;
             float: right;
             width: 50%;
+
+            .desktop & {
+                border-left: 1px solid #ddd;
+            }
+            .mobile & {
+                border-top: 1px solid #ddd;
+            }
         }
         & .standard {
             margin-left: auto;
@@ -104,16 +52,6 @@ $revW: 980px;
             margin: auto;
             width: 37%;
         }
-    }
-
-    .reveal {
-        background-image: url(../images/features/_bkgr.png);
-        background-size: 100% 100%;
-        height: $revH;
-        margin: $unit $unit 0;
-        overflow: hidden;
-        position: relative;
-        z-index: -1;
 
         img {
             position: absolute;
@@ -121,10 +59,6 @@ $revW: 980px;
 
         & > div > img {
             // display: none;
-        }
-        a.shiny {
-            float: right;
-            margin: 21px 0 9px 0;
         }
         &.force {
             .head, .text {
@@ -145,19 +79,25 @@ $revW: 980px;
                 margin-top: $unit;
             }
         }
+        a, .text {
+            color: $gray;
+        }
         .text {
-            color: gray;
             font-size: 14px;
             padding-top: 0;
+            padding-right: 3em;
 
             h4 {
                 line-height: 1.5;
+            }
+            .mobile & {
+                width: 70%;
             }
         }
 
         // shrink
         &.xB h3 {
-            font-size: 110%;
+            font-size: 120%;
         }
 
         div.video {
@@ -170,6 +110,11 @@ $revW: 980px;
             text-align: center;
             top: 55px;
             width: 33%;
+
+            .mobile & {
+                top: 99px;
+                right: 11px;
+            }
             &:hover {
                 opacity: 1.0;
 
@@ -181,8 +126,8 @@ $revW: 980px;
                 position: relative;
             }
             a {
-                @include archer();
-                color: gray;
+                @include font-archer();
+                color: $gray;
                 cursor: pointer;
                 font-size: 15px;
                 font-weight: 600;
@@ -192,4 +137,3 @@ $revW: 980px;
     }
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-@import "_reveal_mobile";

@@ -9,6 +9,12 @@ body {
         padding: 0;
     }
 }
+h1 {
+    color: white !important;
+    font-size: 1px;
+    position: relative;
+    z-index: -1;
+}
 #Page {
     background-color: white;
     box-shadow: 3px 333px 333px $shad1;
@@ -16,6 +22,9 @@ body {
     position: relative;
     width: $ww;
 
+    &.ani {
+        @extend %ani;
+    }
     header {
         position: relative;
         z-index: 9;
@@ -23,8 +32,9 @@ body {
     footer {
         @include rex('margin-top', 0.333);
         @include rex('height', 4);
-        color: gray;
-        font-size: 10px;
+        color: $gray;
+        font-size: 12px;
+        line-height: 22px;
         padding: 0 6px;
         position: absolute;
         vertical-align: baseline;
@@ -45,12 +55,23 @@ body {
                 text-shadow: 1px 1px 2px black;
             }
         }
+        a {
+            background: none;
+            border: 0;
+            color: $gray;
+            margin-top: -4px;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
     section {
         @include clearfix();
     }
     .mobile & {
-        width: 472px;
+        width: 480px;
 
         .desktop {
             display: none;
@@ -60,18 +81,18 @@ body {
     div.masthead {
         background-image: url(../images/header/head.png);
         height: 54px;
-        left: $unit;
+        left: 92px;
         position: absolute;
         top: 26px;
-        width: 478px;
+        width: 380px;
     }
-    div.logo {
+    a.logo {
         background-image: url(../images/header/logo.png);
-        height: 55px;
+        height: 62px;
         position: absolute;
-        right: $unit;
+        left: $unit;
         top: $unit;
-        width: 55px;
+        width: 62px;
     }
 }
 div.text, div.head {

@@ -30,11 +30,19 @@
 @mixin textshadow() {
     text-shadow: 1px 1px 1px black;
 }
-@mixin outline($color: $hilite, $width: 4){
+@mixin outline($color: $hilite, $width: 4) {
     outline: {
+        color: yellow; /* fallback */
         color: $color;
+        offset: $width * -0.5px;
+        style: auto;
         width: $width * 1px;
     }
+}
+@mixin setTrans($color, $opacity: 0.5) {
+    background-color: $color; /* fallback2 */
+    background-color: lighten($color, percentage($opacity/2)); /* fallback1 */
+    background-color: setTrans($color, $opacity);
 }
 
 // GRADS
@@ -59,15 +67,19 @@
     @include background-image( linear-gradient(left, $clr1 11%, $clr2 55%, $clr1 88%) );
 }
 
-@mixin archer () {
+@mixin font-archer() {
     font-family: 'Archer SSm A', 'Archer SSm B', Georgia, serif;
+    -webkit-font-smoothing: antialiased;
 }
-@mixin plain () {
+@mixin font-plain() {
     font-family: Helvetica, Arial, Geneva, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
-@mixin thick () {
+@mixin font-thick() {
     font-family: Verdana, sans-serif;
+    -webkit-font-smoothing: subpixel-antialiased;
 }
+
 @mixin text-size-adjust ($foo: none) {
     -webkit-text-size-adjust: $foo;
     -moz-text-size-adjust: $foo;

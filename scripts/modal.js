@@ -1,82 +1,83 @@
 /*jslint es5:true, white:false */
-/*globals Global, Main, Util, jQuery, window */
+/*globals Global, Main, Util, jQuery, window, _ */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
 var Modal = (function (W, $) { //IIFE
+    'use strict';
     var name = 'Modal',
         self = new Global(name, '(enable modal selections)'),
-        C, Df, U;
+        C, Df, El, U;
 
     C = W.console;
     U = Util;
 
     Df = { // DEFAULTS
         dat: {},
-        all: '.modal',
+        delay: null,
+        closers: '.closeWidget',
+        inits: function (x) {
+            Df.delay = x || 999;
+            El.div = $(El.div);
+            El.message = $(El.message).prependTo(El.div);
+
+            El.div.attr('title', 'Double-click to close');
+        },
+    };
+
+    El = {
+        div: '#Modal',
+        message: '<aside class="modal message"></aside>',
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
+    var valign = _.once(function () {
+        El.div.children().not('aside').hide().valign();
+    });
 
     function _show() {
-        var me = $(this),
-            blocks = me.children().not('aside'),
-            button = $('aside.icon').hide();
-
-        me.fadeIn(Main.delay, function () {
-            button.fadeIn(Main.delay) //
-            .cornerOf(blocks.filter(':visible').first());
-        });
-        blocks.hide().valign();
-        me.children().trigger('refresh');
+        El.div.children().trigger('show.' + name);
+        El.div.fadeIn(Main.delay);
+        valign();
+        El.div.trigger('refresh'); // scroller?
     }
 
     function _hide() {
-        var me = $(this);
-
-        me.slideUp(Main.delay);
-//        me.animate({
-//            'height': 0,
-//        }, Main.delay, 'pullShade', function () {
-//            me.hide().css({
-//                'height': '',
-//            });
-//        });
-
-        U.debug(1) && C.debug(name, '_hide', this);
+        El.div.trigger('hide.' + name);
+        El.div.slideUp(Main.delay);
     }
 
-    function _binding() {
-        Df.all.each(function () {
-            var me = $(this) //
-            .on('show.Modal', _show) //
-            .on('hide.Modal', _hide) //
-            .on('click', function () {
-                me.trigger('hide');
-            });
-
-            U.debug(1) && C.debug(name, '_binding', '\n', me);
+    function bind() {
+        El.div //
+        .on('click', Df.closers, function () {
+            _hide();
+        }).on('dblclick', function (evt) {
+            if ($(evt.target).is('.modal')) {
+                _hide();
+            }
         });
+
+        $.PS_sub('refresh', _hide);
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    function _init() {
+    function _init(delay) {
         if (self.inited(true)) {
             return null;
         }
-        Df.all = $(Df.all);
-        _binding();
+
+        Df.inits(delay);
+        bind();
+
         return self;
     }
 
-    W[name] = $.extend(true, self, {
+    $.extend(true, self, {
         _: function () {
             return Df;
         },
         init: _init,
-        hide: function () {
-            Df.all.trigger('hide.Modal');
-        },
+        hide: _hide,
+        show: _show,
     });
 
     return self;

@@ -1,9 +1,41 @@
 /* MOBILE REVEALS */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.mobile {
+    footer {
+        text-align: center;
+        * {
+            float: none; }
+    }
+}
+.mobile {
+    .desktop {
+        display: none !important;
+    }
+}
+.desktop {
+    .mobile {
+        display: none !important;
+    }
+}
+.mobile {
+    .mobile {
+        display: inherit !important;
+    }
+}
 .mobile #Layout {
-    div.desktop {
-        //display: block;
+    article.tile:not(.square) {
+        width: 460px;
+        br { display: none; }
+    }
+    .tile.square {
+        max-width: $unit * 14.5;
+    }
+    section.reveal {
+        height: 300px;
+    }
+    section.reveal._credit {
+        height: 300% !important;
     }
     article.reveal {
         button {

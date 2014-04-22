@@ -1,9 +1,10 @@
 /*jslint es5:true, white:false, evil:true  */
 /*globals Global, View, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
 // 1170361-getcollege
+
 var Util = (function (W, $) { /// IIFE
+    'use strict';
     var name = 'Util',
         self = new Global(name, '(1170361-getcollege utils)'),
         C, D, DE, U;
@@ -88,7 +89,9 @@ var Util = (function (W, $) { /// IIFE
             off = Math.abs(_dom().scrollTop() - top);
 
             if (off - add > 25) {
-                U.debug(1) && C.debug(name, '_scroll start', nom, off + 'px', add);
+                if (U.debug(1)){
+                    C.debug(name, '_scroll start', nom, off + 'px', add);
+                }
                 ele.addClass(':target');
                 // W.location.hash = nom;
                 off = (off > 1111 ? off / 5 : off / 2) + 250;
@@ -99,7 +102,9 @@ var Util = (function (W, $) { /// IIFE
                     duration: off,
                     complete: function () { // 'easeInBack', 555
                         ele.removeClass(':target');
-                        U.debug(2) && C.debug(name, '_scroll done', nom, off + 'ms');
+                        if (U.debug(2)){
+                            C.debug(name, '_scroll done', nom, off + 'ms');
+                        }
                     },
                     //step: function (now, fx) { var x = Math.abs(now - fx.end) | 0; C.warn(x, [fx]); }
                 });
@@ -132,6 +137,12 @@ var Util = (function (W, $) { /// IIFE
             out.push('<' + tag + nom + '>');
         });
         return ('jQuery:[' + (out.join(', ') || '(empty)') + ']');
+    };
+    // $erpent eats tail
+    $.reify = function (host) {
+        $.each(host, function (i, e) {
+            host[i] = $(e);
+        });
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

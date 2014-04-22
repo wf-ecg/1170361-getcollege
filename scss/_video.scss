@@ -2,16 +2,12 @@
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #Video {
+    color: #ccc;
+    margin: auto;
     text-align: center;
-    & > div {
-        @include box-sizing(content-box);
-        color: #ccc;
-        margin: auto;
-        text-align: center;
 
-        iframe {
-            box-shadow: 3px 3px 33px rgba(0, 0, 0, 0.5);
-        }
+    iframe {
+        box-shadow: 3px 3px 33px rgba(0, 0, 0, 0.5);
     }
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

@@ -1,10 +1,11 @@
 /*jslint es5:true, white:false */
 /*globals _, Control, Decache, Global, Include,
-          IScroll, Modal, Quiz, Respond, Reveal, Util,
-          videojs, jQuery, window */
+          IScroll, Modal, Quiz, Respond, Reveal, Util, Stats,
+          jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
+
 function Main(W, $) {
+    'use strict';
     var name = 'Main',
         self = new Global(name, '(kicker and binder)'),
         C, Df, El, U;
@@ -14,77 +15,75 @@ function Main(W, $) {
 
     Df = { // DEFAULTS
         delay: 333,
-        reveals: ['section._fellows', 'section._credit', 'section._car', 'section._spending'],
-        iscroll: null,
+        reveals: ['section._fellows', 'section._credit', 'section._spending'],
+        iscroll1: null,
+        iscroll2: null,
+        iscroll3: null,
+        iscroll4: null,
+        isbars: {
+            defaultScrollbars: W.isIE,
+            interactiveScrollbars: !W.isIE,
+            mouseWheel: 1,
+            scrollbars: !W.isIE ? 'custom' : true,
+            scrollX: 0,
+            scrollY: 1,
+        },
         inits: function () {
             Df.inited = true;
         },
     };
     El = { // ELEMENTS
-        scrolld: '#ISwrapper',
+        read_scroll: '.articles.is-port',
+        quiz_scroll: '.answers.is-port',
+        body: $('body'),
     };
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-    function _scroll(ele, mult) {
-        var $me = $(ele);
-
-        // look before leap
-        if ($me.length) {
-            $(W.isIE ? 'html' : 'body').stop().animate({
-                scrollTop: $me.offset().top,
-            }, Main.delay * (mult || 1));
-        }
-    }
-
-    function _shrink(up) {
-        var $me = $('.reveal');
-        if (up) {
-            $me.slideUp();
-        } else {
-            $me.slideDown();
-        }
-    }
 
     function _pubsubs() {
         $.PS_sub('change', function () {
-            Reveal.contract();
             Control.reset();
         });
         $.PS_sub('refresh', function () {
-            Respond.check();
-            Modal.hide();
+            Df.iscroll1 && Df.iscroll1.refresh();
+            Df.iscroll2 && Df.iscroll2.refresh();
+            Df.iscroll3 && Df.iscroll3.refresh();
+            Df.iscroll4 && Df.iscroll4.refresh();
         });
         $(W).bind('resize orientationchange', _.throttle(function () {
             $.PS_pub('refresh');
-            U.debug(2) && C.debug(name, '_refresh');
+            if (U.debug(0)) {
+                C.debug(name, '_refresh');
+            }
         }, 333));
-
     }
 
-    function _scroller() {
-        El.scrolld = $(El.scrolld);
+    function isfreshen() {
+        this.refresh();
+        this.scrollTo(0, 0);
+    }
 
-        Df.iscroll = new IScroll(El.scrolld.get(0), {
-            interactiveScrollbars: 1,
-            mouseWheel: 1,
-            scrollX: 0,
-            scrollbars: 'custom',
-        });
+    function _reader() {
+        El.read_scroll = $(El.read_scroll);
+        Df.iscroll1 = new IScroll(El.read_scroll.get(0), Df.isbars);
 
-        El.scrolld.on('touchmove', function (e) {
-            e.preventDefault();
-        }, false).on('refresh', function () {
-
-            W.setTimeout(function() {
-                Df.iscroll.refresh();
-                Df.iscroll.scrollTo(0, 0);
-            }, 99);
-
-        }).children('div').on('click', function (e) {
-            e.stopImmediatePropagation(); // prevent modal trigger
-        });
         // store on wrapper
-        El.scrolld.data('iscroll', Df.iscroll);
+        El.read_scroll.data('iscroll', Df.iscroll1);
+        El.read_scroll.on('mouseenter', function () {
+            isfreshen.apply(Df.iscroll1);
+        });
+    }
+
+    function _quizzer() {
+        El.quiz_scroll = $(El.quiz_scroll);
+        W.iss = Df.iscroll2 = new IScroll(El.quiz_scroll.get(0), Df.isbars);
+
+        // store on wrapper
+        El.quiz_scroll.data('iscroll', Df.iscroll2);
+        El.quiz_scroll.on('refresh', function () {
+            isfreshen.apply(Df.iscroll2);
+        });
+        Quiz.init();
     }
 
     function _embedVid(stub) {
@@ -92,13 +91,13 @@ function Main(W, $) {
         //
         vid = $('#Video');
         ifr = vid.find('iframe');
-        mod = $('div.modal');
+        mod = $('div#Modal');
         //
         ifr.attr({
             src: '//www.youtube.com/embed/' + stub + '?rel=0',
         });
-        mod.one('hide', function () {
-            ifr.attr('src', '');
+        mod.one('hide.Modal', function () {
+            ifr.attr('src', 'about:blank');
             vid.children().hide();
         });
         vid.show().children().show();
@@ -107,50 +106,26 @@ function Main(W, $) {
     function _showArt(id) {
         C.warn(id);
 
-        El.scrolld.show().find('article').hide();
-        El.scrolld.find(id).show();
+        El.read_scroll.show().find('article').hide();
+        El.read_scroll.find(id).show();
     }
 
-    function _bindings() {
-        $('.show_article').on('click', function () {
-            var me = $(this);
-
-            $('.modal').trigger('show');
-            El.scrolld.show();
-
-            _showArt('#' + me.data('id'));
-        });
-        $('.disclose').on('click', function () {
-            $('.modal').trigger('show');
-            $('#Legal').show();
-        });
-        $('.quizzy').on('click', function () {
-            $('.modal').trigger('show');
-            $('#Qwrapper').show();
-        });
-        $('.video > a').on('click', function () {
-            var me = $(this);
-
-            $('.modal').trigger('show');
-            $('#Video').show();
-
-            _embedVid(me.data('src'));
-        });
-
-        $('.masthead').on('click', function () {
-            Respond.change(); // eventless arg
-        });
-
-        $('.modal .scrollerXwidget').click(Modal.hide);
-
-        _pubsubs();
+    function watchInputDevice() {
+        var htm = $('html');
+        htm.on('keydown', function (evt) { // key action
+            htm.removeClass('mouse');
+            htm.addClass('keyboard');
+        }).on('mousedown', function (evt) { // mouse action
+            htm.removeClass('keyboard');
+            htm.addClass('mouse');
+        }).addClass('mouse');
     }
 
     function _loadCaro(sel) {
         var wrap, indi, obj;
 
         wrap = $(sel);
-        indi = wrap.find('.ISindicator').on('click', function (evt) {
+        indi = wrap.find('.is-proxy').on('click', function (evt) {
             var cds = {
                 x: evt.offsetX,
                 y: evt.offsetY,
@@ -168,17 +143,17 @@ function Main(W, $) {
         }, false);
 
         obj = new IScroll(wrap.get(0), {
-            scrollX: true,
-            scrollY: false,
-            momentum: false,
-            snap: true,
-            snapSpeed: 400,
-            keyBindings: true,
             indicators: {
                 el: indi.get(0),
                 resize: false,
                 interactive: true,
-            }
+            },
+            keyBindings: true,
+            momentum: false,
+            scrollX: 1,
+            scrollY: 0,
+            snap: true,
+            snapSpeed: 400,
         });
         // store on wrapper
         wrap.data('iscroll', obj);
@@ -186,15 +161,47 @@ function Main(W, $) {
     }
 
     function _expander() {
-        Reveal.init();
+        Reveal.init(Df.delay);
         //Decache.init('.desktop');
         Reveal.attach('_fellows');
         Reveal.attach('_credit');
-        Reveal.attach('_car');
         Reveal.attach('_spending');
 
-        W.caro1 = _loadCaro('.x5 .ISwrapper');
-        W.caro2 = _loadCaro('.x3 .ISwrapper');
+        Df.iscroll3 = _loadCaro('.x5 .is-wrap');
+        Df.iscroll4 = _loadCaro('.x3 .is-wrap');
+    }
+
+    function bind() {
+        watchInputDevice();
+        $('a, .control, .shiny, .closeWidget').not('[tabindex]').attr('tabindex', 9);
+        $('a').not('[href]').attr('href', '#');
+
+        Control.init(Df.delay);
+        Modal.init(Df.delay);
+        Respond.init();
+        Stats.init();
+
+        El.body.on('touchmove', '.is-view', function (e) {
+            e.preventDefault();
+        });
+        $('.show_article').on('click', function () {
+            Modal.show();
+            _showArt('#' + $(this).data('id'));
+        });
+        $('.show_quiz').on('click', function () {
+            Modal.show();
+            $('.quiz').show();
+        });
+        $('.video > a').on('click', function () {
+            Modal.show();
+            $('#Video').show();
+            _embedVid($(this).data('src'));
+        });
+        $('.masthead').on('click', function () {
+            Respond.change(); // eventless arg
+        });
+
+        _pubsubs();
     }
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -204,30 +211,23 @@ function Main(W, $) {
         }
         Df.inits();
         self.serv = W.location.hostname;
-        C.info('init @ ' + Date() + ' debug:', W.debug, self.mode);
+        C.info('Main init @ ' + Date() + ' debug:', W.debug, self.mode);
 
-        Include.graft('data_quiz.html', ['#Qwrapper'], Quiz.init);
-        Include.graft('data_articles.html', ['#ISwrapper'], _scroller);
+        Include.graft('data_quiz.html', ['.quiz'], _quizzer);
+        Include.graft('data_articles.html', ['.articles.is-port'], _reader);
         Include.graft('data_reveals.html', Df.reveals, _expander);
-        Include.graft('data_misc.html', ['#Legal']);
 
-        Control.init();
-        Modal.init();
-        Respond.init();
+        $('#Top').scrollTo();
 
-        _scroll('#Top');
-        _shrink(1);
-
-        Include.later(_bindings);
+        Include.later(bind);
     }
 
-    W[name] = $.extend(true, self, {
+    $.extend(self, {
         _: function () {
             return Df;
         },
         __: Df,
         delay: Df.delay,
-        scroll: _scroll,
         init: _init,
         mode: eval(U.testrict),
     });

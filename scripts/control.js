@@ -1,98 +1,151 @@
 /*jslint es5:true, white:false */
-/*globals Global, Main, Reveal, Util, jQuery, window */
+/*globals Global, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
 var Control = (function (W, $) { //IIFE
+    'use strict';
     var name = 'Control',
         self = new Global(name, '(control operations)'),
-        C, Df, U;
+        C, Df, El, U;
 
     C = W.console;
     U = Util;
 
     Df = { // DEFAULTS
-        dat: {},
-        cnom: {
-            active: 'tilted',
-            normal: 'tilt',
+        all: [],
+        current: null,
+        delay: null,
+        timeout: 0,
+        inits: function (ms) {
+            Df.delay = ms || 999;
+            $.reify(El);
         },
+    };
+    El = {
+        all: '.control',
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
 
-    function _reset(not) {
-        $('.control').not(not) //
-        .removeClass(Df.cnom.active) //
-        .addClass(Df.cnom.normal) //
-        .attr('title', 'Reveal');
-
-        if (not) {
-            not.addClass(Df.cnom.active) //
-            .removeClass(Df.cnom.normal) //
-            .attr('title', 'Close');
-        }
-    }
-
     function _soonScrollTo(ele) {
-        ele = $(ele).get(0);
-        U.debug(0) && C.debug(name, '_soonScrollTo', ele);
-        // delay scroll
-        W.setTimeout(function () {
-            Main.scroll(ele);
-        }, Main.delay * 2);
-    }
+        ele = $(ele);
 
-    function _getSect(ctrl) { // who am i (TODO fragile...popping class)
-        var str = ctrl.closest('article').attr('class');
-        return str ? str.split(' ').pop() : 'x';
+        W.clearTimeout(Df.timeout);
+
+        Df.timeout = W.setTimeout(function () { // delay scroll
+            ele.scrollTo();
+        }, Df.delay * 2);
     }
 
     function _isActive(ele) {
-        return $(ele).is('.' + Df.cnom.active);
+        return $(ele).is('.active');
     }
 
-    function _tilter(ctrl) {
-        var sect = _getSect(ctrl),
-            reveal = '(closed)';
-
-        if (_isActive(ctrl)) {
-            Main.scroll('#Top'); // scroll to top
-            _reset();
+    function scroller(dat) {
+        if (dat.status === 'active') {
+            _soonScrollTo(dat.jq);
         } else {
-            _soonScrollTo(ctrl); // scroll to tile
-            _reset(ctrl);
+            _soonScrollTo('#Top');
         }
-        U.debug(0) && C.debug(name, '_tilter', sect, ctrl.get(0));
     }
 
-    function _binding() {
-        $('.control').each(function () {
-            var ctrl = $(this);
+    function titler(dat) {
+        if (dat.status === 'active') {
+            dat.jq.attr('title', 'Close section');
+        } else {
+            dat.jq.attr('title', 'Reveal more');
+        }
+    }
 
-            ctrl.on('click', function () {
-                _tilter(ctrl);
-            });
+    function datify() {
+        var me, cbs, dat;
+        // debugger
+        me = $(this);
+        cbs = $.Callbacks();
+        dat = {
+            jq: me,
+            status: 'normal',
+            actuate: function (fn) {
+                if (fn) {
+                    cbs.add(fn);
+                } else {
+                    if (Df.current) {
+                        Df.current.deactivate();
+                    }
+                    cbs.fire(this);
+                }
+            },
+            reset: function (stat) {
+                this.jq.removeClass(this.status);
+                if (stat) {
+                    this.status = stat;
+                    this.jq.addClass(this.status);
+                }
+            },
+            activate: function () {
+                if (this.status === 'normal') {
+                    this.reset('active');
+                    this.actuate();
+                    Df.current = this;
+                    return true;
+                }
+                return false;
+            },
+            deactivate: function () {
+                if (this.status === 'active') {
+                    this.reset('normal');
+                    Df.current = null;
+                    this.actuate();
+                    return true;
+                }
+                return false;
+            },
+        };
 
-            _reset();
+        Df.all.push(dat);
+        dat.actuate(scroller);
+        dat.actuate(titler);
+        me.data(name, dat);
+    }
+
+    function bind() {
+        El.all //
+        .each(datify) //
+        .on('click', function (evt) {
+            evt.preventDefault();
+
+            var dat = $(this).data(name);
+
+            if (_isActive(dat.jq)) {
+                dat.deactivate();
+            } else {
+                dat.activate();
+            }
         });
+        self.reset();
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    function _init() {
+    function _init(delay) {
         if (self.inited(true)) {
             return null;
         }
-        _binding();
+        Df.inits(delay);
+        bind();
         return self;
     }
 
-    W[name] = $.extend(true, self, {
+    $.extend(true, self, {
         _: function () {
             return Df;
         },
+        ':': Df,
         init: _init,
-        reset: _reset,
+        reset: function () {
+            _.each(Df.all, function (x) {
+                x.reset('normal');
+            });
+        },
     });
 
     return self;

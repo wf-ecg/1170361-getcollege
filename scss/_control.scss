@@ -1,27 +1,40 @@
 /* CONTROL */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-button, .control, a.shiny {
+button, .control, a {
+    cursor: pointer;
+
     &:hover, &.hover {
         text-decoration: none;
     }
-    cursor: pointer !important;
+}
+.keyboard {
+    *[tabindex]:focus {
+        outline-color: $hilite;
+    }
+}
+.mouse {
+    *[tabindex]:focus {
+        outline-width: 0;
+    }
 }
 a.shiny {
     @include nosel();
     @include buttongrad1();
     @include textshadow();
+    @include font-thick();
     @extend %ani;
 
     border: 1px solid $brown;
     border-radius: 4px;
     box-shadow: 1px 2px 3px $shad2;
-    color: white;
+    color: white !important;
     display: inline-block;
-    @include thick();
     font-size: 11px;
     font-style: normal;
+    font-weight: normal;
     letter-spacing: 0.5px;
+    line-height: 1.1;
     padding: 5px 15px;
     text-decoration: none;
 
@@ -36,81 +49,68 @@ a.shiny {
         cursor: move;
         border-style: inset;
     }
-}
-footer {
-    line-height: 22px;
-
-    button {
-        background: none;
-        border: 0;
-        color: gray;
-        margin-top: -4px;
-        text-decoration: underline;
-        vertical-align: middle;
+    .tile & {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+    }
+    .reveal & {
+        .desktop & { margin: ($unit * 3) $unit; }
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
     }
 }
-div.control {
+a.control {
+    @include nosel();
+    @include transform-origin( 50% 50% 0 );
+    @include transform( rotate(0) );
+
     background-repeat: no-repeat;
-    height: 38px; width: 38px;
+    bottom: 0; right: 0;
+    color: transparent;
+    position: absolute;
 
-    &.tilt {
-        background-image: url(../images/controls/right-arrow.png);
+
+    &:hover, &.hover {
+        color: transparent;
     }
-    &.tilted {
-        background-image: url(../images/controls/down-arrow.png);
+    &:not(:hover) {
+        @include transform( rotate(0) );
     }
     &.round {
         height: 23px; width: 23px;
         margin: $unit;
 
-        &.tilt {
+        &.normal {
             background-image: url(../images/controls/right-round.png);
         }
-        &.tilted {
+        &.active {
             background-image: url(../images/controls/down-round.png);
         }
     }
-    &:not(:hover) {
-        @include transform( rotate(0) );
-    }
-
 }
-.control {
-    @include nosel();
-    @include transform-origin( 50% 50% 0 );
-    @include transform( rotate(0) );
 
-    bottom: 0; right: 0;
-    position: absolute;
-
-    &.tilt {
-        @extend %ani;
-
+.debug {
+    * {
+        &[tabindex] {
+            @include outline(pink);
+        }
+        &[href] {
+            @include outline(blue);
+        }
+        &:focus {
+            @include outline(cyan);
+        }
         &:active {
-            @include animation(none);
-            @include transform( rotate(90deg) );
+            @include outline(orange);
         }
-        &:hover {
-            @include animation(wiggly .3s ease-in-out 9);
-        }
-        &.round:hover {
-            @include animation(thumpy .5s ease-in-out 9);
-        }
-    }
-    &.tilted {
-        @extend %ani;
-
-        opacity: 1;
-
-        &:active {
-            @include transform( rotate(-90deg) );
-        }
-        &.tilted:hover {
-            @include animation(none);
-            opacity: 0.5;
+        &:target {
+            @include outline(red);
         }
     }
 }
+
 @include keyframes(thumpy) {
     70% { @include transform( scale(1.00) ); }
     80% { @include transform( scale(0.95) ); }
@@ -119,5 +119,4 @@ div.control {
     40% { @include transform( rotate(-5deg) ); }
     80% { @include transform( rotate( 5deg) ); }
 }
-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

@@ -1,8 +1,8 @@
 /*jslint es5:true, white:false */
 /*globals Global, Modernizr, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-'use strict';
 var Respond = (function (W, $) { //IIFE
+    'use strict';
     var name = 'Respond',
         self = new Global(name, '(detect and insert verbiage)'),
         C, Df, U;
@@ -45,6 +45,7 @@ var Respond = (function (W, $) { //IIFE
             d = Df.current,
             w = W.document.documentElement.clientWidth;
         // $('html').is('.retina'),
+
         // good god -- the only way to get width in IE?
         if ((w <= 600 && !r) || (w <= 1200 && r)) {
             d = 'mobile';
@@ -53,8 +54,9 @@ var Respond = (function (W, $) { //IIFE
         }
 
         if (d !== Df.current) {
-            U.debug(1) && C.debug(name + '_detect', '\n', d);
-
+            if (U.debug(1)){
+                C.debug(name, '_detect', d);
+            }
             if (W.isIE && d === 'mobile' && Df.current === 'desktop') {
                 W.location.reload(); // refresh to respond to shrinking
             } else {
@@ -64,18 +66,22 @@ var Respond = (function (W, $) { //IIFE
         return Df.current;
     }
 
+    function bind() {
+        _detect();
+        $.PS_sub('change', _change);
+        $.PS_sub('refresh', _detect);
+    }
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init() {
         if (self.inited(true)) {
             return null;
         }
-        _detect();
-
+        bind();
         return self;
     }
 
-    W[name] = $.extend(true, self, {
+    $.extend(true, self, {
         _: function () {
             return Df;
         },
@@ -93,7 +99,7 @@ var Respond = (function (W, $) { //IIFE
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*
 
-Track current devide
+Track current device
     - current
     + fill(ele, clas)
             uses current lang (seeks class of ele)
