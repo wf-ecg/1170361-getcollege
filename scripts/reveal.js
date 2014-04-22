@@ -25,9 +25,8 @@ var Reveal = (function (W, $) { //IIFE
     /// INTERNAL
     /// attach expand/contract/status events to items with _reveal
 
-    function _contractAll() {
-        Df.reveals.trigger('contract');
-        U.debug(1) && C.debug(name, '_contractAll');
+    function _contractAll(not) {
+        return Df.reveals.trigger('contract');
     }
 
     function _attachTo(sele) {
@@ -44,22 +43,23 @@ var Reveal = (function (W, $) { //IIFE
         data = data[name] = {
             status: true,
         };
+
+        U.debug(1) && C.debug(name, '_attachTo', sele, jq);
         handler = {
             expand: function () {
                 _contractAll();
 
                 if (!data.status) {
-                    jq.show().animate({
+                    jq.show().stop().animate({
                         height: Df.revealpx * (mobile ? 1.5 : 1),
                     }, Main.delay, function () {
                         Df.open = jq;
+                        data.status = true;
                     }) //
                     .children() //
                     .not(mobile ? '.desktop' : 'foo') //
                     .fadeIn(Main.delay * 2);
                 }
-
-                data.status = true;
                 U.debug(2) && C.debug(name, 'handler.expand', '\n', Df);
                 return this;
             },
@@ -69,9 +69,9 @@ var Reveal = (function (W, $) { //IIFE
                         height: '1px',
                     }, (Main.delay * 2), function () {
                         jq.hide();
+                        data.status = false;
                     });
                 }
-                data.status = false;
                 return this;
             },
             status: function () {
@@ -92,12 +92,10 @@ var Reveal = (function (W, $) { //IIFE
     function _setHandle(sel) {
         var jq = _attachTo('section.' + sel);
 
-        U.debug(1) && C.debug(name, '_setHandle', sel);
+        U.debug(1) && C.debug(name, '_setHandle', sel, jq);
 
-        $('article.' + sel + ' .control').toggle(function () {
+        $('article.' + sel + ' .control').click(function () {
             jq.trigger('expand');
-        }, function () {
-            jq.trigger('contract');
         });
     }
 

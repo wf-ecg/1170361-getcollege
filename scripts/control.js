@@ -20,21 +20,22 @@ var Control = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
 
-    function _reset(jq, not) {
-        $('.control').not(not).removeClass(Df.cnom.active) //
+    function _reset(not) {
+        $('.control').not(not) //
+        .removeClass(Df.cnom.active) //
         .addClass(Df.cnom.normal) //
         .attr('title', 'Reveal');
 
-        if (jq) {
-            jq.addClass(Df.cnom.active) //
+        if (not) {
+            not.addClass(Df.cnom.active) //
             .removeClass(Df.cnom.normal) //
             .attr('title', 'Close');
         }
     }
 
-    function _soon(ele) {
+    function _soonScrollTo(ele) {
         ele = $(ele).get(0);
-        W.debug > 0 && C.debug(name + '_soon', '\n', ele);
+        U.debug(0) && C.debug(name, '_soonScrollTo', ele);
         // delay scroll
         W.setTimeout(function () {
             Main.scroll(ele);
@@ -46,15 +47,6 @@ var Control = (function (W, $) { //IIFE
         return str ? str.split(' ').pop() : 'x';
     }
 
-    function _getLevel(ctrl) { // who am i (TODO fragile...popping class)
-        var str = ctrl.closest('section').attr('class');
-        return str ? str.split(' ').pop() : 'x';
-    }
-
-    function _getReveal(level) { // who am i
-        return $('.reveal.' + level);
-    }
-
     function _isActive(ele) {
         return $(ele).is('.' + Df.cnom.active);
     }
@@ -64,22 +56,20 @@ var Control = (function (W, $) { //IIFE
             reveal = '(closed)';
 
         if (_isActive(ctrl)) {
-            Reveal.contract(_reset); // open nothing
             Main.scroll('#Top'); // scroll to top
-            _reset('', ctrl);
+            _reset();
         } else {
-            reveal = _getReveal(_getLevel(ctrl)); // article
-            _soon(ctrl); // scroll to tile
+            _soonScrollTo(ctrl); // scroll to tile
             _reset(ctrl);
         }
-        W.debug > 0 && C.debug(name + '_tilter', '\n', sect, [ctrl, reveal]);
+        U.debug(0) && C.debug(name, '_tilter', sect, ctrl.get(0));
     }
 
     function _binding() {
         $('.control').each(function () {
             var ctrl = $(this);
 
-            ctrl.parent().on('click', function () {
+            ctrl.on('click', function () {
                 _tilter(ctrl);
             });
 
@@ -103,7 +93,6 @@ var Control = (function (W, $) { //IIFE
         },
         init: _init,
         reset: _reset,
-        soon: _soon,
     });
 
     return self;

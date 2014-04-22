@@ -1,8 +1,8 @@
 /*jslint es5:true, white:false, evil:true  */
 /*globals Global, View, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-// 1170361-getcollege
 'use strict';
+// 1170361-getcollege
 var Util = (function (W, $) { /// IIFE
     var name = 'Util',
         self = new Global(name, '(1170361-getcollege utils)'),
@@ -116,13 +116,23 @@ var Util = (function (W, $) { /// IIFE
         ret.prevObject = this;
         return ret;
     };
-    $.extend($.easing, {
-        easeInBack: function (x, t, b, c, d, s) {
-            s = s || 0.5;
-            return c * (t /= d) * t * ((s + 1) * t - s) + b;
-        },
-    });
+    // EASY ELEMENT IDENTITY
+    $.fn.toString = function () {
+        var out = [];
 
+        this.each(function () {
+            var tag, nom, eid, ecn;
+
+            tag = (this.tagName || '???');
+            nom = (this.name ? ('"' + this.name + '"') : 0);
+            eid = (this.id ? ('#' + this.id) : 0);
+            ecn = (this.className ? ('.' + this.className) : 0);
+            nom = (nom || eid || ecn || '(anon)');
+
+            out.push('<' + tag + nom + '>');
+        });
+        return ('jQuery:[' + (out.join(', ') || '(empty)') + ']');
+    };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     $.extend(true, self, {

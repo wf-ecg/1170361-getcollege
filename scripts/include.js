@@ -17,7 +17,6 @@ var Include = (function (W, $) { // IIFE
     Df = G['+' + name] = { // DEFAULTS
         cache: cached,
         promise: null,
-        swaps: [],
         inits: function () {
             if (W.debug > 0) {
                 W['_' + name] = this;
@@ -29,7 +28,7 @@ var Include = (function (W, $) { // IIFE
     /// INTERNAL
 
     function _later(fn) {
-        Df.promise.done(fn);
+        fn && Df.promise.done(fn);
     }
 
     function _copyCache(sel) {
@@ -45,7 +44,6 @@ var Include = (function (W, $) { // IIFE
     }
 
     function _addParts(arr) {
-        arr = arr || Df.swaps;
         U.debug(1) && C.debug(name, '_addParts', arr);
 
         _.each(arr, function (e) {
@@ -58,8 +56,7 @@ var Include = (function (W, $) { // IIFE
         });
     }
 
-    function _graft(url, arr) {
-        Df.swaps = arr || Df.swaps;
+    function _graft(url, arr, cb) {
         Df.promise = $.ajax({
             cache: false,
             //TODO (W.location.hostname !== '10.89.101.100'),
@@ -70,6 +67,7 @@ var Include = (function (W, $) { // IIFE
                 cached = $(str);
                 U.debug(2) && C.debug(name, '_promise', this);
                 _addParts(arr);
+                _later(cb);
             },
         }).promise();
         return Df.promise;
@@ -84,6 +82,7 @@ var Include = (function (W, $) { // IIFE
         cache: _xsrCache,
         graft: _graft,
         later: _later,
+        swap: _addParts,
     });
 
     return self;

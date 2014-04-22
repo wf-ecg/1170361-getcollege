@@ -18,6 +18,7 @@ var Quiz = (function (W, $) { //IIFE
         choices: ['choices'],
         results: ['results'],
         inits: function () {
+            Df.total = Df.answers.length - 1;
             El.div = $(El.div).hide().fadeIn();
             El.currNum = El.div.find('span.current');
             El.questions = El.div.find('div.questions > div').hide();
@@ -35,33 +36,35 @@ var Quiz = (function (W, $) { //IIFE
 
     function _showScore() {
         El.currNum.parent().fadeOut();
-        if (1 + Df.good === Df.answers.length) {
+        if (Df.good === Df.total) {
             Df.good = 'all';
             El.resultdiv.find('h4').show();
+            El.answers.hide();
         } else {
             El.resultdiv.find('h4').hide();
+            El.answers.show();
         }
         El.corrNum.text(Df.good) //
         .parent().fadeIn();
     }
 
     function _revealAnswers() {
+        var kids = El.answers.show().children().hide();
+
         _showScore();
-        El.answers.children().hide();
-        El.answers = El.answers.show().children();
         El.resultdiv.fadeIn();
 
         _.each(Df.results, function (e, i) {
             if (Df.results[i] === false) {
                 // show if answer not true
-                El.answers.eq(i - 1).slideDown();
+                kids.eq(i - 1).slideDown();
             }
         });
         U.debug(1) && C.debug(name, '_revealAnswers');
     }
 
     function _checkAnswer(n) {
-        var rez = Df.answers[n] === Df.choices[n];
+        var rez = (Df.answers[n] === Df.choices[n]);
         if (rez) {
             Df.good++;
         }
@@ -80,7 +83,9 @@ var Quiz = (function (W, $) { //IIFE
         El.questions //
         .eq(Df.current - 2).hide().end() // first time is always a miss
         .eq(Df.current - 1).fadeIn();
-        El.currNum.text(Df.current);
+        if (Df.current <= Df.total) {
+            El.currNum.text(Df.current);
+        }
     }
 
     function _binding() {
@@ -93,13 +98,13 @@ var Quiz = (function (W, $) { //IIFE
             //
             q_num = me.data('question');
             a_str = $(evt.target).data('answer');
-            U.debug(1) && C.debug(name, '_bindings [q#, a#]', q_num, a_str);
+            U.debug(1) && C.debug(name, '_bindings #A', q_num, a_str);
             //
             if (Df.current === q_num && a_str) {
                 _saveChoice(q_num, a_str);
                 _nextQuestion();
             }
-            if (Df.current > 5) {
+            if (Df.current > Df.total) {
                 El.questions.off('click');
                 _revealAnswers();
             }

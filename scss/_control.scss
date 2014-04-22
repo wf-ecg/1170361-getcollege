@@ -1,32 +1,26 @@
 /* CONTROL */
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-section {
-
-    article:not(:empty) {
-        @extend %ani;
-        @include transition( all 0.25s ease-out 0.1s );
-
-        &:hover {
-            @include textshadow();
-            opacity: 0.9;
-        }
+button, .control, a.shiny {
+    &:hover, &.hover {
+        text-decoration: none;
     }
-}
-button, .control {
     cursor: pointer !important;
 }
-a.orange {
+a.shiny {
     @include nosel();
     @include buttongrad1();
     @include textshadow();
+    @extend %ani;
 
     border: 1px solid $brown;
     border-radius: 4px;
     box-shadow: 1px 2px 3px $shad2;
     color: white;
     display: inline-block;
+    @include thick();
     font-size: 11px;
+    font-style: normal;
     letter-spacing: 0.5px;
     padding: 5px 15px;
     text-decoration: none;
@@ -34,7 +28,6 @@ a.orange {
     &.hover, &:hover {
         cursor: pointer;
         border-style: outset;
-        @extend %ani;
         @include buttongrad2();
     }
     &:active {

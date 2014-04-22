@@ -62,7 +62,6 @@ var Data, Glob;
         G.src + '_util.js',
         G.src + 'control.js',
         G.src + 'decache.js',
-        G.src + 'handlers.js',
         G.src + 'include.js',
         G.src + 'modal.js',
         G.src + 'quiz.js',

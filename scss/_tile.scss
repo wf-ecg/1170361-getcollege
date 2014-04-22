@@ -34,6 +34,15 @@
         position: relative;
         @include nosel();
         @include box-sizing(border-box);
+        @extend %ani;
+
+        &:not(:empty) {
+
+            &:hover {
+                @include textshadow();
+                opacity: 0.9;
+            }
+        }
 
         //  R1 semantic
         /* - - - - - - - - - - - - - - - - - - - - - */
@@ -178,7 +187,7 @@
             background-image: url(../images/misc/burnish.png);
             background-color: $_purple;
 
-            a.orange {
+            a.shiny {
                 padding-left: $unit / 2;
                 padding-right: $unit / 2;
             }
@@ -186,19 +195,6 @@
                 @include span();
             }
             .mobile & {/* row? col?*/}
-        }
-        /* - - - - - - - - - - - - - - - - - - - - - */
-        // next row
-
-        &.filler {
-            background-image: url(../images/photos/filler.png);
-            height: 315px;
-        }
-
-        &:hover {
-            &.red, &.green, &.purple, &.amber, &.plum, &.teal {
-                cursor: pointer !important;
-            }
         }
     }
 }

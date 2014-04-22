@@ -2,40 +2,15 @@
 @import "__mix";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #Video {
+    text-align: center;
     & > div {
         @include box-sizing(content-box);
-        border: $unit solid white;
         color: #ccc;
         margin: auto;
+        text-align: center;
 
-        div.video-js {
+        iframe {
             box-shadow: 3px 3px 33px rgba(0, 0, 0, 0.5);
-        }
-        .vjs-big-play-button {
-            // background-image: url(./images/controls/play.png);
-            border-radius: $unit;
-            box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.5);
-            font-size: 100%;
-            height: 55px; width: 70px;
-            left: 43%; top: 45%;
-
-            &:before {
-                line-height: 1.777;
-                color: rgba(0, 0, 0, 0.2);
-                text-shadow: 3px 3px 9px rgba(222, 222, 222, 1);
-            }
-        }
-        .vjs-play-progress, .vjs-volume-level {
-            background: rgba(255, 255, 255, 0.5);
-        }
-        .vjs-control-bar, .vjs-big-play-button {
-            background: rgba(222, 222, 222, 0.7);
-        }
-        .vjs-slider {
-            background: rgba(222, 222, 222, 0.3);
-        }
-        .vjs-control {
-            color: $red1;
         }
     }
 }

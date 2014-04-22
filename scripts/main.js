@@ -1,5 +1,5 @@
 /*jslint es5:true, white:false */
-/*globals _, Control, Decache, Global, Handlers, Include,
+/*globals _, Control, Decache, Global, Include,
           IScroll, Modal, Quiz, Respond, Reveal, Util,
           videojs, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -7,35 +7,24 @@
 function Main(W, $) {
     var name = 'Main',
         self = new Global(name, '(kicker and binder)'),
-        C, Df, U;
+        C, Df, El, U;
 
     C = W.console;
     U = Util;
 
     Df = { // DEFAULTS
         delay: 333,
-        flip: '.fliplang',
-        swaps: [
-            '#ISwrapper',
-            '#Legal',
-            '#Qwrapper',
-            'section._fellows',
-            'section._credit',
-            'section._car',
-            'section._spending',
-        ],
+        reveals: ['section._fellows', 'section._credit', 'section._car', 'section._spending'],
         iscroll: null,
-        scrolld: '#ISwrapper',
-        sects: 'cgray red green purple amber plum teal exit legal slug',
         inits: function () {
             Df.inited = true;
         },
     };
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-    function _later(fn) {
-        Df.promise.done(fn);
-    }
+    El = { // ELEMENTS
+        scrolld: '#ISwrapper',
+    };
 
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     function _scroll(ele, mult) {
         var $me = $(ele);
 
@@ -73,30 +62,63 @@ function Main(W, $) {
     }
 
     function _scroller() {
-        Df.scrolld = $(Df.scrolld);
-        W.is = Df.iscroll = new IScroll(Df.scrolld.get(0), {
+        El.scrolld = $(El.scrolld);
+
+        Df.iscroll = new IScroll(El.scrolld.get(0), {
             interactiveScrollbars: 1,
             mouseWheel: 1,
             scrollX: 0,
             scrollbars: 'custom',
         });
-        Df.scrolld.on('touchmove', function (e) {
+
+        El.scrolld.on('touchmove', function (e) {
             e.preventDefault();
         }, false).on('refresh', function () {
+
             W.setTimeout(function() {
                 Df.iscroll.refresh();
+                Df.iscroll.scrollTo(0, 0);
             }, 99);
+
         }).children('div').on('click', function (e) {
             e.stopImmediatePropagation(); // prevent modal trigger
         });
+        // store on wrapper
+        El.scrolld.data('iscroll', Df.iscroll);
+    }
+
+    function _embedVid(stub) {
+        var vid, ifr, mod;
+        //
+        vid = $('#Video');
+        ifr = vid.find('iframe');
+        mod = $('div.modal');
+        //
+        ifr.attr({
+            src: '//www.youtube.com/embed/' + stub + '?rel=0',
+        });
+        mod.one('hide', function () {
+            ifr.attr('src', '');
+            vid.children().hide();
+        });
+        vid.show().children().show();
+    }
+
+    function _showArt(id) {
+        C.warn(id);
+
+        El.scrolld.show().find('article').hide();
+        El.scrolld.find(id).show();
     }
 
     function _bindings() {
-        _scroller();
+        $('.show_article').on('click', function () {
+            var me = $(this);
 
-        $('.articles').on('click', function () {
             $('.modal').trigger('show');
-            Df.scrolld.show();
+            El.scrolld.show();
+
+            _showArt('#' + me.data('id'));
         });
         $('.disclose').on('click', function () {
             $('.modal').trigger('show');
@@ -106,25 +128,73 @@ function Main(W, $) {
             $('.modal').trigger('show');
             $('#Qwrapper').show();
         });
-        $('.videos').on('click', function () {
+        $('.video > a').on('click', function () {
+            var me = $(this);
+
             $('.modal').trigger('show');
-            $('#Videos').show();
+            $('#Video').show();
+
+            _embedVid(me.data('src'));
         });
 
         $('.masthead').on('click', function () {
             Respond.change(); // eventless arg
         });
 
-        _pubsubs();
+        $('.modal .scrollerXwidget').click(Modal.hide);
 
+        _pubsubs();
+    }
+
+    function _loadCaro(sel) {
+        var wrap, indi, obj;
+
+        wrap = $(sel);
+        indi = wrap.find('.ISindicator').on('click', function (evt) {
+            var cds = {
+                x: evt.offsetX,
+                y: evt.offsetY,
+                w: $(this).width(),
+                l: obj.pages.length - 1,
+                calc: function () {
+                    return this.x / this.w * this.l | 0;
+                },
+            };
+            obj.goToPage(cds.calc(), 0);
+        });
+
+        wrap.on('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+
+        obj = new IScroll(wrap.get(0), {
+            scrollX: true,
+            scrollY: false,
+            momentum: false,
+            snap: true,
+            snapSpeed: 400,
+            keyBindings: true,
+            indicators: {
+                el: indi.get(0),
+                resize: false,
+                interactive: true,
+            }
+        });
+        // store on wrapper
+        wrap.data('iscroll', obj);
+        return obj;
+    }
+
+    function _expander() {
+        Reveal.init();
+        //Decache.init('.desktop');
         Reveal.attach('_fellows');
         Reveal.attach('_credit');
         Reveal.attach('_car');
         Reveal.attach('_spending');
 
-        //Decache.init('.desktop');
-
-        Quiz.init();
+        W.caro1 = _loadCaro('.x5 .ISwrapper');
+        W.caro2 = _loadCaro('.x3 .ISwrapper');
     }
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -133,18 +203,22 @@ function Main(W, $) {
             return null;
         }
         Df.inits();
+        self.serv = W.location.hostname;
         C.info('init @ ' + Date() + ' debug:', W.debug, self.mode);
-        var home = W.location.hostname !== '10.89.101.100';
-        Df.promise = Include.graft(home ? 'data.html' : 'data.php', Df.swaps);
 
-        Control.init(Df);
+        Include.graft('data_quiz.html', ['#Qwrapper'], Quiz.init);
+        Include.graft('data_articles.html', ['#ISwrapper'], _scroller);
+        Include.graft('data_reveals.html', Df.reveals, _expander);
+        Include.graft('data_misc.html', ['#Legal']);
+
+        Control.init();
         Modal.init();
         Respond.init();
-        Reveal.init();
 
         _scroll('#Top');
         _shrink(1);
-        _later(_bindings);
+
+        Include.later(_bindings);
     }
 
     W[name] = $.extend(true, self, {
@@ -154,9 +228,6 @@ function Main(W, $) {
         __: Df,
         delay: Df.delay,
         scroll: _scroll,
-        sects: function () {
-            return Df.sects;
-        },
         init: _init,
         mode: eval(U.testrict),
     });
@@ -167,7 +238,6 @@ function Main(W, $) {
 
 /*
 
-
-
+    auto hide reveals
 
  */

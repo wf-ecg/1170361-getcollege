@@ -3,10 +3,18 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 .modal {
-    background-color: rgba(255,255,255,.5);
+
+    .msie & {
+        background-color: rgba(255, 255, 255, .666);
+    }
+    $clr1: rgba(255, 255, 255, 0.7);
+    $clr2: rgba(255, 255, 255, 0.0);
+    @include background-image( linear-gradient(top, $clr1 50%, $clr2 100%) );
+
     display: none;
-    height: 100%; width: 100%;
+    height: 150%; width: 100%;
     left: 0; top: 0;
+    padding-bottom: 33%;
     position: fixed;
     z-index: 999;
 
@@ -16,18 +24,6 @@
     #Legal {
         width: 60%;
         margin: 1em auto;
-    }
-    #Video {
-        margin: 1em auto;
-    }
-    .text {
-        background-color: white;
-        border: 1px solid gray;
-        border-radius: 3px;
-        box-shadow: inset -1px -1px 9px gray;
-        line-height: 140%;
-        margin-bottom: 2em;
-        padding: 1em 1.5em;
     }
     aside {
         &.icon {
@@ -54,6 +50,7 @@
             background-color: $shad3;
             top: 3px;
             color: white;
+            cursor: pointer;
             left: 50%;
             letter-spacing: 2px;
             margin: 0 -222px;
@@ -65,6 +62,21 @@
 
             &:before {
                 content: 'click to dismiss';
+            }
+        }
+        &.text.labelbaby {
+            @include transform( scale(1) translate3d(0,0,0) rotate(-2deg) );
+            @include hgrad(#944, #c44);
+            @include hgrad($button2, $button1);
+
+            border: 1px dotted white;
+            border-width: 0 2px;
+            box-shadow: 0 0 11px gray;
+            font-size: 150%;
+            opacity: 1;
+
+            &:before {
+                text-shadow: 1px 2px 3px black, -0px -1px 2px white;
             }
         }
     }

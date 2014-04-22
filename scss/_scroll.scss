@@ -9,41 +9,47 @@
     box-shadow: inset 0 0 $unit*3 $deep;
     box-shadow: 1px 3px 15px $deep, 1px 3px 15px black;
     cursor: -webkit-grab;
-    *:active {
-        cursor: -webkit-grabbing;
-    }
-    left: 20%; right: 20%; height: 40%;
+    left: 15%; right: 15%; height: 50%;
     overflow: hidden;
     position: absolute;
     z-index: 1;
+
+    *:active {
+        cursor: -webkit-grabbing;
+    }
 }
-.iscustom, #IScustom {
+.iscustom {
     color: white;
-    display: none;
+    display: block;
     font-size: 115%;
-    padding: 5% 10% 15% 1%;
+    padding: 1% 10% 15% 1%;
     position: absolute;
     width: 100%;
     z-index: 1;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-transform: translateZ(0); -moz-transform: translateZ(0); -ms-transform: translateZ(0); -o-transform: translateZ(0); transform: translateZ(0);
-    -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-    -webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none; -o-text-size-adjust: none; text-size-adjust: none;
+    @include text-size-adjust( none );
+    @include transform( translateZ(0) );
+    @include user-select( none );
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
 
+    hr {
+        margin: 1em 0;
+    }
     & ul {
         color: white;
+        list-style-type: square;
         text-align: left;
         width: 100%;
-        list-style-type: square;
     }
     li {
+        font-size: 100%;
         line-height: 1.4;
         margin-bottom: $unit;
         margin-left: $unit * 2;
         padding: 0 $unit;
-        font-size: 100%;
     }
     h2 {
+        font-style: italic;
         margin-top: $unit * 4;
     }
     p, h3, h4 {
@@ -62,9 +68,6 @@
     hr {
         border-top: 1px dotted white;
     }
-}
-#IScustom {
-    display: block;
 }
 
 .scrollerXwidget {
@@ -103,6 +106,7 @@
 }
 .iScrollIndicator {
     background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
     position: absolute;
 }
 .iScrollHorizontalScrollbar .iScrollIndicator {

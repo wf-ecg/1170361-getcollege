@@ -34,6 +34,15 @@ var Modal = (function (W, $) { //IIFE
         var me = $(this);
 
         me.slideUp(Main.delay);
+//        me.animate({
+//            'height': 0,
+//        }, Main.delay, 'pullShade', function () {
+//            me.hide().css({
+//                'height': '',
+//            });
+//        });
+
+        U.debug(1) && C.debug(name, '_hide', this);
     }
 
     function _binding() {
@@ -42,10 +51,10 @@ var Modal = (function (W, $) { //IIFE
             .on('show.Modal', _show) //
             .on('hide.Modal', _hide) //
             .on('click', function () {
-                me.trigger('hide.Modal');
+                me.trigger('hide');
             });
 
-            U.debug(1) && C.debug(name + '_binding', '\n', me);
+            U.debug(1) && C.debug(name, '_binding', '\n', me);
         });
     }
 
