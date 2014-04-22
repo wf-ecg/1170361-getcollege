@@ -1,0 +1,75 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* TILES / Reveal */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+section.reveal {
+    background-image: url(../images/features/_bkgr.png);
+    background-size: 100% 100%;
+    font-size: 18px;
+    height: 1px;
+    line-height: 1.35;
+    margin: $unit $unit 0;
+    overflow: hidden;
+    position: relative;
+    z-index: -1;
+
+    a {
+        color: $gray;
+    }
+    img {
+        position: absolute;
+    }
+
+    .head, .text {
+        @include rex('padding', 1);
+
+        body:not(.mobile) & {
+            @media (max-width: 800px) {
+                @include rex('padding', 0.5);
+            }
+        }
+    }
+
+    .head {
+
+        h3 {
+            color: $red;
+            font-size: 150%;
+            font-style: italic;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.3;
+            margin-top: $unit;
+        }
+    }
+    .text {
+        font-size: 14px;
+        padding-top: 0;
+        padding-right: 3em;
+
+        h4 {
+            line-height: 1.5;
+        }
+        p {
+            margin: 0;
+            @include rex('margin-right', 0.5);
+
+            .mobile & {
+                font-size: 120%;
+                line-height: 1.2;
+                margin: $unit 0;
+            }
+        }
+    }
+    /// UNIQUE
+    .mobile &._credit {
+        height: 300% !important;
+    }
+    &.xB h3 { // shrink text overload
+        font-size: 120%;
+
+        .mobile & {
+            font-size: 150%;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

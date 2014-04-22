@@ -1,0 +1,66 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* TILES */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#Layout.tiles {
+    ///grid
+    padding-bottom: $unit;
+    padding-top: $unit;
+    position: relative;
+    z-index: 1;
+
+    .collapse {
+        display: none;
+    }
+    article.tile {
+        background-repeat: no-repeat;
+        background-position-y: 100%;
+        color: white;
+        display: inline-block;
+        float: left;
+        min-height: 100px; min-width: 100px;
+        margin: $unit 0 0 $unit;
+        padding: 14px 0 0 14px;
+        position: relative;
+
+        @include nosel();
+        @include box-sizing(border-box);
+
+        &:not(:empty) {
+            background-repeat: repeat-x;
+
+            .desktop:not(.ipad) &:hover {
+                @include textshadow();
+                opacity: 0.9;
+            }
+        }
+
+        p {
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            line-height: 1.5;
+            margin: $unit 0;
+            padding-right: $unit;
+            @include font-thick();
+        }
+        h2 {
+            font-size: 2.3em;
+            font-weight: 800;
+            letter-spacing: -1.3px;
+            .msie { letter-spacing: -2px; }
+            line-height: 1.15;
+        }
+        h3 {
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            .msie { letter-spacing: -1px; }
+            line-height: 1.5;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+@import "_reveal";
+@import "_reveal_article";
+@import "_reveal_video";
+@import "_unique";
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //

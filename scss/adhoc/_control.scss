@@ -1,0 +1,129 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC / Control */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+@include keyframes(thumpy) {
+    70% { @include transform( scale(1.00) ); }
+    80% { @include transform( scale(0.95) ); }
+}
+@include keyframes(wiggly) {
+    40% { @include transform( rotate(-5deg) ); }
+    80% { @include transform( rotate( 5deg) ); }
+}
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+button, .control, a {
+    cursor: pointer;
+
+    &:hover, &.hover {
+        text-decoration: none;
+    }
+}
+.keyboard {
+    *[tabindex]:focus {
+        outline-color: $hilite;
+    }
+}
+.mouse {
+    *[tabindex]:focus {
+        outline-width: 0;
+    }
+}
+a.shiny {
+    @include nosel();
+    @include buttongrad1();
+    @include textshadow();
+    @include font-thick();
+
+    .animate & {
+        @include ani();
+    }
+
+    border: 1px solid $brown;
+    border-radius: 4px;
+    box-shadow: 1px 2px 3px $shad2;
+    color: white !important;
+    display: inline-block;
+    font-size: 11px;
+    .mobile & { font-size: 10px !important; }
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    padding: 5px 15px;
+    text-decoration: none;
+
+    &.hover, &:hover {
+        cursor: pointer;
+        border-style: outset;
+        @include buttongrad2();
+    }
+    &:active {
+        @include bulge();
+        opacity: 0.8;
+        cursor: move;
+        border-style: inset;
+    }
+    .tile & {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+    }
+    .reveal & {
+        margin: ($unit * 4) $unit;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+a.control {
+    @include nosel();
+    @include transform-origin( 50% 50% 0 );
+    @include transform( rotate(0) );
+
+    background-repeat: no-repeat;
+    bottom: 0; right: 0;
+    color: transparent;
+    position: absolute;
+
+
+    &:hover, &.hover {
+        color: transparent;
+    }
+    &:not(:hover) {
+        @include transform( rotate(0) );
+    }
+    &.round {
+        @include transition( 333ms cubic-bezier(0.1, 0.57, 0.1, 1) );
+        background-image: url(../images/controls/right-round.svg);
+        .msie & { background-image: url(../images/controls/right-round.png); }
+        background-size: 100%;
+        border-radius: 1em;
+        height: 23px; width: 23px;
+        margin: $unit;
+
+        &.active {
+            @include transform( rotate(90deg) );
+            .msie & { background-image: url(../images/controls/down-round.png); }
+        }
+    }
+}
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+.debug {
+    * {
+        &[tabindex] {
+            @include outline(pink);
+        }
+        &[href] {
+            @include outline(blue);
+        }
+        &:focus {
+            @include outline(cyan);
+        }
+        &:active {
+            @include outline(orange);
+        }
+        &:target {
+            @include outline(red);
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

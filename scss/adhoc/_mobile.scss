@@ -1,0 +1,26 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC / Mobile */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.ui-loader {
+    display: none;
+}
+.desktop body .mobile {
+    display: none !important;
+}
+.mobile body .desktop {
+    display: none !important;
+}
+.mobile .mobile {
+    display: inherit !important;
+}
+html.mobile {
+    .ui-page {
+        width: $lillwidth + 20;
+    }
+}
+html.ipad {
+    .ui-page {
+       width: $fullwidth + 20;
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

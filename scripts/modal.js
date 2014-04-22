@@ -12,45 +12,44 @@ var Modal = (function (W, $) { //IIFE
 
     Df = { // DEFAULTS
         dat: {},
-        delay: null,
-        closers: '.closeWidget',
+        speed: null,
+        closers: '.closeWidget, .modal',
         inits: function (x) {
-            Df.delay = x || 999;
-            El.div = $(El.div);
-            El.message = $(El.message).prependTo(El.div);
-
-            El.div.attr('title', 'Double-click to close');
+            $.reify(El);
+            Df.speed = x || 999;
+            El.message.prependTo(El.div);
         },
     };
 
     El = {
         div: '#Modal',
-        message: '<aside class="modal message"></aside>',
+        message: '<aside class="modal closeMessage"></aside>',
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
-    var valign = _.once(function () {
-        El.div.children().not('aside').hide().valign();
-    });
 
     function _show() {
+        var blocks = El.div.children().not('aside');
+
         El.div.children().trigger('show.' + name);
-        El.div.fadeIn(Main.delay);
-        valign();
-        El.div.trigger('refresh'); // scroller?
+        El.div.fadeIn(Df.speed);
+        blocks.hide().valign();
+
+        _.delay(function () {
+            El.div.children().trigger('refresh'); // scroller?
+        });
     }
 
     function _hide() {
+        $.PS_pub($.nameSpace('close', name), self);
         El.div.trigger('hide.' + name);
-        El.div.slideUp(Main.delay);
+        El.div.slideUp(Df.speed);
     }
 
     function bind() {
-        El.div //
-        .on('click', Df.closers, function () {
-            _hide();
-        }).on('dblclick', function (evt) {
-            if ($(evt.target).is('.modal')) {
+        El.div.on('click touchstart', function (evt) {
+            evt.stopPropagation();
+            if ($(evt.target).is(Df.closers)) {
                 _hide();
             }
         });
@@ -60,12 +59,12 @@ var Modal = (function (W, $) { //IIFE
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    function _init(delay) {
+    function _init(speed) {
         if (self.inited(true)) {
             return null;
         }
 
-        Df.inits(delay);
+        Df.inits(speed);
         bind();
 
         return self;

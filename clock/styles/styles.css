@@ -1,0 +1,41 @@
+@charset "UTF-8";
+body{
+    margin: 16px;
+    padding: 0px;
+}
+
+.header {
+    text-align:center;
+}
+
+.archerMedItal {
+    font-size:4em;
+    font-family: 'Archer SSm A', 'Archer SSm B';
+    font-weight: 700;
+    font-style: italic;
+    color:#0095c8;
+}
+
+.archerBook {
+    font-size:2em;
+    font-family: 'Archer SSm A', 'Archer SSm B'; font-weight: 500;
+}
+
+.content {
+    text-align:center;
+}
+
+#countdown {
+    margin:0 auto;
+    margin-top:2em;
+    display: inline-block;
+}
+
+.footer {
+    margin: 5em 0 1em 0;
+    padding-top: 1em;
+    border-top:#e0e3e2 thin solid;
+    font-family:Verdana, Geneva, sans-serif;
+    font-size:.8em;
+    color:#44464a;
+}

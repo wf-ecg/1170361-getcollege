@@ -7,28 +7,29 @@
 function Main(W, $) {
     'use strict';
     var name = 'Main',
-        self = new Global(name, '(kicker and binder)'),
-        C, Df, El, U;
+    self = new Global(name, '(kicker and binder)'),
+    C, Df, El, U;
 
     C = W.console;
     U = Util;
 
     Df = { // DEFAULTS
-        delay: 333,
+        speed: 333,
         reveals: ['section._fellows', 'section._credit', 'section._spending'],
         iscroll1: null,
         iscroll2: null,
-        iscroll3: null,
-        iscroll4: null,
+        carousel1: null,
+        carousel2: null,
         isbars: {
             defaultScrollbars: W.isIE,
             interactiveScrollbars: !W.isIE,
             mouseWheel: 1,
-            scrollbars: !W.isIE ? 'custom' : true,
+            scrollbars: 'custom',
             scrollX: 0,
             scrollY: 1,
         },
         inits: function () {
+            $.reify(El);
             Df.inited = true;
         },
     };
@@ -40,22 +41,25 @@ function Main(W, $) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    function _pubsubs() {
+    function pubsubs() {
         $.PS_sub('change', function () {
             Control.reset();
         });
-        $.PS_sub('refresh', function () {
+
+        $.PS_sub('refresh.iScroll', function () {
             Df.iscroll1 && Df.iscroll1.refresh();
             Df.iscroll2 && Df.iscroll2.refresh();
-            Df.iscroll3 && Df.iscroll3.refresh();
-            Df.iscroll4 && Df.iscroll4.refresh();
+            Df.carousel1 && Df.carousel1.refresh();
+            Df.carousel2 && Df.carousel2.refresh();
         });
+
         $(W).bind('resize orientationchange', _.throttle(function () {
             $.PS_pub('refresh');
-            if (U.debug(0)) {
-                C.debug(name, '_refresh');
-            }
         }, 333));
+
+        if (!Respond.mobile()) {
+            Decache.init('.desktop');
+        }
     }
 
     function isfreshen() {
@@ -63,19 +67,17 @@ function Main(W, $) {
         this.scrollTo(0, 0);
     }
 
-    function _reader() {
-        El.read_scroll = $(El.read_scroll);
+    function reader() {
         Df.iscroll1 = new IScroll(El.read_scroll.get(0), Df.isbars);
 
         // store on wrapper
         El.read_scroll.data('iscroll', Df.iscroll1);
-        El.read_scroll.on('mouseenter', function () {
+        El.read_scroll.on('refresh', function () {
             isfreshen.apply(Df.iscroll1);
         });
     }
 
-    function _quizzer() {
-        El.quiz_scroll = $(El.quiz_scroll);
+    function quizzer() {
         W.iss = Df.iscroll2 = new IScroll(El.quiz_scroll.get(0), Df.isbars);
 
         // store on wrapper
@@ -86,28 +88,77 @@ function Main(W, $) {
         Quiz.init();
     }
 
-    function _embedVid(stub) {
-        var vid, ifr, mod;
-        //
+    function linkVid(evt) {
+        var me, stub;
+
+        me = $(evt.currentTarget);
+        stub = me.data('src');
+
+        me.attr({
+            href: '//www.youtube.com/embed/' + stub + '?rel=0&html5=1',
+            target: '_blank',
+        });
+        return true;
+    }
+
+    function embedVid(evt) {
+        var me, stub, vid, ifr, mod, tmp;
+        evt.preventDefault();
+
+        me = $(evt.currentTarget);
+        stub = me.data('src');
         vid = $('#Video');
         ifr = vid.find('iframe');
         mod = $('div#Modal');
-        //
+
+        Modal.show();
+        vid.show();
+
         ifr.attr({
-            src: '//www.youtube.com/embed/' + stub + '?rel=0',
+            src: '//www.youtube.com/embed/' + stub + '?rel=0&html5=1',
         });
         mod.one('hide.Modal', function () {
             ifr.attr('src', 'about:blank');
             vid.children().hide();
         });
         vid.show().children().show();
+
+        // hack Sure Pay to show transcript
+        if (stub === 'j-A19zzzzq4') {
+            tmp = 'https://www.getbankingdone.com/files/WF_SurePay_DemoTranscript.pdf';
+            tmp = hackTranscript(vid, tmp);
+
+            mod.one('hide.Modal', function () {
+                tmp.remove();
+            });
+        }
     }
 
-    function _showArt(id) {
-        C.warn(id);
+    function hackTranscript(ele, href) {
+        var wrap, link;
+        wrap = $('<aside class="modal linkMessage"></aside>');
+        link = $('<a>Transcript</a>').attr({
+            href: href,
+            target: '_blank',
+        });
+        wrap.append(link);
+        ele.append(wrap);
+        return wrap;
+    }
 
+    function showArt(id) {
         El.read_scroll.show().find('article').hide();
         El.read_scroll.find(id).show();
+    }
+
+    function loaded() {
+        El.body.addClass('loaded');
+        _.delay(function () {
+            El.body.removeClass('loading')
+        }, 999);
+        _.delay(function () {
+            El.body.removeClass('loaded');
+        }, 9999);
     }
 
     function watchInputDevice() {
@@ -121,87 +172,56 @@ function Main(W, $) {
         }).addClass('mouse');
     }
 
-    function _loadCaro(sel) {
-        var wrap, indi, obj;
+    function expander() {
+        Df.carousel1 = Carousel.attach('.x5.is-port');
+        Df.carousel2 = Carousel.attach('.x3.is-port');
 
-        wrap = $(sel);
-        indi = wrap.find('.is-proxy').on('click', function (evt) {
-            var cds = {
-                x: evt.offsetX,
-                y: evt.offsetY,
-                w: $(this).width(),
-                l: obj.pages.length - 1,
-                calc: function () {
-                    return this.x / this.w * this.l | 0;
-                },
-            };
-            obj.goToPage(cds.calc(), 0);
-        });
-
-        wrap.on('touchmove', function (e) {
-            e.preventDefault();
-        }, false);
-
-        obj = new IScroll(wrap.get(0), {
-            indicators: {
-                el: indi.get(0),
-                resize: false,
-                interactive: true,
-            },
-            keyBindings: true,
-            momentum: false,
-            scrollX: 1,
-            scrollY: 0,
-            snap: true,
-            snapSpeed: 400,
-        });
-        // store on wrapper
-        wrap.data('iscroll', obj);
-        return obj;
-    }
-
-    function _expander() {
-        Reveal.init(Df.delay);
-        //Decache.init('.desktop');
         Reveal.attach('_fellows');
         Reveal.attach('_credit');
         Reveal.attach('_spending');
-
-        Df.iscroll3 = _loadCaro('.x5 .is-wrap');
-        Df.iscroll4 = _loadCaro('.x3 .is-wrap');
     }
 
     function bind() {
-        watchInputDevice();
-        $('a, .control, .shiny, .closeWidget').not('[tabindex]').attr('tabindex', 9);
-        $('a').not('[href]').attr('href', '#');
+        watchInputDevice(); // detect mouse or keys for highlighting
 
-        Control.init(Df.delay);
-        Modal.init(Df.delay);
+        $('a, .control, .shiny, .closeWidget').not('[tabindex]').attr('tabindex', 9);
+        $('a').not('[href]').attr('href', 'javascript:void(0)');
+        $('a').not('.control, .shiny, .closeWidget').each(function () {
+            var me = $(this);
+            me.attr('title', me.attr('href').replace(/(\S*?\/\/\S+?)\/.*/, '$1'));
+        });
+
+        Carousel.init(Df.speed);
+        Control.init(Df.speed);
+        Modal.init(Df.speed);
+        Reveal.init(Df.speed);
         Respond.init();
         Stats.init();
 
-        El.body.on('touchmove', '.is-view', function (e) {
-            e.preventDefault();
-        });
-        $('.show_article').on('click', function () {
+        $('.show_article').on('click touchend', function (evt) {
+            evt.preventDefault();
             Modal.show();
-            _showArt('#' + $(this).data('id'));
-        });
-        $('.show_quiz').on('click', function () {
-            Modal.show();
-            $('.quiz').show();
-        });
-        $('.video > a').on('click', function () {
-            Modal.show();
-            $('#Video').show();
-            _embedVid($(this).data('src'));
-        });
-        $('.masthead').on('click', function () {
-            Respond.change(); // eventless arg
+            showArt('#' + $(this).data('id'));
         });
 
-        _pubsubs();
+        $('.show_quiz').on('click touchend', function (evt) {
+            evt.preventDefault();
+            $('.quiz').trigger('show');
+        });
+
+        $('.video > a').on('click touchend', function (evt) {
+            return jsView.mobile.agent() ? linkVid(evt) : embedVid(evt); // linkVid is used since mobile.agent returns for ipads
+        });
+
+        $('.masthead').on('dblclick', function (evt) {
+            evt.preventDefault();
+            if (!W.isIE) {
+                Respond.toggle();
+            }
+        });
+
+        pubsubs();
+        $.PS_pub('refresh');
     }
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -213,13 +233,14 @@ function Main(W, $) {
         self.serv = W.location.hostname;
         C.info('Main init @ ' + Date() + ' debug:', W.debug, self.mode);
 
-        Include.graft('data_quiz.html', ['.quiz'], _quizzer);
-        Include.graft('data_articles.html', ['.articles.is-port'], _reader);
-        Include.graft('data_reveals.html', Df.reveals, _expander);
+        reader();
+        quizzer();
+        expander();
 
+        Include.init();
         $('#Top').scrollTo();
-
         Include.later(bind);
+        loaded();
     }
 
     $.extend(self, {
@@ -227,7 +248,7 @@ function Main(W, $) {
             return Df;
         },
         __: Df,
-        delay: Df.delay,
+        speed: Df.speed,
         init: _init,
         mode: eval(U.testrict),
     });
@@ -238,6 +259,6 @@ function Main(W, $) {
 
 /*
 
-    auto hide reveals
+
 
  */

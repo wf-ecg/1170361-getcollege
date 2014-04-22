@@ -1,0 +1,97 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* SCROLL / Reveal */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.reveal.is-port {
+    $devB: 0px; // border width (0 for dev off)
+    $indi: 20px; // indicator
+    $revW: $fullwidth;
+    $revH: 257px; // reveal H and W
+    $revWm: $lillwidth;
+    $revHm: 257px; // reveal H and W
+
+    border: $devB solid green;
+    margin: 0 auto;
+    min-height: 1px;
+    position: relative;
+    width: $revW;
+
+    .mobile & { width: $revWm; }
+    section.reveal {
+        cursor: -webkit-grab;
+        float: left;
+        height: $revH;
+        min-height: 1px;
+        width: $revW - $indi;
+
+        .msie & { cursor: move; }
+        .mobile & {
+            height: $revHm * 1.2;
+            width: $revWm - $indi;
+            padding: 0.5em;
+
+            br {
+                display: none;
+            }
+        }
+        *:active {
+            cursor: -webkit-grabbing;
+        }
+    }
+    .is-view {
+        border: $devB solid red;
+        min-height: 1px;
+        position: relative;
+        z-index: 1;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        -webkit-transform: translateZ(0);-moz-transform: translateZ(0);-ms-transform: translateZ(0);-o-transform: translateZ(0);transform: translateZ(0);
+        -webkit-touch-callout: none;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
+        -webkit-text-size-adjust: none;-moz-text-size-adjust: none;-ms-text-size-adjust: none;-o-text-size-adjust: none;text-size-adjust: none;
+    }
+    .is-proxy {
+        background-image: url(../images/controls/cubes.png);
+        cursor: pointer;
+        height: $indi;
+        position: absolute;
+        top: 230px;
+        right: 40%;
+        z-index: 9;
+
+        .mobile & {
+            top: 280px;
+            right: 33%;
+        }
+        .is-peg {
+            background: #8f8f8f;
+            height: $indi - 1;
+            opacity: 0.95;
+            position: absolute;
+            width: $indi;
+            z-index: 9;
+        }
+    }
+    &.x3 {
+        .is-view {
+            width: $revW * 3 + 1px;
+
+            .mobile & {
+                width: $revWm * 3 + 1px;
+            }
+        }
+        .is-proxy {
+            width: (3 * $indi * 2) - $indi;
+        }
+    }
+    &.x5 {
+        .is-view {
+            width: $revW * 5 + 1px;
+
+            .mobile & {
+                width: $revWm * 5 + 1px;
+            }
+        }
+        .is-proxy {
+            width: (5 * $indi * 2) - $indi;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

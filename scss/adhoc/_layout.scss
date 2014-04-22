@@ -1,0 +1,105 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC / Layout */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+body {
+    padding: $unit;
+    overflow-y: scroll;
+
+    &.mobile {
+        padding: 0;
+    }
+}
+#Main {
+    background-color: white;
+    box-shadow: 3px 333px 333px $shad1;
+    margin: auto;
+    position: relative;
+    width: $fullwidth;
+
+    .mobile & {
+        padding: 0;
+        width: $lillwidth;
+    }
+    .masthead {
+        @include nosel();
+        height: 54px;
+        left: 92px;
+        position: absolute;
+        top: 26px;
+        width: 380px;
+    }
+    a.logo {
+        .msie & {
+            background-image: url(../images/header/logo.png);
+        }
+        background-image: url(../images/header/logo.svg);
+        background-size: 100%;
+        height: 62px;
+        position: absolute;
+        left: $unit;
+        top: $unit;
+        width: 62px;
+    }
+    h1 {
+        color: $red;
+        font-size: 40px;
+        font-style: italic;
+        letter-spacing: -2px;
+        position: relative;
+        top: 3px;
+    }
+    header {
+        height: 66px;
+        position: relative;
+        z-index: 9;
+    }
+    footer {
+        @include rex('margin-top', 0.333);
+        @include rex('height', 4);
+        color: $gray;
+        font-size: 12px;
+        line-height: 22px;
+        padding: 0 6px;
+        position: absolute;
+        vertical-align: baseline;
+        width: 100%;
+
+        .mobile & {
+            text-align: center;
+
+            * {
+                float: none;
+            }
+        }
+        &.fixed .right {
+            background-color: $shad3;
+            bottom: 0;
+            font-size: 133%;
+            padding: 6px 36px 12px 18px;
+            position: fixed;
+            right: 0;
+            text-align: right;
+            z-index: 99;
+
+            * {
+                color: white;
+                text-shadow: 1px 1px 2px black;
+            }
+        }
+        a {
+            background: none;
+            border: 0;
+            color: $gray;
+            margin-top: -4px;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    section {
+        @include clearfix();
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

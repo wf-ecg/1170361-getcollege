@@ -1,0 +1,96 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC / Base */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+html {
+    @include font-plain();
+    font-size: 14px;
+    line-height: 1;
+
+    body {
+        @include graygrad();
+        &.loading { background-image: none; }
+        background-attachment: fixed;
+
+        a {
+            &.hover, &:hover {
+                text-decoration: none;
+            }
+            color: $link;
+            text-decoration: underline;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            clear: both;
+            letter-spacing: -0.5px;
+            line-height: 1.0;
+            margin: 0;
+            padding: 0;
+            @include font-archer();
+
+            sup {
+                $x: 10px; // define x
+                font-size: $x;
+                margin-left: $x / 4;
+                margin-right: $x / -3;
+            }
+        }
+        h1 {
+            font-weight: 800;
+            font-size: 180%;
+        }
+        h2 {
+            font-weight: 700;
+            font-size: 160%;
+        }
+        h3 {
+            font-weight: 700;
+            font-size: 140%;
+        }
+        h4 {
+            font-weight: 600;
+            font-size: 120%;
+        }
+        h5 {
+            font-weight: 500;
+            font-size: 100%;
+        }
+        h6 {
+            font-weight: 300;
+            font-size: 80%;
+        }
+        hr {
+            border: 0px solid white;
+            border-top-width: 2px;
+            clear: both;
+        }
+        img {
+            @include nosel();
+            background-repeat: no-repeat;
+            max-width: 100%;
+        }
+        p sup {
+            font-size: 8px;
+        }
+        small {
+            font-size: 80%;
+        }
+        strong {
+            font-weight: bold;
+        }
+        sup {
+            font: 200 9px Verdana;
+            letter-spacing: 0;
+            position: relative;
+            top: -0.5em;
+        }
+        table {
+            border-collapse: collapse;
+            clear: both;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// [min|max]- width * height
+// [min|max]- device-width * device-height
+// [min|max]- aspect-ratio * device-aspect-ratio
+// orientation :[port|land]
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //

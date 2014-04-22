@@ -1,0 +1,98 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* MODAL */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#Modal {
+    $clr1: rgba(255, 255, 255, 0.7);
+    $clr2: rgba(255, 255, 255, 0.3);
+    $dark: rgba(  7,   7,   7, 0.7);
+
+    @include nosel();
+    @include background-image( linear-gradient(top, $clr1 90%, $clr2 100%) );
+    .msie & { background-color: rgba(255, 255, 255, 0.666); }
+
+    cursor: not-allowed;
+    display: none;
+    height: 100%; width: 100%;
+    left: 0; top: 0;
+    position: fixed;
+    text-align: center;
+    z-index: 999;
+
+    & > div {
+        display: inline-block;
+        margin: auto;
+        min-width: 400px;
+        text-align: left;
+    }
+
+    .closeWidget {
+        border: 0;
+        border-radius: 1em;
+        color: white;
+        font-family: arial;
+        font-size: $unit * 3.333;
+        font-weight: bold;
+        line-height: $unit * 2;
+        padding: $unit / 2;
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+        top: 0;
+        z-index: 99999;
+
+        &:hover, &.hover {
+            background-color: $frost;
+            cursor: pointer;
+        }
+        &:active, &.active {
+            background-color: $shad1;
+            color: $red;
+        }
+    }
+
+    aside {
+        &.closeMessage, &.linkMessage {
+            @include nosel();
+            @include transition( transform 1s ease-in .125s );
+
+            background-color: $dark;
+            .msie & { background-color: black; }
+            &, a { color: white; }
+            letter-spacing: 2px;
+            margin: 0 auto;
+            padding: 0.5em;
+            position: relative;
+            text-align: center;
+            text-transform: uppercase;
+            top: 3px;
+            width: 23em;
+            z-index: 1;
+
+        }
+        &.closeMessage:before {
+            content: 'dismiss overlay';
+        }
+        &.linkMessage {
+            width: 100%;
+        }
+        &.closeMessage.labelbaby, &.closeMessage:active {
+            @include transform( scale(2) translate3d(0,0,0) rotate(-12deg) );
+            @include hgrad(#944, #c44);
+            @include hgrad($button2, $button1);
+
+            border: 1px dotted white;
+            border-width: 0 2px;
+            box-shadow: 0 0 11px gray;
+            cursor: move;
+            opacity: 1;
+
+            &:before {
+                text-shadow: 1px 2px 2px $shad3, -0px -1px 1px white;
+            }
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+@import "_quiz";
+@import "_video";
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //

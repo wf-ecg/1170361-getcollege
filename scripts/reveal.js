@@ -4,133 +4,156 @@
 var Reveal = (function (W, $) { //IIFE
     'use strict';
     var name = 'Reveal',
-        self = new Global(name, '(expand or contract)'),
-        C, Df, El, U;
+    self = new Global(name, '(expand or contract)'),
+    C, Df, El, U;
 
     C = W.console;
     U = Util;
 
     Df = { // DEFAULTS
-        dat: {},
-        delay: null,
-        open: '',
-        sect: '',
-        revealpx: 257,
+        all: [],
+        speed: null,
+        current: null,
+        revealpx: 268,
         reveals: 'section.reveal',
         inits: function (ms) {
-            Df.delay = ms || 999;
-            El.reveals = $(El.reveals);
+            $.reify(El);
+            Df.speed = ms || 999;
             Df.inited = true;
         },
     };
     El = {
+        body: 'body',
         reveals: 'section.reveal',
     };
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
     /// attach expand/contract/status events to items with _reveal
 
-    function _contractAll() {
-        return El.reveals.trigger('contract');
+    function mobile() {
+        return El.body.is('.mobile');
     }
 
-    function setAutoAdvance(me) {
-        var ln = me.pages.length - 1;
-
-        me.tm = W.setInterval(function () {
-            me.goToPage((1 + me.currentPage.pageX) % ln, 0);
-        }, 5555);
-
-        $(me.indicator1.wrapper).parent().one('click keypress', function () {
-            W.clearInterval(me.tm);
-        });
-    }
-
-    function _attachTo(sele) {
-        var jq, data, handler, mobile, iscroll;
-
-        jq = $(sele).closest('section');
-        mobile = $('body').is('.mobile');
-        iscroll = jq.parent().parent().data('iscroll');
-
-        data = jq.data();
-        if (!data) {
-            if (U.debug(1)) {
-                C.error('no data');
-            }
+    function scroller(dat) {
+        if (!dat.carousel) {
             return;
+        } else if (dat.status === 'active') {
+            dat.carousel.tm = Carousel.auto(dat.carousel);
+        } else {
+            W.clearInterval(dat.carousel.tm);
         }
-        data = data[name] = {
-            status: true,
-        };
-        handler = {
-            expand: function () {
-                if (!data.status) {
-                    jq.show().stop().animate({
-                        height: Df.revealpx // * (mobile ? 1.5 : 1),
-                    }, Df.delay, function () {
-                        Df.open = jq;
-                        data.status = true;
-                    });
+    }
 
-                    jq.children().not(mobile ? '.desktop' : 'foo').fadeIn(Df.delay * 2);
-                    if (iscroll) {
-                        setAutoAdvance(jq.parent().parent().data('iscroll'));
+    function fader(dat) {
+        var div, mob;
+
+        div = dat.wrap;
+        mob = Respond.mobile();
+
+        if (dat.status === 'active') {
+            div.addClass('animate').show().css({
+                display: 'block',
+                height: Df.revealpx * (mob ? 1.2 : 1),
+            });
+            div.children().fadeIn(Df.speed * 2, function () {
+                div.removeClass('animate');
+                dat.carousel && dat.carousel.refresh();
+            });
+        } else {
+            div.addClass('animate').css({
+                height: '1px',
+            });
+            div.children().fadeOut(Df.speed, function () {
+                div.removeClass('animate');
+                div.is('.is-port') || div.hide();
+            });
+        }
+    }
+
+    function datify(me) {
+        var cbs, dat, wrap, wrapped;
+
+        cbs = $.Callbacks();
+
+        wrap = me.parent().parent();
+        wrapped = wrap.data('carousel') || false;
+        wrap = wrapped ? wrap : me;
+
+        dat = {
+            wrap: wrap,
+            carousel: wrapped,
+            status: 'active',
+            actuate: function (fn) {
+                if (fn) {
+                    cbs.add(fn);
+                } else {
+                    if (Df.current) {
+                        Df.current.deactivate();
                     }
+                    cbs.fire(dat);
                 }
-                _contractAll();
-
-                return this;
             },
-            contract: function () {
-                if (data.status) {
-                    jq.children().fadeOut().end().animate({
-                        height: '1px',
-                    }, (Df.delay * 2), function () {
-                        jq.hide();
-                        data.status = false;
-                    });
-                    if (iscroll) {
-                        W.clearInterval(iscroll.tm);
-                    }
+            reset: function (stat) {
+                dat.wrap.removeClass(dat.status);
+                if (stat) {
+                    dat.status = stat;
+                    dat.wrap.addClass(dat.status);
                 }
-                return this;
             },
-            status: function () {
-                C.warn(data.status);
-                return data.status;
+            activate: function () {
+                if (dat.status !== 'active') {
+                    dat.reset('active');
+                    dat.actuate();
+                    Df.current = dat;
+                    return true;
+                }
+                return false;
+            },
+            deactivate: function () {
+                if (dat.status !== 'normal') {
+                    dat.reset('normal');
+                    Df.current = null;
+                    dat.actuate();
+                    return true;
+                }
+                return false;
             },
         };
 
-        jq.hide() //
-        .on('expand.' + name, handler.expand) //
-        .on('contract.' + name, handler.contract) //
-        .on('status.' + name, handler.status);
+        Df.all.push(dat);
+        me.data(name, dat);
 
-        handler.contract();
-        return jq;
+        dat.actuate(fader);
+        dat.actuate(scroller);
+        dat.deactivate();
+
+        return dat;
     }
 
     function _setHandle(sel) {
-        var jq = _attachTo('section.' + sel).first();
+        var sect, btn, dat;
 
-        $('article.' + sel + ' .control').click(function () {
-            jq.trigger('expand');
+        sect = $('section.' + sel);
+        btn = $('article.' + sel + ' .control');
+        dat = datify(sect.first());
+
+        btn.click(function () {
+            if ($(this).is('.active')) {
+                dat.deactivate();
+            } else {
+                dat.activate();
+            }
         });
-    }
-
-    function bind() {
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    function _init(delay) {
+    function _init(speed) {
         if (self.inited(true)) {
             return null;
         }
 
-        Df.inits(delay);
-        bind();
+        Df.inits(speed);
         return self;
     }
 
@@ -140,8 +163,6 @@ var Reveal = (function (W, $) { //IIFE
         },
         init: _init,
         attach: _setHandle,
-        contract: _contractAll,
-        auto: setAutoAdvance,
     });
 
     return self;

@@ -1,0 +1,41 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* TILES / Reveal-Video */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+section.reveal {
+
+    div.video {
+        display: block;
+        height: 0;
+        line-height: 140%;
+        opacity: 0.9;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 55px;
+        width: 33%;
+
+        .mobile & {
+            top: 111px;
+            right: 11px;
+        }
+        &:hover {
+            opacity: 1.0;
+
+            a {
+                color: $red;
+            }
+        }
+        img {
+            position: relative;
+        }
+        a {
+            @include font-archer();
+            color: $gray;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

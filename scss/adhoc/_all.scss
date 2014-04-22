@@ -1,0 +1,25 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC */
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+$fullwidth: 980px;
+$lillwidth: 480px;
+$unit: $fullwidth / 97;
+$wt: $unit * 15;
+$ht: $unit * 15;
+
+// misc
+$rem: 1rem; $hem: 0.5rem; $qem: 0.25rem;
+$layers: '../images/layers';
+$resp: 800px;
+$debug: 1;
+$remx: 12px;
+$hilite: rgba(255, 255, 99, 0.7);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+@import "_base";
+@import "_control";
+@import "_layout";
+@import "_misc";
+@import "_mobile";
+@import "_msie";
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //

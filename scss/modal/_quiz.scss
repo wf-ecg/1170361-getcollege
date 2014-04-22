@@ -1,0 +1,97 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* MODAL / Quiz */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.quiz {
+    $bdark: #00698c;
+    $bsemi: #4d96af;
+    $blite: #80b4c6;
+    $bhead: #fcc60a;
+
+    @include font-archer();
+    background-color: $bdark;
+    border: $unit solid transparent;
+    box-shadow: 1px 3px 15px black;
+    color: white;
+    cursor: -webkit-grab;
+    display: none;
+    font-size: 120%;
+    left: 15%; right: 15%; //height: 50%;
+    line-height: 150%;
+    padding: $unit * 2;
+    position: absolute;
+    z-index: 1;
+    .mobile & { height: 100%; left: 0; right: 0; top: 0; bottom: 0; margin-top: 0 !important; }
+
+    a {
+        @include dotwhite();
+    }
+    blockquote {
+        background-color: $blite;
+        color: black;
+        line-height: 140%;
+        padding: 0.5em 1em;
+
+        h3 {
+            color: black;
+            font-size: 21px;
+        }
+        p {
+            font-style: italic;
+        }
+    }
+    blockquote, h3, h4, h5 {
+        line-height: 130%;
+        margin: 0 0 $unit;
+    }
+    h3 {
+        color: $bhead;
+        font-weight: 600;
+    }
+    h4 {
+        color: $bhead;
+        font-style: italic;
+    }
+    h5 {
+        font-style: italic;
+        .mobile & br { display: none; }
+    }
+    ol, ul {
+        line-height: 140%;
+        margin-left: 2em;
+    }
+    li {
+        border-radius: 3px;
+        margin-left: -0.5em;
+        padding: 0.25em 0.5em;
+    }
+    .questions {
+        margin-right: 10%;
+
+        li {
+            cursor: pointer;
+            &:hover, &:focus {
+                background-color: $bsemi;
+                outline-color: $hilite;
+            }
+            &.selected, &:active {
+                background-color: $blite;
+            }
+        }
+        ol { // Multi choice
+            li {
+                list-style-type: upper-alpha;
+                margin: $unit 0;
+            }
+        }
+        ul { // T or F
+            li {
+                font-size: 180%;
+                float: left;
+                list-style-position: inside;
+                list-style-type: circle;
+                margin-right: 5%;
+            }
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

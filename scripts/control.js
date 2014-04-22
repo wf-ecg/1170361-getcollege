@@ -13,11 +13,11 @@ var Control = (function (W, $) { //IIFE
     Df = { // DEFAULTS
         all: [],
         current: null,
-        delay: null,
+        speed: null,
         timeout: 0,
         inits: function (ms) {
-            Df.delay = ms || 999;
             $.reify(El);
+            Df.speed = ms || 999;
         },
     };
     El = {
@@ -33,7 +33,7 @@ var Control = (function (W, $) { //IIFE
 
         Df.timeout = W.setTimeout(function () { // delay scroll
             ele.scrollTo();
-        }, Df.delay * 2);
+        }, Df.speed * 2);
     }
 
     function _isActive(ele) {
@@ -104,6 +104,7 @@ var Control = (function (W, $) { //IIFE
         Df.all.push(dat);
         dat.actuate(scroller);
         dat.actuate(titler);
+
         me.data(name, dat);
     }
 
@@ -126,11 +127,11 @@ var Control = (function (W, $) { //IIFE
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    function _init(delay) {
+    function _init(speed) {
         if (self.inited(true)) {
             return null;
         }
-        Df.inits(delay);
+        Df.inits(speed);
         bind();
         return self;
     }

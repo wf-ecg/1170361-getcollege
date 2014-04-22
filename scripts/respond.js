@@ -1,5 +1,5 @@
 /*jslint es5:true, white:false */
-/*globals Global, Modernizr, Util, jQuery, window */
+/*globals Global, Modernizr, Util, jQuery, jsView, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Respond = (function (W, $) { //IIFE
     'use strict';
@@ -14,6 +14,15 @@ var Respond = (function (W, $) { //IIFE
         dat: {},
         current: '',
     };
+
+    function swaps() {
+        var p, f, l;
+        p = $('section article._fellows').parent()
+        f = p.children().first();
+        l = p.children().last();
+        p.prepend(l).append(f);
+    }
+
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
 
@@ -25,19 +34,34 @@ var Respond = (function (W, $) { //IIFE
 
     function _setSize(str) {
         Df.current = str;
-        $('body').removeClass('desktop mobile').addClass(str);
+        $('html').removeClass('desktop mobile').addClass(str);
+    }
+
+    function _isMobile() {
+        return (Df.current === 'mobile');
+    }
+
+    function _toggle() {
+        if (_isMobile()) {
+            _change('desktop');
+        } else {
+            _change('mobile');
+        }
     }
 
     function _change(str) {
-        $.PS_pub('change');
-
-        if (str === 'desktop' || (!str && Df.current === 'mobile')) {
+        if (Df.current === str) {
+            str = '';
+        }
+        if (str === 'desktop') {
             _setSize('desktop');
             _recolumn(6);
-        } else if (str === 'mobile' || (!str && Df.current === 'desktop')) {
+            swaps();
+        } else if (str === 'mobile') {
             _setSize('mobile');
             _recolumn(3);
         }
+        $.PS_pub('refresh.iScroll');
     }
 
     function _detect() {
@@ -47,27 +71,33 @@ var Respond = (function (W, $) { //IIFE
         // $('html').is('.retina'),
 
         // good god -- the only way to get width in IE?
-        if ((w <= 600 && !r) || (w <= 1200 && r)) {
+        if ((w <= 640 && !r) || (w <= 1200 && r)) {
             d = 'mobile';
-        } else if ((w > 600 && !r) || (w > 1200 && r)) {
+        } else if ((w > 640 && !r) || (w > 1200 && r)) {
             d = 'desktop';
         }
 
+        var mob = jsView.mobile.agent();
+
+        if (mob && mob.match('iPad')) {
+            d = 'desktop';
+            $('html').addClass('ipad');
+        }
+
+        if (U.debug(1)){
+            C.debug(name, '_detect', d);
+        }
         if (d !== Df.current) {
-            if (U.debug(1)){
-                C.debug(name, '_detect', d);
-            }
-            if (W.isIE && d === 'mobile' && Df.current === 'desktop') {
-                W.location.reload(); // refresh to respond to shrinking
+            if (Df.current === 'desktop' || Df.current === 'mobile') {
+                W.location.reload();
             } else {
-                _change(d);
+                _change(d); // initial run ... no current set
             }
         }
         return Df.current;
     }
 
     function bind() {
-        _detect();
         $.PS_sub('change', _change);
         $.PS_sub('refresh', _detect);
     }
@@ -77,6 +107,7 @@ var Respond = (function (W, $) { //IIFE
         if (self.inited(true)) {
             return null;
         }
+        _detect();
         bind();
         return self;
     }
@@ -88,9 +119,8 @@ var Respond = (function (W, $) { //IIFE
         init: _init,
         change: _change,
         check: _detect,
-        mobile: function () {
-            return (Df.current === 'mobile');
-        },
+        mobile: _isMobile,
+        toggle: _toggle,
     });
 
     return self;

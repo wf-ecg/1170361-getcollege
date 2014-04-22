@@ -1,0 +1,28 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC / Msie */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+html.msie {
+    #Modal {
+        background-image: url(../images/misc/masq.png);
+    }
+    .badbrowser {
+        &::before {
+            content: 'scold';
+        }
+        &::after {
+            content: 'spank';
+        }
+    }
+    .cgray .text {
+        h3 {
+            font-size: 140% !important;
+        }
+        p {
+            font-size: 80%;
+        }
+    }
+    cite {
+        display: none;
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

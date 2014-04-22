@@ -1,5 +1,5 @@
 /*jslint es5:true, white:false */
-/*globals Global, Util, _, jQuery, window */
+/*globals Global, Stats, Util, _, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Quiz = (function (W, $) { //IIFE
     'use strict';
@@ -18,17 +18,17 @@ var Quiz = (function (W, $) { //IIFE
         choices: ['choices'],
         results: ['results'],
         inits: function () {
+            $.reify(El);
             Df.total = Df.answers.length - 1;
-            El.div = $(El.div).hide().fadeIn();
-            El.currNum = El.div.find(El.currNum);
-            El.questions = El.div.find(El.questions).hide();
-            El.corrNum = El.div.find(El.corrNum);
-            El.resultdiv = El.div.find(El.resultdiv).hide();
-            El.answers = El.div.find(El.answers).hide();
+            El.div.hide().fadeIn();
+            El.questions.hide();
+            El.resultdiv.hide();
+            El.answers.hide();
         },
     };
     El = { // ELEMENTS
         div: '.quiz',
+        html: 'html',
         currNum: 'span.current',
         questions: 'div.questions > div',
         corrNum: 'span.correct',
@@ -36,11 +36,15 @@ var Quiz = (function (W, $) { //IIFE
         answers: 'div.answers',
     };
 
+    function _ns(str) {
+        return $.nameSpace(str, name);
+    }
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// INTERNAL
 
-    function _showScore() {
+    function showScore() {
         El.currNum.parent().fadeOut();
+
         if (Df.good === Df.total) {
             Df.good = 'all';
             El.resultdiv.find('h4').show();
@@ -50,14 +54,18 @@ var Quiz = (function (W, $) { //IIFE
             El.resultdiv.find('h4').hide();
             El.answers.show();
         }
+
         El.corrNum.text(Df.good) //
         .parent().fadeIn();
+
+        El.div.addClass('done');
+        Stats.update('Quiz score: ' + Df.good + ' of 5');
     }
 
-    function _revealAnswers() {
+    function revealAnswers() {
         var kids = El.answers.show().children('blockquote').hide();
 
-        _showScore();
+        showScore();
         El.resultdiv.fadeIn();
 
         _.each(Df.results, function (e, i) {
@@ -69,7 +77,7 @@ var Quiz = (function (W, $) { //IIFE
         El.resultdiv.children().trigger('refresh'); // scroller?
     }
 
-    function _checkAnswer(n) {
+    function checkAnswer(n) {
         var rez = (Df.answers[n] === Df.choices[n]);
         if (rez) {
             Df.good++;
@@ -77,12 +85,12 @@ var Quiz = (function (W, $) { //IIFE
         Df.results[n] = rez;
     }
 
-    function _saveChoice(q, a) {
+    function saveChoice(q, a) {
         Df.choices[q] = a;
-        _checkAnswer(q);
+        checkAnswer(q);
     }
 
-    function _nextQuestion() {
+    function nextQuestion() {
         Df.current++;
         El.questions //
         .eq(Df.current - 2).hide().end() // first time is always a miss
@@ -93,7 +101,21 @@ var Quiz = (function (W, $) { //IIFE
         }
     }
 
-    function _bind() {
+    function open() {
+        Modal.show();
+
+        if ($.support.orientation && W.orientation !== 0 && !El.html.is('.ipad')) {
+            W.alert('Portrait orientation required. \nTurn your device vertically.');
+            return;
+        }
+        El.div.show();
+
+        if (Df.current === 0) {
+            nextQuestion(); // kick off
+        }
+    }
+
+    function bind() {
         // on click take data from target
         El.questions.on('click keypress', function (evt) {
             evt.stopPropagation();
@@ -105,16 +127,22 @@ var Quiz = (function (W, $) { //IIFE
             a_str = $(evt.target).data('answer');
 
             if (Df.current === q_num && a_str) {
-                _saveChoice(q_num, a_str);
-                _nextQuestion();
+                saveChoice(q_num, a_str);
+                nextQuestion();
             }
             if (Df.current > Df.total) {
                 El.questions.off('click');
-                _revealAnswers();
+                revealAnswers();
             }
         }).hide();
 
-        _nextQuestion(); // kick off
+        El.div.on('show', open);
+
+        $.PS_sub('close.Modal', function (evt) {
+            if (evt.namespace === 'Modal' && El.div.is('.done')) {
+               W.location = '.';
+            }
+        });
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -124,7 +152,7 @@ var Quiz = (function (W, $) { //IIFE
             return null;
         }
         Df.inits();
-        _bind();
+        bind();
         return self;
     }
 

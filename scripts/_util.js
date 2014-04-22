@@ -138,6 +138,24 @@ var Util = (function (W, $) { /// IIFE
         });
         return ('jQuery:[' + (out.join(', ') || '(empty)') + ']');
     };
+    $.nameSpace = function (str, nom) {
+        var arr;
+
+        if (!nom) {
+            throw new Error('no namespace given');
+        }
+        arr = str.split(' ');
+
+        // add dot and name to each event type
+        str = _.map(arr, function (e) {
+            return e + '.' + nom;
+        }).join(' ');
+
+        if (!str) {
+            C.warn('namespace error');
+        }
+        return str;
+    };
     // $erpent eats tail
     $.reify = function (host) {
         $.each(host, function (i, e) {

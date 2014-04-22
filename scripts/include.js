@@ -4,19 +4,18 @@
 var Include = (function (W, $) { // IIFE
     'use strict';
     var name = 'Include',
-        self, C, Df, G, U;
+        self = new Global(name, '(access and attach selected regions)'),
+        C, Df, G, U, cached;
 
     G = Global;
     U = Util;
-
-    self = new Global(name, '(access and attach selected regions)');
     C = W.console;
 
-    var cached = $();
+    cached = $();
 
     Df = G['+' + name] = { // DEFAULTS
         cache: cached,
-        promise: null,
+        promise: $.Deferred(),
         inits: function () {
             if (W.debug > 0) {
                 W['_' + name] = this;
@@ -78,13 +77,22 @@ var Include = (function (W, $) { // IIFE
         }).promise();
         return Df.promise;
     }
-
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+    function _init() {
+        if (self.inited(true)) {
+            return null;
+        }
+
+        Df.promise.resolve();
+        return self;
+    }
 
     $.extend(true, self, {
         _: function () {
             return Df;
         },
+        init: _init,
         cache: _xsrCache,
         graft: _graft,
         later: _later,

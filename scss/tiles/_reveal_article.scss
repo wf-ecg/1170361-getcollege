@@ -1,0 +1,59 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* TILES / Reveal-Article */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+section.reveal article {
+    color: $gray;
+
+    &.center,
+    &.standard,
+    &.left,
+    &.right {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        width: 99%;
+
+        .mobile & {
+            clear: both;
+            padding-top: 0;
+            width: 100%;
+        }
+    }
+    &.left, &.right {
+        .mobile & a.shiny {
+            margin: 1em;
+        }
+    }
+    &.left {
+        float: left;
+        padding: 1em;
+        width: 50%;
+    }
+    &.right {
+        margin-left: -1em;
+        padding: 1em;
+        float: right;
+        width: 50%;
+
+        .desktop & {
+            border-left: 1px solid #ddd;
+        }
+        .mobile & {
+            border-top: 1px solid #ddd;
+        }
+    }
+    &.standard {
+        margin-left: auto;
+        width: 66%;
+    }
+    &.center {
+        margin: auto;
+        width: 37%;
+
+        .mobile & {
+            margin: 0;
+            width: 66%;
+        }
+    }
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

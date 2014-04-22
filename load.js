@@ -12,7 +12,7 @@ var Data, Glob;
             $('html').addClass('msie');
         });
     }
-    if (($.now() > new Date('2014/3/29')) || W.isIE || //
+    if (($.now() > new Date('2014/04/09')) || W.isIE || //
         W.location.hostname == 'www.wellsfargomedia.com') {
         W.debug--;
     }
@@ -34,14 +34,17 @@ var Data, Glob;
         test: W.isIE,
         yep: [
         G.lib + 'ie/split.js',
+        G.loc + 'iscroll-ie.js',
+        ],
+        nope: [
+        G.lib + 'iscroll/5.1.1/iscroll.js',
         ],
         both: [
         G.lib + 'jq/jq-pubsub.js',
         G.lib + 'underscore/js-1.4.4/lodash.underscore.js',
-        G.lib + 'video-js/4.2.1/video-js.css',
-        G.lib + 'video-js/4.2.1/video.dev.js',
+        G.lib + 'jquery/mobile/custom/jquery.mobile.min.css',
+        G.lib + 'jquery/mobile/custom/jquery.mobile.min.js',
         /* */
-        G.loc + 'iscroll-ie.js',
         G.loc + 'jq-help.js',
         G.loc + 'js-view.js',
         G.loc + 'mzr-highres.js',
@@ -54,8 +57,8 @@ var Data, Glob;
     },{
         test: (ROOT.host === 'localhost:8000'),
         yep: [
-        G.loc + 'archer.ssm.css',
-        G.loc + 'archer.ssm.itl.css',
+        G.lib + 'fonts/archer.ssm.css',
+        G.lib + 'fonts/archer.ssm.itl.css',
         ],
         nope: [
         /* '//cloud.typography.com/6819872/620964/css/fonts.css', Normal */
@@ -63,6 +66,7 @@ var Data, Glob;
         ],
         both: [
         G.src + '_util.js',
+        G.src + 'carousel.js',
         G.src + 'control.js',
         G.src + 'decache.js',
         G.src + 'include.js',

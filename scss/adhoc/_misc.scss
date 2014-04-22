@@ -1,0 +1,86 @@
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* ADHOC / Misc */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*body.desktop {
+    @media (max-width: 1600px) {
+        zoom: 1;
+    }
+    @media (max-width: 1000px) {
+        zoom: 0.9;
+    }
+    @media (max-width: 900px) {
+        zoom: 0.8;
+    }
+    @media (max-width: 800px) {
+        zoom: 0.7;
+    }
+    @media (max-width: 750px) {
+        zoom: 0.6;
+    }
+}
+body.mobile {
+    @media (max-width: 600px) {
+        zoom: 1;
+    }
+    @media (max-width: 475px) {
+        zoom: 0.8;
+    }
+}*/
+.desktop .ui-page {
+    overflow-x: visible;
+}
+.animate{
+    @include fxreset();
+    @include ani();
+}
+*:focus {
+    @include outline();
+}
+.cache {
+    display: none;
+}
+.show {
+    display: initial !important;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+cite {
+    color: lime;
+    display: none;
+    font: normal $unit monospace;
+    padding: $unit / 3;
+    position: absolute;
+    right: 0;
+    text-shadow: 0 0 3px black;
+    top: 0;
+
+    .debug & {
+        display: inline;
+    }
+}
+
+span.separator {
+    background-color: $gray;
+    display: inline-block;
+    height: 15px;
+    margin: 0 0.5em;
+    vertical-align: middle;
+    width: 1px;
+}
+.clearfix {
+    @include clearfix();
+}
+.loading * {
+    @include ani();
+    opacity: 0.666;
+}
+.loaded * {
+    @include ani();
+    opacity: 1;
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

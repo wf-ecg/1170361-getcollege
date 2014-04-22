@@ -1,19 +1,13 @@
-/* SCREEN */
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+@import "animation";
+@import "compass/css3";
+@import "compass/css3/transition";
+@import "compass/css3/user-interface";
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-@import "_reset";
-@import "_base";
-@import "_control";
-@import "_layout";
-@import "_misc";
-@import "_modal";
-@import "_quiz";
-@import "_reveal";
-@import "_scroll";
-@import "_tile";
-@import "_tile_text";
-@import "_video";
-
-// FIXES
-@import "_msie";
-@import "__xtn";
-@import "_mobile";
+@import "core/_all";
+@import "adhoc/_all";
+@import "modal/_all";
+@import "scroll/_all";
+@import "tiles/_all";
+// - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - - + - //
+/* >^º!º^< */

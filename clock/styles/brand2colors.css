@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* Brand2  palette */
+
+/* primary color */
+.col_wfRed {color: #bb0826;}
+.col_wfYellow {color:#fcc60a;}
+.col_warmRed {color:#ec1c29;}
+.col_darkRed {color:#ae1e23;}
+
+.bg_wfRed {background-color: #bb0826;}
+.bg_wfYellow {background-color:#fcc60a;}
+.bg_warmRed {background-color:#ec1c29;}
+.bg_darkRed {background-color:#ae1e23;}
+
+/* active color palette */
+.col_teal {color:#0095c8;}
+.col_darkTeal {color:#00698c;}
+.col_green {color:#46a033;}
+.col_darkGreen {color:#007337}
+.col_orange {color:#ed8800;}
+.col_darkOrange {color:#ce4c00;}
+.col_plum {color:#702f8a;}
+.col_darkPlum {color:#4d3b65;}
+.col_magenta {color:#ae2573;}
+.col_darkMagenta {color:#821861;}
+.col_ebony {color:#7a6855;}
+.col_darkEbony {color:#574537;}
+.col_coolGray {color:#44464a;}
+.col_darkCoolGray {color:#d9d9d6;}
+.col_coolGrayMedium {color:#bfc0be;}
+
+.bg_teal {background-color:#F0095c8;}
+.bg_darkTeal {background-color:#00698c;}
+.bg_green {background-color:#46a033;}
+.bg_darkGreen {background-color:#007337}
+.bg_orange {background-color:#ed8800;}
+.bg_darkOrange {background-color:#ce4c00;}
+.bg_plum {background-color:#702f8a;}
+.bg_darkPlum {background-color:#4d3b65;}
+.bg_magenta {background-color:#ae2573;}
+.bg_darkMagenta {background-color:#821861;}
+.bg_ebony {background-color:#7a6855;}
+.bg_darkEbony {background-color:#574537;}
+.bg_coolGray {background-color:#44464a;}
+.bg_darkCoolGray {background-color:#d9d9d6;}
+.bg_coolGrayMedium {background-color:#bfc0be;}
+
+/* Hyperlinks */
+.col_linkBlueInternal {color:#3366cc;}
+.col_linkBlueExternal {color:#5174b8;}

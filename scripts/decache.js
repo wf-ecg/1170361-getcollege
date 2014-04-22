@@ -25,7 +25,7 @@ var Decache = (function (W, $) { //IIFE
                 'src': me.data().src,
                 'data-src': '',
             });
-        });
+        }).show();
     }
 
     function _auto(jq) {

@@ -14,7 +14,7 @@ ROOT = {
             dir: '/wf-ecg/1170361-getcollege',
         },
         'www.wellsfargomedia.com': {
-            dir: '/drt/4',
+            dir: '/gcr',
         },
     },
     _config: function () { /// only top is not a stub
