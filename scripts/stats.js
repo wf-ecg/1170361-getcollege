@@ -1,5 +1,6 @@
-/*jslint es5:true, white:false */
-/*globals Global, _, jQuery, window */
+/*jslint white:false */
+/*globals Global, _, jQuery, window,
+    Stats:true */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Stats = (function (W, $) { //IIFE
     'use strict';

@@ -1,4 +1,4 @@
-/*jslint es5:true, white:false */
+/*jslint white:false */
 /*globals Global, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Control = (function (W, $) { //IIFE
@@ -56,13 +56,12 @@ var Control = (function (W, $) { //IIFE
         }
     }
 
-    function datify() {
-        var me, cbs, dat;
-        // debugger
-        me = $(this);
+    function datify(jq) {
+        var cbs, dat;
+
         cbs = $.Callbacks();
         dat = {
-            jq: me,
+            jq: jq,
             status: 'normal',
             actuate: function (fn) {
                 if (fn) {
@@ -105,13 +104,14 @@ var Control = (function (W, $) { //IIFE
         dat.actuate(scroller);
         dat.actuate(titler);
 
-        me.data(name, dat);
+        jq.data(name, dat);
     }
 
     function bind() {
         El.all //
-        .each(datify) //
-        .on('click', function (evt) {
+        .each(function () {
+            datify($(this));
+        }).on('click', function (evt) {
             evt.preventDefault();
 
             var dat = $(this).data(name);

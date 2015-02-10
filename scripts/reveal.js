@@ -1,4 +1,4 @@
-/*jslint es5:true, white:false */
+/*jslint white:false */
 /*globals Global, Util, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Reveal = (function (W, $) { //IIFE
@@ -57,7 +57,7 @@ var Reveal = (function (W, $) { //IIFE
             });
             div.children().fadeIn(Df.speed * 2, function () {
                 div.removeClass('animate');
-                dat.carousel && dat.carousel.refresh();
+                if (dat.carousel) dat.carousel.refresh();
             });
         } else {
             div.addClass('animate').css({
@@ -65,7 +65,7 @@ var Reveal = (function (W, $) { //IIFE
             });
             div.children().fadeOut(Df.speed, function () {
                 div.removeClass('animate');
-                div.is('.is-port') || div.hide();
+                if (!div.is('.is-port')) div.hide();
             });
         }
     }

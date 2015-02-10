@@ -1,5 +1,6 @@
-/*jslint es5:true, white:false, evil:true  */
-/*globals Global, View, jQuery, window */
+/*jslint white:false, evil:true  */
+/*globals Global, Util:true, View,
+    jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 // 1170361-getcollege
 
@@ -89,7 +90,7 @@ var Util = (function (W, $) { /// IIFE
             off = Math.abs(_dom().scrollTop() - top);
 
             if (off - add > 25) {
-                if (U.debug(1)){
+                if (U.debug(1)) {
                     C.debug(name, '_scroll start', nom, off + 'px', add);
                 }
                 ele.addClass(':target');
@@ -102,7 +103,7 @@ var Util = (function (W, $) { /// IIFE
                     duration: off,
                     complete: function () { // 'easeInBack', 555
                         ele.removeClass(':target');
-                        if (U.debug(2)){
+                        if (U.debug(2)) {
                             C.debug(name, '_scroll done', nom, off + 'ms');
                         }
                     },

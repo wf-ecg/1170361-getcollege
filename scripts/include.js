@@ -1,4 +1,4 @@
-/*jslint es5:true, white:false */
+/*jslint white:false */
 /*globals Global, Util, _, jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Include = (function (W, $) { // IIFE
@@ -68,7 +68,7 @@ var Include = (function (W, $) { // IIFE
             url: url,
             success: function (str) {
                 cached = $(str);
-                if (U.debug(2)){
+                if (U.debug(2)) {
                     C.debug(name, '_promise', this);
                 }
                 _addParts(arr);
