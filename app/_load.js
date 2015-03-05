@@ -2,9 +2,7 @@
 /*globals _, C, W, Global, jQuery,
     Glob:true, Main, Modernizr, ROOT, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Data, Glob;
-
-Glob = new Global('Glob');
+var Glob = new Global('Glob');
 
 (function ($, M, G) {
     'use strict';
@@ -20,11 +18,6 @@ Glob = new Global('Glob');
     if ($.browser.msie) {
         $(function () {
             $('html').addClass('msie');
-            $('body').on('mouseover', '.region, .widget, a, li', function () {
-                $(this).addClass('hover');
-            }).on('mouseout', '.region, .widget, a, li', function () {
-                $(this).removeClass('hover');
-        });
         });
         W.debug--;
     }
@@ -46,9 +39,9 @@ Glob = new Global('Glob');
         ],
         both: [
         G.lib + 'jq/jq-pubsub.js',
+        G.lib + 'jquery/mobile/custom/jquery.mobile.min.css',
         G.lib + 'jquery/mobile/custom/jquery.mobile.min.js',
-            /*G.lib + 'jquery/mobile/custom/jquery.mobile.min.css',*/
-            'build/libs.min.js',
+        'build/libs.min.js',
         ],
         complete: function () {
         },
@@ -58,13 +51,13 @@ Glob = new Global('Glob');
         test: (ROOT.conf.nom === 'localhost' || ROOT.conf.nom === 'qla2'),
         yep: [
             G.lib + (!W.isIE ? 'fonts/archer.ssm.css'     : 'fonts/eot/archer.ssm.css'),
-            G.lib + (!W.isIE ? 'fonts/myriad.con.css'     : 'fonts/eot/myriad.con.css'),
-            G.lib + (!W.isIE ? 'fonts/myriad.css'         : 'fonts/eot/myriad.css'),
+            /* G.lib + (!W.isIE ? 'fonts/myriad.con.css'     : 'fonts/eot/myriad.con.css'),
+            G.lib + (!W.isIE ? 'fonts/myriad.css'         : 'fonts/eot/myriad.css'), */
         ],
         nope: [/*
             '//cloud.typography.com/6819872/620964/css/fonts.css', // Normal */
             '//cloud.typography.com/6819872/633184/css/fonts.css', // ScrnSmrt
-            '//use.typekit.net/cqz6fet.js',
+            /* '//use.typekit.net/cqz6fet.js', */
         ],
         complete: function () {
             try {

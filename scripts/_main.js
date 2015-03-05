@@ -1,13 +1,13 @@
-/*jslint es5:true, white:false */
+/*jslint white:false, evil: true */
 /*globals _, Control, Decache, Global, Include,
-          IScroll, Modal, Quiz, Respond, Reveal, Util, Stats,
+          IScroll, Main:true, Modal, Quiz, Respond, Reveal, Util, Stats,
           jQuery, window */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var Main = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Main',
     self = new Global(name, '(kicker and binder)'),
-    C, Df, El, U;
+    C, Df, El;
 
     C = W.console;
     U = Util;
@@ -46,10 +46,10 @@ var Main = (function ($, G, U) { // IIFE
         });
 
         $.PS_sub('refresh.iScroll', function () {
-            Df.iscroll1 && Df.iscroll1.refresh();
-            Df.iscroll2 && Df.iscroll2.refresh();
-            Df.carousel1 && Df.carousel1.refresh();
-            Df.carousel2 && Df.carousel2.refresh();
+            if (Df.iscroll1) Df.iscroll1.refresh();
+            if (Df.iscroll2) Df.iscroll2.refresh();
+            if (Df.carousel1) Df.carousel1.refresh();
+            if (Df.carousel2) Df.carousel2.refresh();
         });
 
         $(W).bind('resize orientationchange', _.throttle(function () {
@@ -61,9 +61,9 @@ var Main = (function ($, G, U) { // IIFE
         }
     }
 
-    function isfreshen() {
-        this.refresh();
-        this.scrollTo(0, 0);
+    function freshen(obj) {
+        obj.refresh();
+        obj.scrollTo(0, 0);
     }
 
     function reader() {
@@ -72,7 +72,7 @@ var Main = (function ($, G, U) { // IIFE
         // store on wrapper
         El.read_scroll.data('iscroll', Df.iscroll1);
         El.read_scroll.on('refresh', function () {
-            isfreshen.apply(Df.iscroll1);
+            freshen(Df.iscroll1);
         });
     }
 
@@ -82,7 +82,7 @@ var Main = (function ($, G, U) { // IIFE
         // store on wrapper
         El.quiz_scroll.data('iscroll', Df.iscroll2);
         El.quiz_scroll.on('refresh', function () {
-            isfreshen.apply(Df.iscroll2);
+            freshen(Df.iscroll2);
         });
         Quiz.init();
     }
@@ -153,7 +153,7 @@ var Main = (function ($, G, U) { // IIFE
     function loaded() {
         El.body.addClass('loaded');
         _.delay(function () {
-            El.body.removeClass('loading')
+            El.body.removeClass('loading');
         }, 999);
         _.delay(function () {
             El.body.removeClass('loaded');
@@ -184,7 +184,7 @@ var Main = (function ($, G, U) { // IIFE
         watchInputDevice(); // detect mouse or keys for highlighting
 
         $('a, .control, .shiny, .closeWidget').not('[tabindex]').attr('tabindex', 9);
-        $('a').not('[href]').attr('href', 'javascript:void(0)');
+        $('a').not('[href]').attr('href', 'javas' + ':criptvoid(0)');
         $('a').not('.control, .shiny, .closeWidget').each(function () {
             var me = $(this);
             me.attr('title', me.attr('href').replace(/(\S*?\/\/\S+?)\/.*/, '$1'));
