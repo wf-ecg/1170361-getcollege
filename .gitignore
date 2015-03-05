@@ -1,6 +1,11 @@
 *.mp4
+*.ogv
 *.pdf
 *.psd
-*.swf
+*.webm
 *.zip
-/styles/
+media*/*/*
+
+npm-debug.log
+node_modules
+*/build/*
