@@ -1,0 +1,65 @@
+<meta http-equiv="cache-control" content="max-age=0, must-revalidate">
+<script>
+    /*jslint es5:true, white:false */
+    /*globals window */
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    var W, C, O, L;
+    W = window;
+    L = W.location;
+    C = W.console;
+
+    function refresh(url) {
+        W.document.write('<meta http-equiv="refresh" content="0; url=' + url + '">');
+    }
+
+    // ensure pathname terminates to a document
+    function bouncer(url) {
+        var o = {
+            pth: url,
+            rev: url.toLowerCase(),
+        };
+        o.seg = o.rev.split('/');
+        o.end = o.seg.pop();
+
+        if (o.end) { /* test for doc */
+            o.end = o.end.match(/\./) ? o.end : o.end + '/index.html';
+        } else { /* default to index */
+            o.end = 'index.html';
+        }
+        o.rev = o.seg.concat(o.end).join('/');
+        o.go = function () {
+            if (o.pth !== o.rev) {
+                L.pathname = o.rev;
+            } else {
+                C.info('no bounce required');
+            }
+        };
+        return o;
+    }
+
+    function gcr(str) {
+        return str.replace(/getcollegeready/i,'gcr'); // force gcr
+    }
+
+    // if ending has no dot to indicate a doc, replace end with /index.html
+    function shortcut() {
+        var l = window.location, s = l.pathname, t = s.toLowerCase();
+        t = t.match(/\w+\.\w+$/) ? t : t.replace(/\/*$/, '/index.html');
+        t !== s && (l.pathname = t);
+    }
+
+    function tester(path, end, msg) {
+        var loc = bouncer(path);
+        C.debug(loc.end === end, msg || end);
+    }
+
+    tester('/wf-ecg/1170361-getcollege/bounce/', "index.html");
+    tester('/wf-ecg/1170361-getcollege/bounce', "bounce/index.html");
+    tester('/wf-ecg/1170361-getcollege/bounce/foo', "foo/index.html");
+    tester('/wf-ecg/1170361-getcollege/bounce/index.html', "index.html");
+    tester('/wf-ecg/1170361-getcollege/bounce/index.html', "built to fail");
+
+    bouncer(L.pathname).go();
+    shortcut(L.pathname);
+
+</script>
