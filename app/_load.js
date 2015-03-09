@@ -31,17 +31,17 @@ var Glob = new Global('Glob');
     G.Load.base = {
         test: W.isIE,
         yep: [
-        G.ven + 'msie/split.js',
-        G.ven + 'msie/iscroll.js', // fkin ie
+            G.ven + 'msie/split.js',
+            G.ven + 'msie/iscroll.js', // fkin ie
         ],
         nope: [
-        G.ven + 'iscroll.js', // current standards
+            G.ven + 'iscroll.js', // current standards
         ],
         both: [
-        G.lib + 'jq/jq-pubsub.js',
-        G.lib + 'jquery/mobile/custom/jquery.mobile.min.css',
-        G.lib + 'jquery/mobile/custom/jquery.mobile.min.js',
-        'build/libs.min.js',
+            G.lib + 'jq/jq-pubsub.js',
+            G.lib + 'jquery/mobile/custom/jquery.mobile.min.css',
+            G.lib + 'jquery/mobile/custom/jquery.mobile.min.js',
+            'build/libs.min.js',
         ],
         complete: function () {
         },
