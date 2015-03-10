@@ -181,10 +181,12 @@ var Main = (function ($, G, U) { // IIFE
     }
 
     function bind() {
-        watchInputDevice(); // detect mouse or keys for highlighting
+        var dummy = 'javascript';
+        dummy += ':;';
 
+        watchInputDevice(); // detect mouse or keys for highlighting
         $('a, .control, .shiny, .closeWidget').not('[tabindex]').attr('tabindex', 9);
-        $('a').not('[href]').attr('href', 'javas' + ':criptvoid(0)');
+        $('a').not('[href]').attr('href', dummy);
         $('a').not('.control, .shiny, .closeWidget').each(function () {
             var me = $(this);
             me.attr('title', me.attr('href').replace(/(\S*?\/\/\S+?)\/.*/, '$1'));
