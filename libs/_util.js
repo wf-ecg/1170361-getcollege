@@ -140,46 +140,8 @@ var Util = (function ($) { /// IIFE
             }
         }
     }
+
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-    $.fn.exempt = function (bool) {
-        var ret = $();
-        if (!bool) {
-            ret = $(this);
-        }
-        ret.prevObject = this;
-        return ret;
-    };
-    $.nameSpace = function (str, nom) {
-        var arr;
-
-        if (!nom) {
-            throw new Error('no namespace given');
-        }
-        arr = str.split(' ');
-
-        // add dot and name to each event type
-        str = _.map(arr, function (e) {
-            return e + '.' + nom;
-        }).join(' ');
-
-        if (!str) {
-            C.warn('namespace error');
-        }
-        return str;
-    };
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-    function _fixIE() {
-        $('body').on('mouseover', '*', function (evt) {
-            evt.stopPropagation();
-            $(this).addClass('hover');
-        }).on('mouseout', '*', function (evt) {
-            evt.stopPropagation();
-            $(this).removeClass('hover');
-        });
-    }
-
-    void(W.isIE && _fixIE());
 
     $.extend(true, self, {
         arg: _arg,
