@@ -6,13 +6,10 @@
 var Util = (function ($) { /// IIFE
     'use strict';
     var name = 'Util',
-        self = new Global(name, '(1170361-getcollege utils)'),
-        D, DE, U;
+        self = new Global(name, '(limited utils)'),
+        U;
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /// CONSTANTS
-    D = W.document;
-    DE = D.documentElement;
-
     U = {
         args: function () {
             return arguments;
@@ -71,87 +68,145 @@ var Util = (function ($) { /// IIFE
     };
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-    function _dom() {
-        var obj = _dom.Obj;
-        //
-        if (!obj) {
-            obj = D.body; // default
-            if (!$.browser.webkit) {
-                obj = DE;
-            }
-            _dom.Obj = obj = $(obj);
+    /// MISC
+    U.slice = function (array, first, last) {
+        // 2 crazy things
+        if (W.isIE && !last) {
+            // fuckin IE cannot use undefined as a missing 2nd param
+            return array.slice(first);
+        } else {
+            // also the 2nd param cannot be zero (js has no neg-zero)
+            return array.slice(first, last || undefined);
         }
-        return obj;
-    }
+    };
 
-    // reflect function takes number arg (def 1) (0 = *)
-    // returns function that slices and returns args array
-    // on num means gimme that arg number
-    // two nums mean apply slice (the way splice numbers it)
-
-    function _arg(n1, n2) {
-        // n2 = _undef(n2) ? 99 : n2;
-        if (U.undef(n2)) {
-            n2 = n1;
-            n1 = 0;
+    U.Counter = (function () {
+        function Counter(n) {
+            n = (n || 0);
+            this.valueOf = this.toString = function () {
+                return n++;
+            };
         }
-        return function () {
-            var arr = Array.prototype.slice.apply(arguments);
-            return arr.slice(n1, n2);
+        return Counter;
+    }());
+
+    U.Cache = (function (obj) {
+        function cache() {}
+        cache.prototype = obj;
+        return cache;
+    }(new U.Counter()));
+
+    U.xyStore = function (ele, restore) {
+        var e = $(ele),
+        xy = e.position(),
+        dat = e.data(),
+        auto = {
+            left: 'auto',
+            top: 'auto'
         };
-    }
 
-    function _scroll(ele, add) {
-        var nom, off, top;
-
-        add = add || 0;
-        if (typeof ele === 'number') {
-            add = ele;
-            ele = 'body';
+        if (restore) {
+            // either 1 restore or 2 reset to auto
+            e.css((restore < 2 && dat.xyStore) || auto);
+        } else {
+            dat.xyStore = xy;
         }
-        ele = $(ele || 'body').first();
-        nom = ((ele[0] && ele[0].id) || ele);
+    };
 
-        if (ele.length) {
-            top = ele.offset().top;
-            off = Math.abs(_dom().scrollTop() - top);
+    U.abstractXY = function (evt) {
+        var o = {},
+        bs = $('body').scrollTop(),
+        hs = $('html').scrollTop(),
+        ie = $.browser.msie,
+        ff = $.browser.mozilla;
 
-            if (off - add > 25) {
-                if (U.debug(1)) {
-                    C.debug(name, '_scroll start', nom, off + 'px', add);
+        if (ie) {
+            o.x = evt.pageX;
+            o.y = evt.pageY + (bs);
+        } else {
+            o.x = evt.clientX;
+            o.y = evt.clientY + (ff ? hs : bs);
+        }
+        return o;
+    };
+
+    U.makeMailtos = function (ele) {
+        $('.email', (ele || 'body')) //
+        .removeClass('email') //
+        .addClass('mailto') //
+        .toMailto();
+    };
+
+    U.mfal = function () {
+        C.warn('U.mfal?');
+
+        var supplant = function (txt, cb) {
+            var me = $(this);
+            //
+            txt = '#' + (txt || me.attr('href'));
+            cb = cb || $.noop;
+            //
+            me.on('click', function (evt) {
+                evt.preventDefault();
+                if (typeof cb === 'function') {
+                    cb(this);
+                } else {
+                    W.location = cb;
                 }
-                ele.addClass(':target');
-                // W.location.hash = nom;
-                off = (off > 1111 ? off / 5 : off / 2) + 250;
+            }).attr('href', txt);
+        };
+        $('[href="."]').each(function () {
+            supplant.apply(this, ['reload', function () {
+                W.location.reload();
+            }]);
+        });
+        $('[href=".."]').each(function () {
+            supplant.apply(this, ['teamworks', 'http://portal.teamworks.wellsfargo.com/']);
+        });
+    };
 
-                _dom().stop().animate({
-                    scrollTop: top + add,
-                }, {
-                    duration: off,
-                    complete: function () { // 'easeInBack', 555
-                        ele.removeClass(':target');
-                        if (U.debug(2)) {
-                            C.debug(name, '_scroll done', nom, off + 'ms');
-                        }
-                    },
-                    //step: function (now, fx) { var x = Math.abs(now - fx.end) | 0; C.warn(x, [fx]); }
-                });
-            }
-        }
-    }
+    U.query = function (nom) {
+        var A = W.location.search.slice(1).split('&'),
+        O = {};
+
+        $.each(A, function (i, e) {
+            var x = e.split('=');
+
+            O[x[0]] = x[1];
+        });
+        return nom ? (O[nom] || true) : O;
+    };
+
+    U.pathId = function () {
+        var path, tmp;
+
+        path = (' ' + W.location.pathname).split('/');
+        tmp = path.pop() || path.pop(); // trailing slash?
+        path = tmp.match('index.') ? path.pop() : tmp; // get directory?
+        return path.split('.').shift(); // remove any extension
+    };
+
+    U.pageId = function () {
+        var str = $('body').attr('id');
+        return (str || this.pathId()).toLowerCase();
+    };
+
+    U.time = function () {
+        var arr = $.now().toString().match(/\d{6,7}/g);
+        return {
+            all: arr.join(''),
+            big: arr[0],
+            lil: arr[1],
+        };
+    };
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    $.extend(true, self, {
-        arg: _arg,
-        dom: _dom,
-        scroll: _scroll,
+    $.extend(self, {
         flatten: U.flatcat,
         isDef: U.defined,
         I: U.reflect,
-        mobile: W.View && View.mobile,
-        viewport: W.View && View.port,
+        testrict: "eval('var x=0'),(typeof(x)!=='number'?'':'non-')+'strict'",
     }, U);
 
     return self;
