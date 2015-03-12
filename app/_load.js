@@ -1,8 +1,7 @@
 /*jslint white:false */
-/*globals _, C, W, Global, jQuery,
-    Glob:true, Main, Modernizr, ROOT, */
+/*globals _, C, W, Glob, ROOT, jQuery,
+        Main, Modernizr, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Glob = new Global('Glob');
 
 (function ($, M, G) {
     'use strict';
