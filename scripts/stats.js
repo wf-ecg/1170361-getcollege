@@ -1,14 +1,12 @@
 /*jslint white:false */
-/*globals Global, _, jQuery, window,
-    Stats:true */
+/*globals _, C, W, Glob, Util, jQuery,
+        Stats:true */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Stats = (function (W, $) { //IIFE
+var Stats = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Stats',
-    self = new Global(name, '(update Google Analytics)'),
-    C, Df;
-
-    C = W.console;
+        self = new G.constructor(name, '(update Google Analytics)'),
+        Df;
 
     Df = { // DEFAULTS
         lastAction: null,
@@ -99,12 +97,14 @@ var Stats = (function (W, $) { //IIFE
         init: _.once(_init),
         update: _.throttle(_update, 1500),
     });
+    self.init();
 
-    return self.init();
-}(window, jQuery));
+    return self;
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*
 
+    TODO: Why self init?
 
 */

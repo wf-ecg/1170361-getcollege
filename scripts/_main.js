@@ -1,16 +1,13 @@
-/*jslint white:false, evil: true */
-/*globals _, Control, Decache, Global, Include,
-          IScroll, Main:true, Modal, Quiz, Respond, Reveal, Util, Stats,
-          jQuery, window */
+/*jslint white:false */
+/*globals _, C, W, Glob, Util, jQuery,
+        Control, Decache, Include, IScroll,
+    Main:true, Modal, Quiz, Respond, Reveal, Stats, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Main = (function ($, G, U) { // IIFE
+ var Main = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Main',
-    self = new Global(name, '(kicker and binder)'),
-    C, Df, El;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(kicker and binder)'),
+        Df, El;
 
     Df = { // DEFAULTS
         speed: 333,
@@ -251,16 +248,14 @@ var Main = (function ($, G, U) { // IIFE
         __: Df,
         speed: Df.speed,
         init: _init,
-        mode: eval(U.testrict),
     });
 
     return self;
 }(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
 /*
 
 
 
- */
+*/

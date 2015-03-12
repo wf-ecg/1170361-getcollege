@@ -1,14 +1,12 @@
 /*jslint white:false */
-/*globals Global, Util, jQuery, window */
+/*globals _, C, W, Glob, Util, jQuery,
+        Control:true, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Control = (function (W, $) { //IIFE
+var Control = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Control',
-        self = new Global(name, '(control operations)'),
-        C, Df, El, U;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(control operations)'),
+        Df, El;
 
     Df = { // DEFAULTS
         all: [],
@@ -128,7 +126,7 @@ var Control = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init(speed) {
-        if (self.inited(true)) {
+        if (self.isInited(true)) {
             return null;
         }
         Df.inits(speed);
@@ -150,7 +148,7 @@ var Control = (function (W, $) { //IIFE
     });
 
     return self;
-}(window, jQuery));
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

@@ -1,14 +1,12 @@
-/*jslint white:false */
-/*globals Global, IScroll, Util, jsView, jQuery, window */
+/*/*jslint white:false */
+/*globals _, C, W, Glob, Util, jQuery,
+        Carousel:true, IScroll, jsView,  */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Carousel = (function (W, $) { //IIFE
+var Carousel = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Carousel',
-    self = new Global(name, '(rotation scroller)'),
-    C, Df, El, U;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(rotation scroller)'),
+        Df, El;
 
     Df = { // DEFAULTS
         all: [],
@@ -103,7 +101,7 @@ var Carousel = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init(speed) {
-        if (self.inited(true)) {
+        if (self.isInited(true)) {
             return null;
         }
 
@@ -121,7 +119,7 @@ var Carousel = (function (W, $) { //IIFE
     });
 
     return self;
-}(window, jQuery));
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

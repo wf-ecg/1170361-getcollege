@@ -1,14 +1,12 @@
 /*jslint white:false */
-/*globals Global, Stats, Util, _, jQuery, window */
+/*globals _, C, W, Glob, Util, jQuery,
+        Quiz:true, Stats, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Quiz = (function (W, $) { //IIFE
+var Quiz = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Quiz',
-        self = new Global(name, '(show a series of questions and results)'),
-        C, Df, El, U;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(show a series of questions and results)'),
+        Df, El;
 
     Df = { // DEFAULTS
         dat: {},
@@ -148,7 +146,7 @@ var Quiz = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init() {
-        if (self.inited(true)) {
+        if (self.isInited(true)) {
             return null;
         }
         Df.inits();
@@ -164,10 +162,11 @@ var Quiz = (function (W, $) { //IIFE
     });
 
     return self;
-}(window, jQuery));
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*
+
 
 
 */
