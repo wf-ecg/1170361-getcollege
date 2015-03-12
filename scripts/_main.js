@@ -1,16 +1,13 @@
-/*jslint white:false, evil: true */
-/*globals _, Control, Decache, Global, Include,
-          IScroll, Main:true, Modal, Quiz, Respond, Reveal, Util, Stats,
-          jQuery, window */
+/*jslint white:false */
+/*globals _, C, W, Glob, Util, jQuery,
+        Control, Decache, Include, IScroll,
+    Main:true, Modal, Quiz, Respond, Reveal, Stats, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Main = (function ($, G, U) { // IIFE
+ var Main = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Main',
-    self = new Global(name, '(kicker and binder)'),
-    C, Df, El;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(kicker and binder)'),
+        Df, El;
 
     Df = { // DEFAULTS
         speed: 333,
@@ -181,10 +178,12 @@ var Main = (function ($, G, U) { // IIFE
     }
 
     function bind() {
-        watchInputDevice(); // detect mouse or keys for highlighting
+        var dummy = 'javascript';
+        dummy += ':;';
 
+        watchInputDevice(); // detect mouse or keys for highlighting
         $('a, .control, .shiny, .closeWidget').not('[tabindex]').attr('tabindex', 9);
-        $('a').not('[href]').attr('href', 'javas' + ':criptvoid(0)');
+        $('a').not('[href]').attr('href', dummy);
         $('a').not('.control, .shiny, .closeWidget').each(function () {
             var me = $(this);
             me.attr('title', me.attr('href').replace(/(\S*?\/\/\S+?)\/.*/, '$1'));
@@ -249,16 +248,14 @@ var Main = (function ($, G, U) { // IIFE
         __: Df,
         speed: Df.speed,
         init: _init,
-        mode: eval(U.testrict),
     });
 
     return self;
 }(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
 /*
 
 
 
- */
+*/

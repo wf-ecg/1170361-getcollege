@@ -1,14 +1,12 @@
 /*jslint white:false */
-/*globals Global, Modernizr, Util, jQuery, jsView, window */
+/*globals _, C, W, Glob, Util, jQuery,
+        Modernizr, Respond:true, jsView, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Respond = (function (W, $) { //IIFE
+var Respond = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Respond',
-        self = new Global(name, '(detect and insert verbiage)'),
-        C, Df, U;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(detect and insert verbiage)'),
+        Df;
 
     Df = { // DEFAULTS
         dat: {},
@@ -104,7 +102,7 @@ var Respond = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init() {
-        if (self.inited(true)) {
+        if (self.isInited(true)) {
             return null;
         }
         _detect();
@@ -124,7 +122,7 @@ var Respond = (function (W, $) { //IIFE
     });
 
     return self;
-}(window, jQuery));
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

@@ -1,5 +1,5 @@
 /*jslint white:false */
-/*globals jQuery, window */
+/*globals jQuery, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 (function ($) {
     // VERTICALLY ALIGN FN

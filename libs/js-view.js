@@ -1,9 +1,9 @@
 /*jslint white:false */
-/*globals window, jQuery */
+/*globals _, C, W, Glob, Util, jQuery,
+        jsView:true, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 var jsView = (function (W, $) { // IIFE
-    var C = W.console,
-        name = 'jsView',
+    var name = 'jsView',
         self = {};
 
     function _debug(n) {

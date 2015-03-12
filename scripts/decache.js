@@ -1,14 +1,12 @@
 /*jslint white:false */
-/*globals Global, Util, jQuery, window */
+/*globals _, C, W, Glob, Util, jQuery,
+        Decache:true, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Decache = (function (W, $) { //IIFE
+var Decache = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Decache',
-        self = new Global(name, '(load images from data-src after doc)'),
-        C, Df, U;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(load images from data-src after doc)'),
+        Df;
 
     Df = { // DEFAULTS
         dat: {},
@@ -35,7 +33,7 @@ var Decache = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init(sel) {
-        if (self.inited(true)) {
+        if (self.isInited(true)) {
             return null;
         }
         if (sel) {
@@ -53,7 +51,7 @@ var Decache = (function (W, $) { //IIFE
     });
 
     return self;
-}(window, jQuery));
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*

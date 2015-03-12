@@ -1,14 +1,12 @@
 /*jslint white:false */
-/*globals Global, Util, jQuery, window */
+/*globals _, C, W, Glob, Util, jQuery,
+        Reveal:true, */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-var Reveal = (function (W, $) { //IIFE
+var Reveal = (function ($, G, U) { // IIFE
     'use strict';
     var name = 'Reveal',
-    self = new Global(name, '(expand or contract)'),
-    C, Df, El, U;
-
-    C = W.console;
-    U = Util;
+        self = new G.constructor(name, '(expand or contract)'),
+        Df, El;
 
     Df = { // DEFAULTS
         all: [],
@@ -149,7 +147,7 @@ var Reveal = (function (W, $) { //IIFE
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     function _init(speed) {
-        if (self.inited(true)) {
+        if (self.isInited(true)) {
             return null;
         }
 
@@ -166,7 +164,7 @@ var Reveal = (function (W, $) { //IIFE
     });
 
     return self;
-}(window, jQuery));
+}(jQuery, Glob, Util));
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*
